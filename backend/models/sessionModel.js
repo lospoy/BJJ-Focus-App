@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const techniqueSchema = require('./techniqueModel')
 // here we define the SCHEMA for the BJJ classes or "sessions" (to avoid using typical programming words)
 // sessions are unlimited, it's every instance that a teacher holds a BJJ class
 //
