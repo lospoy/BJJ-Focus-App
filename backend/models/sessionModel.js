@@ -27,38 +27,47 @@ const sessionSchema = mongoose.Schema(
             required: true,
             ref: 'Schedule'
         },
-        // all people that attended the session
-        // should teacher be out of attendace?
-        attendance: {
-            type: Object,
-            required: [true, 'Attendance required.'],
-            properties: {
-              teacher: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: [true, 'Teacher required.'],
-                ref: 'Teacher'
-              },
-              students: {
-                type: [studentSchema],
-                required: [true, 'Students required.'],
-                ref: 'Student'
-              }
-            }
+        teacher: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: [true, 'Teacher required.'],
+            ref: 'Teacher'
+        },
+        students: {
+            type: [studentSchema],
+            required: [true, 'Students required.'],
+            ref: 'Student'
         },
         // type of session: focus, allLevels, advanced, etc.
         sessionType: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Object,
             required: true,
-            ref: 'SessionType'
+            properties: {
+                name: {
+                    type: String,
+                    required: [true, 'The session surely has a name (beginners?).']
+                },
+                gi_nogi: {
+                    type: Object,
+                    required: [true, 'Gi or Nogi?.'],
+                    properties: {
+                        gi: {
+                            type: Boolean,
+                            required: false,
+                        },
+                        nogi: {
+                            type: Boolean,
+                            required: false,
+                        }
+                    }
+                },
+            }
         },
         // is duration a number?? talking about minutes here
-        // should this go inside of sessionType?
         duration: {
             type: Number,
             required: [true, 'Duration of session required.'],
         },
         // array of techniques/moves that were taught in the session
-        // techniques <=> moves ??????
         techniques: {
             type: [techniqueSchema],
             ref: 'Technique',
