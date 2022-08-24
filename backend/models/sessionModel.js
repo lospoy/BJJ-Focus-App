@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+const techniqueSchema = require('./techniqueModel')
 // here we define the SCHEMA for the BJJ classes or "sessions" (to avoid using typical programming words)
 // sessions are unlimited, it's every instance that a teacher holds a BJJ class
 //
@@ -12,8 +14,6 @@
 // techniques: 1 to 10
 // duration: 30min to 180min
 // warmup: yes/no, duration
-const mongoose = require('mongoose')
-const techniqueSubSchema = require('')
 
 const sessionSchema = mongoose.Schema(
     {
@@ -64,23 +64,6 @@ const sessionSchema = mongoose.Schema(
             type: [techniqueSchema],
             ref: 'Technique',
             required: [true, 'Techniques required.'],
-            properties: {
-                position: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    required: true,
-                    ref: 'Position'
-                },
-                move: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    required: true,
-                    ref: 'Move'
-                },
-                variation: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    required: true,
-                    ref: 'Variation'
-                },
-            },
         }
     },
     {
@@ -88,4 +71,4 @@ const sessionSchema = mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('Price', priceSchema)
+module.exports = mongoose.model('Session', sessionSchema)
