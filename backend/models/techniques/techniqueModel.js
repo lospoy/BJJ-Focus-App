@@ -14,13 +14,17 @@ const techniqueSchema = mongoose.Schema(
         },
         variation: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
+            required: [true, 'Specify variation, at least "standard".'],
             ref: 'Variation'
         },
         curriculum: {
             type: mongoose.Schema.Types.ObjectId,
             required: false,
             ref: 'Curriculum'
+        },
+        times_taught: {
+            type: Number,
+            required: [true, 'Times taught is at least zero.']
         }
     },
     {
