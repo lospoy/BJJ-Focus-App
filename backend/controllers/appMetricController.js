@@ -3,7 +3,7 @@
 
 const asyncHandler = require('express-async-handler')
 
-const AppMetric = require('../models/appMetricModel')
+const AppMetric = require('../models/app_models/appMetricModel')
 
 // @desc    Get appMetrics
 // @route   GET /api/appMetrics
