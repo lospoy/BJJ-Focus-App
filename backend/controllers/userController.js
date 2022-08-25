@@ -7,9 +7,9 @@ const User = require('../models/userModel')
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body
+    const { firstName, lastName, email, password, nickName, pronouns, human } = req.body
 
-    if (!name || !email || !password) {
+    if (!firstName || !lastName || !email || !password || !human) {
         res.status(400)
         throw new Error('Please fill in all fields')
     }
@@ -28,16 +28,20 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // Create user
     const user = await User.create({
-        name,
+        firstName,
+        lastName,
         email,
+        human,
         password: hashedPassword,
     })
 
     if (user) {
         res.status(201).json({
             _id: user.id,
-            name: user.name,
+            firstName: user.name.firstName,
+            lastName: user.name.lastName,
             email: user.email,
+            human: user.human,
             token: generateToken(user._id),
         })
     } else {
@@ -77,6 +81,31 @@ const getMe = asyncHandler(async (req, res) => {
     res.status(200).json(req.user)
 })
 
+// @desc    Update user data
+// @route   PUT /api/users/:id
+// @access  Private
+const updateUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+
+    // Check for user
+    if(!user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    // Make sure logged in user matches the user updating their data
+    if(user.toString() !== user.id) {
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+    })
+
+    res.status(200).json(updatedUser)
+})
+
 // Generate JWT
 const generateToken = (id) => {
     // #v667    jwt.sign({ this is the payload })
@@ -89,5 +118,6 @@ const generateToken = (id) => {
 module.exports = {
     registerUser,
     loginUser,
+    updateUser,
     getMe,
 }
