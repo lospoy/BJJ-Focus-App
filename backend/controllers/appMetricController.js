@@ -72,7 +72,7 @@ const updateMetric = asyncHandler(async (req, res) => {
 // @desc    Delete appMetric
 // @route   DELETE /api/appMetrics/:id
 // @access  Private
-const deletePrice = asyncHandler(async (req, res) => {
+const deleteMetric = asyncHandler(async (req, res) => {
     const price = await AppMetric.findById(req.params.id)
 
     if(!price) {
