@@ -33,10 +33,10 @@ const userSchema = mongoose.Schema(
             type: String,
             required: [true, 'Please add a password'],
         },
-        student: {
+        person: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
-            ref: 'Student',
+            ref: 'Person',
         },
         appUsage: {
             type: [appUsageSchema],
