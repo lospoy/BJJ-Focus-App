@@ -30,12 +30,12 @@ const sessionSchema = mongoose.Schema(
         teacher: {
             type: mongoose.Schema.Types.ObjectId,
             required: [true, 'Teacher required.'],
-            ref: 'Teacher'
+            ref: 'Human'
         },
         students: {
-            type: [studentSchema],
+            type: [humanSchema],
             required: [true, 'Students required.'],
-            ref: 'Student'
+            ref: 'Human'
         },
         // type of session: focus, allLevels, advanced, etc.
         sessionType: {
