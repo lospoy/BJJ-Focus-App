@@ -26,8 +26,7 @@ const saveAppMetric = asyncHandler(async (req, res) => {
     }
 
     const metric = await AppMetric.create({
-        // .text regardless of type? (works with number)
-        // @route /models/priceModel
+        // @route /models/app_models/appMetricModel
         time: {
             lastSession: req.body.time.lastSession,
             totalUsageDuration: req.body.time.totalUsageDuration,
