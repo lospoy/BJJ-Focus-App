@@ -5,6 +5,7 @@ const humanSchema = mongoose.Schema(
     {
         name: {
             type: Object,
+            required: [true, 'Name required'],
             properties: {
                 firstName: {
                     type: String,
@@ -23,6 +24,31 @@ const humanSchema = mongoose.Schema(
                     required: false
                 },
             }
+        },
+        trainingStatus: {
+            type: Object,
+            required: [true, 'Current training status required.'],
+            properties: {
+                active: {
+                    type: Boolean,
+                    required: false,
+                },
+                injured: {
+                    type: Boolean,
+                    required: false,
+                },
+                resting: {
+                    type: Boolean,
+                    required: false,
+                },
+                unknown: {
+                    type: Boolean,
+                    required: false,
+                },
+                retired: {
+                    type: Boolean,
+                    required: false,
+                },
         },
         trainingHistory: {
             type: Object,
