@@ -40,7 +40,7 @@ const userSchema = mongoose.Schema(
         },
         appMetrics: {
             type: [appMetricSchema],
-            required: true,
+            required: false,
             ref: 'AppMetric',
         }
     },
