@@ -1,9 +1,9 @@
 // here we define the user SCHEMA
 const mongoose = require('mongoose')
 
-// Replacing the industry-standard "Session" with "Usage" since the word session
+// Replacing the industry-standard "Session" with "Metric" since the word session
 // is already being used to refer to another model
-const appUsageSchema = mongoose.Schema(
+const appMetricSchema = mongoose.Schema(
     {
         user: {
             type: mongoose.Schema.Types.ObjectId,
@@ -49,4 +49,4 @@ const appUsageSchema = mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('AppUsage', appUsageSchema)
+module.exports = mongoose.model('AppMetric', appMetricSchema)

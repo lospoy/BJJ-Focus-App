@@ -38,10 +38,10 @@ const userSchema = mongoose.Schema(
             required: true,
             ref: 'Human',
         },
-        appUsage: {
-            type: [appUsageSchema],
+        appMetrics: {
+            type: [appMetricSchema],
             required: true,
-            ref: 'AppUsage',
+            ref: 'AppMetric',
         }
     },
     {
