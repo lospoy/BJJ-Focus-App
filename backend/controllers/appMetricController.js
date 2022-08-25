@@ -17,7 +17,7 @@ const getMetrics = asyncHandler(async (req, res) => {
 // @desc    Save appMetrics
 // @route   POST /api/appMetrics
 // @access  Private
-const saveAppMetric = asyncHandler(async (req, res) => {
+const saveMetric = asyncHandler(async (req, res) => {
     // #c301 >> to use body data you need to add middleware in /server.js 
 
     if(!req.body.appMetric) {
