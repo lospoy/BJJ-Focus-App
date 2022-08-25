@@ -56,6 +56,10 @@ const moveSchema = mongoose.Schema(
                     type: Boolean,
                     required: false,
                 },
+                sweep: {
+                    type: Boolean,
+                    required: false,
+                },
             },
         }
     },
