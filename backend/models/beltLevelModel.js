@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const beltLevelSchema = mongoose.Schema(
+const beltSchema = mongoose.Schema(
     {
         name: {
             type: Object,
@@ -64,4 +64,4 @@ const beltLevelSchema = mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('BeltLevel', beltLevelSchema)
+module.exports = mongoose.model('Belt', beltSchema)
