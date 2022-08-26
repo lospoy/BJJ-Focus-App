@@ -38,7 +38,7 @@ const userSchema = mongoose.Schema(
             type: Object,
             required: false,
             properties: {
-                teacher: {
+                admin: {
                     type: Boolean,
                     required: false
                 },
