@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const curriculumSchema = mongoose.Schema(
+const focusCurriculumSchema = mongoose.Schema(
     {
         name: {
             type: String,
@@ -32,4 +32,4 @@ const curriculumSchema = mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('Curriculum', curriculumSchema)
+module.exports = mongoose.model('FocusCurriculum', focusCurriculumSchema)
