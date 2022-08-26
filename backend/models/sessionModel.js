@@ -1,78 +1,52 @@
 const mongoose = require('mongoose')
 // here we define the SCHEMA for the BJJ classes or "sessions" (to avoid using typical programming words)
 // sessions are unlimited, it's every instance that a teacher holds a BJJ class
-//
-// A session's properties >>
-//
-// date: day session was held
-// scheduleSlot: pre-decided time (e.g. 10:00AM)
-// teacher: 1
-// students: 1 to 50
-// sessionType: focus, allLevels, advanced
-// topics: 1 to 3
-// techniques: 1 to 10
-// duration: 30min to 180min
-// warmup: yes/no, duration
 
 const sessionSchema = mongoose.Schema(
     {
-        // date the session was held
-        date_held: {
-            type: Date,
-            required: [true, 'Date required.'],
-        },
-        // pre-decided time (e.g. 10:00AM)
-        scheduleSlot: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'Schedule'
-        },
-        teacher: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: [true, 'Teacher required.'],
-            ref: 'Human'
-        },
-        students: {
-            type: [humanSchema],
-            required: [true, 'Students required.'],
-            ref: 'Human'
-        },
-        // type of session: focus, allLevels, advanced, etc.
-        sessionType: {
+        // date/time the session was held
+        when: {
             type: Object,
-            required: true,
+            required: [true, 'Date "when" required.'],
             properties: {
-                name: {
-                    type: String,
-                    required: [true, 'The session surely has a name (beginners?).']
+                // day held
+                date: {
+                    type: Date,
+                    required: [true, 'Date required.'],
                 },
-                gi_nogi: {
-                    type: Object,
-                    required: [true, 'Gi or Nogi?.'],
-                    properties: {
-                        gi: {
-                            type: Boolean,
-                            required: false,
-                        },
-                        nogi: {
-                            type: Boolean,
-                            required: false,
-                        }
-                    }
+                // slot in the schedule -> pre-decided time (e.g. 10:00AM)
+                // duration of the session in minutes
+                time: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    required: true,
+                    ref: 'Schedule'
                 },
             }
         },
-        // is duration a number?? talking about minutes here
-        duration: {
-            type: Number,
-            required: [true, 'Duration of session required.'],
+        who: {
+            type: Object,
+            required: [true, 'Attendance "who" required.'],
+            properties: {
+                teacher: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    required: [true, 'Teacher required.'],
+                    ref: 'Human'
+                },
+                students: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    required: [true, 'Students required.'],
+                    ref: 'Human'
+                },
+            }
         },
-        // array of techniques/moves that were taught in the session
-        techniques: {
-            type: [techniqueSchema],
-            ref: 'Technique',
-            required: [true, 'Techniques required.'],
-        }
+        // type of session: focus, allLevels, advanced, etc.
+        // array of techniques
+        // gi or nogi
+        curriculum: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'Curriculum',
+        },
     },
     {
         timestamps: true
