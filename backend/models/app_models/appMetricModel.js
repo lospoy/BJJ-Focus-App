@@ -10,39 +10,40 @@ const appMetricSchema = mongoose.Schema(
             required: true,
             ref: 'User',
         },
-        time: {
-            type: Object,
-            required: true,
-            properties: {
-                lastSession: {
-                    type: Object,
-                    required: [true, 'At least 1 second required'],
-                    properties: {
-                        date: Date,
-                        duration: {
-                            type: Number,
-                            required: [true, 'At least 1 second required'],
-                        }
-                    },
-                },
-                totalUsageDuration: {
-                    type: Number,
-                    required: [true, 'At least 1 second required'],
-                },
-                averageUsageLength: {
-                    type: Number,
-                    required: [true, 'Average required.']
-                }
-            }
-        },
-        timesOpened: {
-            type: Number,
-            required: [true, 'At least 1 time opened required.']
-        },
-        device: {
-            type: Object,
-            required: false
-        },
+        // Code below is not in use at the moment, dummy object for later on
+        // time: {
+        //     type: Object,
+        //     required: true,
+        //     properties: {
+        //         lastSession: {
+        //             type: Object,
+        //             required: [true, 'At least 1 second required'],
+        //             properties: {
+        //                 date: Date,
+        //                 duration: {
+        //                     type: Number,
+        //                     required: [true, 'At least 1 second required'],
+        //                 }
+        //             },
+        //         },
+        //         totalUsageDuration: {
+        //             type: Number,
+        //             required: [true, 'At least 1 second required'],
+        //         },
+        //         averageUsageLength: {
+        //             type: Number,
+        //             required: [true, 'Average required.']
+        //         }
+        //     }
+        // },
+        // timesOpened: {
+        //     type: Number,
+        //     required: [true, 'At least 1 time opened required.']
+        // },
+        // device: {
+        //     type: Object,
+        //     required: false
+        // },
     },
     {
         timestamps: true,
