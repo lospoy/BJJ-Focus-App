@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/appMetrics', require('./routes/app_routes/appMetricRoutes'))
 app.use('/api/users', require('./routes/app_routes/userRoutes'))
-app.use('/api/humans'), require('./routes/humanRoutes')
+app.use('/api/humans', require('./routes/humanRoutes'))
 
 // Serve frontend >> *must* be under the API routes
 if(process.env.NODE_ENV === 'production') {
