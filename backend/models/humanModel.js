@@ -3,17 +3,28 @@ const mongoose = require('mongoose')
 
 const humanSchema = mongoose.Schema(
     {
+        crm: {
+            type: Object,
+            required: false,
+            properties: {
+                id: {
+                    type: String,
+                    required: [true, 'crm.id required'],
+                    unique: true,
+                },
+            }
+        },
         name: {
             type: Object,
             required: [true, 'Name required'],
             properties: {
-                firstName: {
+                first: {
                     type: String,
-                    required: [true, 'First name required'],
+                    required: [true, 'name.firstName required'],
                 },
-                lastName: {
+                last: {
                     type: String,
-                    required: [true, 'Last name required'],
+                    required: [true, 'name.lastName required'],
                 },
                 nickName: {
                     type: String,
@@ -53,34 +64,34 @@ const humanSchema = mongoose.Schema(
         },
         trainingHistory: {
             type: Object,
-            required: [true, 'Specify training history. At least "brand new".' ],
+            required: [false, 'Specify training history. At least "brand new".' ],
             properties: {
                 belt: {
                     type: mongoose.Schema.Types.ObjectId,
-                    required: [true, 'Belt level required.'],
+                    required: [false, 'trainingHistory.belt required.'],
                     ref: 'Belt'
                 },
                 lastSession: {
                     type: mongoose.Schema.Types.ObjectId,
-                    required: [true, 'Last session required.'],
+                    required: [false, 'trainingHistory.lastSession required.'],
                     ref: 'Session'
                 },
                 firstSession: {
                     type: mongoose.Schema.Types.ObjectId,
-                    required: [true, 'First session required.'],
+                    required: [false, 'trainingHistory.firstSession required.'],
                     ref: 'Session'
                 },
                 totalTrained: {
                     type: Object,
-                    required: [true, 'Specify total trained. Minimum 1 class.'],
+                    required: [false, 'Specify total trained. Minimum 1 class.'],
                     properties: {
                         totalNumberOfSessions: {
                             type: Number,
-                            required: [true, 'Total number of sessions required.'],
+                            required: [true, 'totalTrained.totalNumberOfSessions required.'],
                         },
                         totalTimeTrained: {
                             type: Number,
-                            required: [true, 'Total minutes trained required.'],
+                            required: [true, 'totalTrained.totalTimeTrained required.'],
                         }
                     }
                 }
