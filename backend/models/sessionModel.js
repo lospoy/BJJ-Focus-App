@@ -44,7 +44,7 @@ const sessionSchema = mongoose.Schema(
         // gi or nogi
         what: {
             type: Object,
-            required: [true, 'Attendance "who" required.'],
+            required: [true, 'Type of session "what" required.'],
             properties: {
                 lesson: {
                     type: mongoose.Schema.Types.ObjectId,

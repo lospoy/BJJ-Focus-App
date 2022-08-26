@@ -1,7 +1,7 @@
 // middleware are functions that execute during the req, res cycle
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
-const User = require('../models/userModel')
+const User = require('../models/app_models/userModel')
 
 // middleware requires req, res, AND 'next'
 
