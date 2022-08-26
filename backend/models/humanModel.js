@@ -49,6 +49,7 @@ const humanSchema = mongoose.Schema(
                     type: Boolean,
                     required: false,
                 },
+            },
         },
         trainingHistory: {
             type: Object,
