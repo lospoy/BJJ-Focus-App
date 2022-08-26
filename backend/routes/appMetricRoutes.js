@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getMetrics, saveMetric, updateMetric, deleteMetric } = require('../controllers/appMetricController')
+const { getMetrics, saveMetric, updateMetric, deleteMetric } = require('../controllers/app_controllers/appMetricController')
 const { protect } = require('../middleware/authMiddleware')
 
 // only needs '/' because /app/appMetrics is already specified in /server.js
