@@ -42,11 +42,23 @@ const sessionSchema = mongoose.Schema(
         // type of session: focus, allLevels, advanced, etc.
         // array of techniques
         // gi or nogi
-        curriculum: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'Curriculum',
-        },
+        what: {
+            type: Object,
+            required: [true, 'Attendance "who" required.'],
+            properties: {
+                lesson: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    required: false,
+                    ref: 'Curriculum',
+                },
+                // seminar: {
+
+                // },
+                // workshop: {
+
+                // }
+            }
+        }
     },
     {
         timestamps: true
