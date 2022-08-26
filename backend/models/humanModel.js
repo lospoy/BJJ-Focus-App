@@ -3,17 +3,6 @@ const mongoose = require('mongoose')
 
 const humanSchema = mongoose.Schema(
     {
-        crm: {
-            type: Object,
-            required: false,
-            properties: {
-                id: {
-                    type: String,
-                    required: [true, 'crm.id required'],
-                    unique: true,
-                },
-            }
-        },
         name: {
             type: Object,
             required: [true, 'Name required'],
@@ -95,6 +84,17 @@ const humanSchema = mongoose.Schema(
                         }
                     }
                 }
+            }
+        },
+        crm: {
+            type: Object,
+            required: false,
+            properties: {
+                id: {
+                    type: String,
+                    required: [true, 'crm.id required'],
+                    unique: true,
+                },
             }
         },
     },
