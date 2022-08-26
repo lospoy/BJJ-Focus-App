@@ -1,5 +1,10 @@
 const path = require('path')
 const express = require('express')
+// **colors AND dotenv required to start server**
+// **even if the IDE marks it as "not in use"**
+const colors = require('colors')
+const dotenv = require('dotenv').config()
+// **
 const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
 const port = process.env.PORT || 5000

@@ -7,9 +7,13 @@ const User = require('../models/userModel')
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstName, lastName, email, password, nickName, pronouns, human } = req.body
+    const { 
+        name: { first, last },
+        email,
+        password,
+    } = req.body
 
-    if (!firstName || !lastName || !email || !password || !human) {
+    if (!first || !last || !email || !password) {
         res.status(400)
         throw new Error('Please fill in all fields')
     }
@@ -28,20 +32,17 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // Create user
     const user = await User.create({
-        firstName,
-        lastName,
+        name: {first, last},
         email,
-        human,
         password: hashedPassword,
     })
 
     if (user) {
         res.status(201).json({
             _id: user.id,
-            firstName: user.name.firstName,
-            lastName: user.name.lastName,
+            first: user.name.first,
+            last: user.name.last,
             email: user.email,
-            human: user.human,
             token: generateToken(user._id),
         })
     } else {
@@ -91,12 +92,6 @@ const updateUser = asyncHandler(async (req, res) => {
     if(!user) {
         res.status(401)
         throw new Error('User not found')
-    }
-
-    // Make sure logged in user matches the user updating their data
-    if(user.toString() !== user.id) {
-        res.status(401)
-        throw new Error('User not authorized')
     }
 
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
