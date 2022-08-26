@@ -5,12 +5,13 @@ const userSchema = mongoose.Schema(
     {
         name: {
             type: Object,
+            required: [true, 'Name required.'],
             properties: {
-                firstName: {
+                first: {
                     type: String,
                     required: [true, 'First name required'],
                 },
-                lastName: {
+                last: {
                     type: String,
                     required: [true, 'Last name required'],
                 },
@@ -35,11 +36,11 @@ const userSchema = mongoose.Schema(
         },
         human: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
+            required: false,
             ref: 'Human',
         },
         appMetrics: {
-            type: [appMetricSchema],
+            type: mongoose.Schema.Types.ObjectId,
             required: false,
             ref: 'AppMetric',
         }
