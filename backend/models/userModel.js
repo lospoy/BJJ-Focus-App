@@ -42,6 +42,14 @@ const userSchema = mongoose.Schema(
                     type: Boolean,
                     required: false
                 },
+                teacher: {
+                    type: Boolean,
+                    required: false
+                },
+                student: {
+                    type: Boolean,
+                    required: false
+                },
             }
         },
         human: {
