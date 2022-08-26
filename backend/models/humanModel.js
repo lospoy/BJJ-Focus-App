@@ -53,7 +53,7 @@ const humanSchema = mongoose.Schema(
         },
         trainingHistory: {
             type: Object,
-            required: [false, 'Specify training history. At least "brand new".' ],
+            required: [true, 'Specify training history. At least "brand new".' ],
             properties: {
                 belt: {
                     type: mongoose.Schema.Types.ObjectId,
