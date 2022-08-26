@@ -34,6 +34,16 @@ const userSchema = mongoose.Schema(
             type: String,
             required: [true, 'Please add a password'],
         },
+        permissions: {
+            type: Object,
+            required: false,
+            properties: {
+                teacher: {
+                    type: Boolean,
+                    required: false
+                },
+            }
+        },
         human: {
             type: mongoose.Schema.Types.ObjectId,
             required: false,
