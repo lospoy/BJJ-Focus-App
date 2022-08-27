@@ -3,6 +3,11 @@ const mongoose = require('mongoose')
 
 const humanSchema = mongoose.Schema(
     {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: false,
+            ref: 'User',
+        },
         name: {
             type: Object,
             required: [true, 'Name required'],
@@ -76,11 +81,17 @@ const humanSchema = mongoose.Schema(
                     properties: {
                         totalNumberOfSessions: {
                             type: Number,
-                            required: [true, 'totalTrained.totalNumberOfSessions required.'],
+                            required: [false, 'totalTrained.totalNumberOfSessions required.'],
                         },
                         totalTimeTrained: {
-                            type: Number,
-                            required: [true, 'totalTrained.totalTimeTrained required.'],
+                            type: Object,
+                            required: [false, 'totalTrained.totalTimeTrained required.'],
+                            properties: {
+                                years: {
+                                    type: Number,
+                                    required: false
+                                }
+                            }
                         }
                     }
                 }
