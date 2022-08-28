@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const Human = require('../models/humanModel')
 
@@ -52,7 +50,29 @@ const registerHuman = asyncHandler(async (req, res) => {
 // @route   GET /api/humans/:id
 // @access  Private
 const getHuman = asyncHandler(async (req, res) => {
-    res.status(200).json(req.params.id)
+    const human = await Human.find(req.human)
+
+    if(!human) {
+        res.status(400)
+        throw new Error('Human not found')
+    }
+
+    // Check for user
+    if(!req.user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    // Check for user permission to SEE human
+    // Must be admin, teacher, or the user's human
+    if(req.user.permissions.admin === true
+        || req.user.permissions.teacher === true
+        || human.user.toString() === req.user.id) {
+            res.status(200).json(human)
+    } else {
+        res.status(401)
+        throw new Error('User not authorized')
+    }
 })
 
 // @desc    Update human data
@@ -61,17 +81,38 @@ const getHuman = asyncHandler(async (req, res) => {
 const updateHuman = asyncHandler(async (req, res) => {
     const human = await Human.findById(req.params.id)
 
-    // Check for human
     if(!human) {
-        res.status(401)
+        res.status(400)
         throw new Error('Human not found')
     }
+    
+    // Check for user
+    if(!req.user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
 
-    const updatedHuman = await Human.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-    })
+    // Check for user permission to modify human (admin / teacher)
+    const isAdmin = req.user.permissions.admin === true
+    const isTeacher = req.user.permissions.teacher === true
+    const isTheStudentItself = human.user.toString() === req.user.id
 
-    res.status(200).json(updatedHuman)
+    if( isAdmin || isTeacher || isTheStudentItself ) {
+        const updatedHuman = await Human.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        })
+        res.status(200).json(updatedHuman)
+
+    } else {
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+
+    // **************LATEST ACTION 16:00 08/26: POST UPDATE HUMAN DATA
+    // "message": "Cannot read properties of undefined (reading 'toString')",
+    // "stack": "TypeError: Cannot read properties of undefined (reading 'toString')\n   
+    // at E:\\WebDev\\Portfolio\\BJJ-app\\backend\\controllers\\humanController.js:98:43\n
+    // at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
 })
 
 
