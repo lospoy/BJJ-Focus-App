@@ -17,9 +17,22 @@ const sessionSchema = mongoose.Schema(
                 // slot in the schedule -> pre-decided time (e.g. 10:00AM)
                 // duration of the session in minutes
                 time: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    required: true,
-                    ref: 'Schedule'
+                    type: Object,
+                    required: [true, "Schedule slot required."],
+                    properties: {
+                        number: {
+                            type: Number,
+                            required: [true, "time.number required."],
+                        },
+                        am: {
+                            type: Boolean,
+                            required: false,
+                        },
+                        pm: {
+                            type: Boolean,
+                            required: false,
+                        }
+                    }
                 },
             }
         },
