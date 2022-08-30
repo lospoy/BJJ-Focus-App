@@ -8,12 +8,12 @@ const User = require('../../models/app_models/userModel')
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
     const { 
-        name: { first, last },
         email,
         password,
+        human,
     } = req.body
 
-    if (!first || !last || !email || !password) {
+    if (!email || !password || !human) {
         res.status(400)
         throw new Error('Please fill in all fields')
     }
@@ -32,17 +32,16 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // Create user
     const user = await User.create({
-        name: {first, last},
         email,
         password: hashedPassword,
+        human,
     })
 
     if (user) {
         res.status(201).json({
             _id: user.id,
-            first: user.name.first,
-            last: user.name.last,
             email: user.email,
+            human: user.human,
             token: generateToken(user._id),
         })
     } else {

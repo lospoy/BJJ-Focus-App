@@ -54,7 +54,7 @@ const userSchema = mongoose.Schema(
         },
         human: {
             type: mongoose.Schema.Types.ObjectId,
-            required: false,
+            required: true,
             ref: 'Human',
         },
         appMetrics: {
