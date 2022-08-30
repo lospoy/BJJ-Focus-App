@@ -10,11 +10,9 @@ const registerHuman = asyncHandler(async (req, res) => {
     // trainingStatus active by default for new humans
     const { 
         name: { first, last },
-        trainingStatus,
-        trainingHistory,
     } = req.body
 
-    if (!first || !last || !trainingStatus || !trainingHistory) {
+    if (!first || !last) {
         res.status(400)
         throw new Error('Please fill in all fields')
     }
@@ -24,23 +22,21 @@ const registerHuman = asyncHandler(async (req, res) => {
 
     if (humanExists) {
         res.status(400)
-        throw new Error(`Human with name ${last, first} already exists`)
+        throw new Error(`Human with name ${first} ${last} already exists`)
     }
 
     // Create human
     const human = await Human.create({
         name: {first, last},
-        trainingStatus,
-        trainingHistory,
     })
 
     if (human) {
         res.status(201).json({
             _id: human.id,
-            first: human.name.first,
-            last: human.name.last,
-            trainingStatus: human.trainingStatus,
-            trainingHistory: human.trainingHistory
+            name: {
+                first: human.name.first,
+                last: human.name.last
+            }
         })
     } else {
         res.status(400)
@@ -48,7 +44,7 @@ const registerHuman = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Get human data
+// @desc    Get specific human data
 // @route   GET /api/humans/:id
 // @access  Private
 const getHuman = asyncHandler(async (req, res) => {
@@ -65,7 +61,7 @@ const getHuman = asyncHandler(async (req, res) => {
         throw new Error('User not found')
     }
 
-    // Check for user permission to SEE human
+    // Check for user permission to GET human data
     // Must be admin, teacher, or the user's human
     const isAdmin = req.user.permissions.admin === true
     const isTeacher = req.user.permissions.teacher === true
@@ -74,6 +70,25 @@ const getHuman = asyncHandler(async (req, res) => {
 
     if(isAdmin || isTeacher || isTheStudentItself) {
         res.status(200).json(human)
+    } else {
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+})
+
+// @desc    Get all humans
+// @route   GET /api/humans
+// @access  Private
+const getAllHumans = asyncHandler(async (req, res) => {
+    const allHumans = await Human.find({})
+
+    // Check for user permission to GET human data
+    // Must be admin, teacher, or the user's human
+    const isAdmin = req.user.permissions.admin === true
+    const isTeacher = req.user.permissions.teacher === true
+
+    if(isAdmin || isTeacher) {
+        res.status(200).json(allHumans)
     } else {
         res.status(401)
         throw new Error('User not authorized')
@@ -125,5 +140,6 @@ const updateHuman = asyncHandler(async (req, res) => {
 module.exports = {
     registerHuman,
     getHuman,
+    getAllHumans,
     updateHuman,
 }

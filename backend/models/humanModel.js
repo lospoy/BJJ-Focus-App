@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 
 const humanSchema = mongoose.Schema(
+
     {
         user: {
             type: mongoose.Schema.Types.ObjectId,
@@ -32,11 +33,12 @@ const humanSchema = mongoose.Schema(
         },
         trainingStatus: {
             type: Object,
-            required: [true, 'Current training status required.'],
+            required: [false, 'Current training status required.'],
             properties: {
                 active: {
                     type: Boolean,
                     required: false,
+                    default: true,
                 },
                 injured: {
                     type: Boolean,
@@ -58,7 +60,7 @@ const humanSchema = mongoose.Schema(
         },
         trainingHistory: {
             type: Object,
-            required: [true, 'Specify training history. At least "brand new".' ],
+            required: [false, 'Specify training history. At least "brand new".' ],
             properties: {
                 belt: {
                     type: mongoose.Schema.Types.ObjectId,
@@ -111,7 +113,7 @@ const humanSchema = mongoose.Schema(
     },
     {
         timestamps: true,
-    }
+    },
 )
 
 module.exports = mongoose.model('Human', humanSchema)
