@@ -118,6 +118,7 @@ const updateHuman = asyncHandler(async (req, res) => {
     // **************LATEST ACTION 22:45 08/30: UPDATE HUMAN
     // update doesnt add to the property of the object, it replaces the property of the object
     // expected is it ADDS to the property, not replace
+    // unsure if this needs to be done client side
 })
 
 
