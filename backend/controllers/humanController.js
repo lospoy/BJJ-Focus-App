@@ -52,7 +52,7 @@ const registerHuman = asyncHandler(async (req, res) => {
 // @route   GET /api/humans/:id
 // @access  Private
 const getHuman = asyncHandler(async (req, res) => {
-    const human = await Human.find(req.human)
+    const human = await Human.findById(req.params.id)
 
     if(!human) {
         res.status(400)
