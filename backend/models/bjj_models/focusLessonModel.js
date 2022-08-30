@@ -4,15 +4,15 @@ const focusLessonSchema = mongoose.Schema(
     {
         number: {
             type: Number,
-            required: [true, 'Number required.'],
+            required: [false, 'Number required.'],
         },
-        title: {
+        topic: {
             type: String,
-            required: [true, 'Title required.'],
+            required: [true, 'Topic required.'],
         },
         techniques: {
             type: mongoose.Schema.Types.ObjectId,
-            required: [true, 'Techniques required.'],
+            required: [false, 'Techniques required.'],
             ref: 'Technique',
         },
     },
