@@ -1,5 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Human = require('../models/humanModel')
+// const User = require('..models/app_models/userModel')
+
 
 // @desc    Register new human
 // @route   POST /api/humans
@@ -65,10 +67,13 @@ const getHuman = asyncHandler(async (req, res) => {
 
     // Check for user permission to SEE human
     // Must be admin, teacher, or the user's human
-    if(req.user.permissions.admin === true
-        || req.user.permissions.teacher === true
-        || human.user.toString() === req.user.id) {
-            res.status(200).json(human)
+    const isAdmin = req.user.permissions.admin === true
+    const isTeacher = req.user.permissions.teacher === true
+    const studentIsUser = human.user ? human.user.toString() : ''
+    const isTheStudentItself = studentIsUser === req.user.id
+
+    if(isAdmin || isTeacher || isTheStudentItself) {
+        res.status(200).json(human)
     } else {
         res.status(401)
         throw new Error('User not authorized')
@@ -92,27 +97,27 @@ const updateHuman = asyncHandler(async (req, res) => {
         throw new Error('User not found')
     }
 
-    // Check for user permission to modify human (admin / teacher)
+    // Check for user permission to update human
+    // Must be admin, teacher, or the user's human
     const isAdmin = req.user.permissions.admin === true
     const isTeacher = req.user.permissions.teacher === true
-    const isTheStudentItself = human.user.toString() === req.user.id
+    const studentIsUser = human.user ? human.user.toString() : ''
+    const isTheStudentItself = studentIsUser === req.user.id
+    
 
     if( isAdmin || isTeacher || isTheStudentItself ) {
-        const updatedHuman = await Human.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-        })
-        res.status(200).json(updatedHuman)
-
+            const updatedHuman = await Human.findByIdAndUpdate(req.params.id, req.body, {
+                new: true,
+            })
+            res.status(200).json(updatedHuman)
     } else {
         res.status(401)
         throw new Error('User not authorized')
     }
 
-    // **************LATEST ACTION 16:00 08/26: POST UPDATE HUMAN DATA
-    // "message": "Cannot read properties of undefined (reading 'toString')",
-    // "stack": "TypeError: Cannot read properties of undefined (reading 'toString')\n   
-    // at E:\\WebDev\\Portfolio\\BJJ-app\\backend\\controllers\\humanController.js:98:43\n
-    // at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+    // **************LATEST ACTION 22:45 08/30: UPDATE HUMAN
+    // update doesnt add to the property of the object, it replaces the property of the object
+    // expected is it ADDS to the property, not replace
 })
 
 
