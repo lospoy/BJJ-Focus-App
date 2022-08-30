@@ -22,7 +22,7 @@ const sessionSchema = mongoose.Schema(
                     properties: {
                         number: {
                             type: Number,
-                            required: [true, "time.number required."],
+                            required: [false, "time.number required."],
                         },
                         am: {
                             type: Boolean,
