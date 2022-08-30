@@ -79,13 +79,13 @@ const humanSchema = mongoose.Schema(
                     type: Object,
                     required: [false, 'Specify total trained. Minimum 1 class.'],
                     properties: {
-                        totalNumberOfSessions: {
+                        sessions: {
                             type: Number,
-                            required: [false, 'totalTrained.totalNumberOfSessions required.'],
+                            required: [false, 'totalTrained.sessions required.'],
                         },
-                        totalTimeTrained: {
+                        time: {
                             type: Object,
-                            required: [false, 'totalTrained.totalTimeTrained required.'],
+                            required: [false, 'totalTrained.time required.'],
                             properties: {
                                 years: {
                                     type: Number,
