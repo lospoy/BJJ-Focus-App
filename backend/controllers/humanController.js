@@ -11,10 +11,10 @@ const registerHuman = asyncHandler(async (req, res) => {
     const { 
         name: { first, last },
         trainingStatus,
-        trainingHistory: { belt },
+        trainingHistory,
     } = req.body
 
-    if (!first || !last || !trainingStatus || !belt) {
+    if (!first || !last || !trainingStatus || !trainingHistory) {
         res.status(400)
         throw new Error('Please fill in all fields')
     }
@@ -31,7 +31,7 @@ const registerHuman = asyncHandler(async (req, res) => {
     const human = await Human.create({
         name: {first, last},
         trainingStatus,
-        trainingHistory: { belt },
+        trainingHistory,
     })
 
     if (human) {
@@ -40,7 +40,7 @@ const registerHuman = asyncHandler(async (req, res) => {
             first: human.name.first,
             last: human.name.last,
             trainingStatus: human.trainingStatus,
-            belt: human.trainingHistory.belt
+            trainingHistory: human.trainingHistory
         })
     } else {
         res.status(400)
