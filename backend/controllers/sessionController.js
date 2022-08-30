@@ -3,39 +3,48 @@ const Session = require('../models/sessionModel')
 // const User = require('..models/app_models/userModel')
 
 
-// @desc    Register new session
+// @desc    Save new session
 // @route   POST /api/sessions
 // @access  Public
-const registerSession = asyncHandler(async (req, res) => {
+const saveSession = asyncHandler(async (req, res) => {
     const { 
-        name: { first, last },
+        when: { date, time },
+        who: { teacher, students },
+        what
     } = req.body
 
-    if (!first || !last) {
+    if (!date || !time || !teacher || !students || !what) {
         res.status(400)
         throw new Error('Please fill in all fields')
     }
 
     // Check if session exists
-    const sessionExists = await Session.findOne({ name: { first, last } })
+    const sessionExists = await Session.findOne({ when: { date, time } })
 
     if (sessionExists) {
         res.status(400)
-        throw new Error(`Session with name ${first} ${last} already exists`)
+        throw new Error(`Session dated ${date} ${time} already exists`)
     }
 
     // Create session
     const session = await Session.create({
-        name: {first, last},
+        when: { date, time },
+        who: { teacher, students },
+        what
     })
 
     if (session) {
         res.status(201).json({
             _id: session.id,
-            name: {
-                first: session.name.first,
-                last: session.name.last
-            }
+            when: {
+                date: session.when.date,
+                time: session.when.time
+            },
+            who: {
+                teacher: session.who.teacher,
+                student: session.who.student
+            },
+            what
         })
     } else {
         res.status(400)
@@ -137,7 +146,7 @@ const updateSession = asyncHandler(async (req, res) => {
 
 
 module.exports = {
-    registerSession,
+    saveSession,
     getSession,
     getAllSessions,
     updateSession,
