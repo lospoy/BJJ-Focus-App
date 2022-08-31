@@ -104,8 +104,8 @@ const getAllSessions = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET session data
     // Must be admin, teacher, or the user's session
-    const isAdmin = req.user.permissions.admin === true
-    const isTeacher = req.user.permissions.teacher === true
+    const isAdmin = req.user.permissions.admin
+    const isTeacher = req.user.permissions.teacher
 
     if(isAdmin || isTeacher) {
         res.status(200).json(allSessions)
