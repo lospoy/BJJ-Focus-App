@@ -27,7 +27,10 @@ const registerHuman = asyncHandler(async (req, res) => {
 
     // Create human
     const human = await Human.create({
-        name: {first, last},
+        name: {
+            first, last
+        },
+        createdBy: req.user.id
     })
 
     if (human) {
@@ -36,7 +39,8 @@ const registerHuman = asyncHandler(async (req, res) => {
             name: {
                 first: human.name.first,
                 last: human.name.last
-            }
+            },
+            createdBy: req.user.id
         })
     } else {
         res.status(400)

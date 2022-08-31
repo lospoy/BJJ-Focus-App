@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const Session = require('../models/sessionModel')
-// const User = require('..models/app_models/userModel')
+const User = require('../models/app_models/userModel')
 
 
 // @desc    Save new session
@@ -8,43 +8,55 @@ const Session = require('../models/sessionModel')
 // @access  Public
 const saveSession = asyncHandler(async (req, res) => {
     const { 
-        when: { date, time },
+        when: { date },
         who: { teacher, students },
-        what
+        what,
     } = req.body
 
-    if (!date || !time || !teacher || !students || !what) {
+    if (!date || !teacher || !students || !what) {
         res.status(400)
         throw new Error('Please fill in all fields')
     }
 
     // Check if session exists
-    const sessionExists = await Session.findOne({ when: { date, time } })
+    const sessionExists = await Session.findOne({ when: { date } })
 
     if (sessionExists) {
         res.status(400)
-        throw new Error(`Session dated ${date} ${time} already exists`)
+        throw new Error(`Session dated ${date} already exists`)
     }
 
+    // ************ TBD
+    // Check for user permission to save session
+    // Must be admin or teacher
+    // const isAdmin = req.user.permissions.admin === true
+    // const isTeacher = req.user.permissions.teacher === true    
+    // if(isAdmin || isTeacher) {}
+  
     // Create session
     const session = await Session.create({
-        when: { date, time },
-        who: { teacher, students },
-        what
+        when: {
+            date: req.body.when.date
+        },
+        who: {
+            teacher: req.body.who.teacher,
+            students: req.body.who.students
+        },
+        what: req.body.what,
+        createdBy: req.user.id
     })
-
     if (session) {
         res.status(201).json({
             _id: session.id,
             when: {
                 date: session.when.date,
-                time: session.when.time
             },
             who: {
                 teacher: session.who.teacher,
-                student: session.who.student
+                students: session.who.students
             },
-            what
+            what: session.what,
+            createdBy: req.user.id
         })
     } else {
         res.status(400)
@@ -71,8 +83,8 @@ const getSession = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET session data
     // Must be admin, teacher, or the user's session
-    const isAdmin = req.user.permissions.admin === true
-    const isTeacher = req.user.permissions.teacher === true
+    const isAdmin = req.user.permissions.admin
+    const isTeacher = req.user.permissions.teacher
     const studentIsUser = session.user ? session.user.toString() : ''
     const isTheStudentItself = studentIsUser === req.user.id
 

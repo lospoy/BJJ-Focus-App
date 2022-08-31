@@ -14,26 +14,6 @@ const sessionSchema = mongoose.Schema(
                     type: Date,
                     required: [true, 'Date required.'],
                 },
-                // slot in the schedule -> pre-decided time (e.g. 10:00AM)
-                // duration of the session in minutes
-                time: {
-                    type: Object,
-                    required: [true, "Schedule slot required."],
-                    properties: {
-                        number: {
-                            type: Number,
-                            required: [false, "time.number required."],
-                        },
-                        am: {
-                            type: Boolean,
-                            required: false,
-                        },
-                        pm: {
-                            type: Boolean,
-                            required: false,
-                        }
-                    }
-                },
             }
         },
         who: {
@@ -47,8 +27,8 @@ const sessionSchema = mongoose.Schema(
                 },
                 students: {
                     type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Human',
                     required: [true, 'Students required.'],
-                    ref: 'Human'
                 },
             }
         },
@@ -71,6 +51,11 @@ const sessionSchema = mongoose.Schema(
 
                 // }
             }
+        },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'User'
         }
     },
     {
