@@ -1,4 +1,4 @@
-# bjj-app
+# workout_tracker
 
 ## Project setup
 ```
