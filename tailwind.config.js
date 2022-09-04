@@ -4,8 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "at-light-orange": "#ffc21e",
-        "at-orange": "#f17f1d",
+        "at-faint-orange": "#fff8f1",
+        "at-light-orange": "#cc7317",
+        "at-orange": "#995611",
         "light-grey": "#f1f1f1",
       },
     },
