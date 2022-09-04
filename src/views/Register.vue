@@ -40,12 +40,12 @@
         </div>
 
         <div class="flex flex-col mb-2">
-            <label for="humanId" class="mb-1 text-sm text-at-light-orange">id</label>
+            <label for="human" class="mb-1 text-sm text-at-light-orange">id</label>
             <input
                 type="text"
                 required class="p-2 text-gray-500 focus:outline-none"
-                id="humanId"
-                v-model="humanId"
+                id="human"
+                v-model="human"
             />
         </div>
 
@@ -62,7 +62,7 @@
 <script>
 import { ref } from "vue"
 import { useRouter } from "vue-router"
-import UserDataService from "../services/userDataService"
+
 
 import Button from '../components/Button.vue'
 
@@ -77,24 +77,32 @@ export default {
     const email = ref(null)
     const password = ref(null)
     const confirmPassword = ref(null)
-    // humanId will be pre-populated via SMS
+    // human (human id) will be pre-populated via SMS
     // if via email then email also pre-populated
-    const humanId = ref(null)
+    const human = ref(null)
     const errorMsg = ref(null)
 
     // Register function
     const register = async () => {
+        const data = {
+            email: email.value,
+            password: password.value,
+            human: human.value
+        }
+
         if(password.value === confirmPassword.value) {
             try {
-                await UserDataService.create({
-                    email: email.value,
-                    password: password.value,
-                    humanId: humanId.value
-                })
+                await userService.register({ data })
+                // needs to route to login with a message: "login with your new account"
                 router.push({ name: "Login" })
             } catch (error) {
                 errorMsg.value = error.message
+                setTimeout(() => {
+                    errorMsg.value = null
+                }, 5000)
             }
+            console.log(data)
+            return
         } else {
             errorMsg.value = "Passwords do not match"
             setTimeout(() => {
@@ -102,8 +110,6 @@ export default {
             }, 5000)
         }
     }
-
-    return { email, password, confirmPassword, humanId, errorMsg, register };
   },
 };
 </script>
