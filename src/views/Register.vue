@@ -6,7 +6,7 @@
     </div>
 
     <!--- Register --->
-    <form class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
+    <form @submit.prevent="register" class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
         <h1 class="text-3xl text-at-light-orange mb-4 self-center">Register</h1>
 
         <div class="flex flex-col mb-2">
@@ -62,6 +62,7 @@
 <script>
 import { ref } from "vue"
 import { useRouter } from "vue-router"
+import UserDataService from "../services/userDataService"
 
 import Button from '../components/Button.vue'
 
@@ -72,6 +73,7 @@ export default {
   },
   setup() {
     // Create data / vars
+    const router = useRouter()
     const email = ref(null)
     const password = ref(null)
     const confirmPassword = ref(null)
@@ -84,9 +86,14 @@ export default {
     const register = async () => {
         if(password.value === confirmPassword.value) {
             try {
-                
+                await UserDataService.create({
+                    email: email.value,
+                    password: password.value,
+                    humanId: humanId.value
+                })
+                router.push({ name: "Login" })
             } catch (error) {
-                
+                errorMsg.value = error.message
             }
         } else {
             errorMsg.value = "Passwords do not match"
@@ -96,7 +103,7 @@ export default {
         }
     }
 
-    return { email, password, confirmPassword, humanId, errorMsg };
+    return { email, password, confirmPassword, humanId, errorMsg, register };
   },
 };
 </script>
