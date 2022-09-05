@@ -72,6 +72,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { createUser } from "../services/userService"
 
 // components import
 import Button from '../components/Button.vue'
@@ -92,16 +93,17 @@ name: "register",
     const human = ref(null)
     const errorMsg = ref(null);
 
-    let newUser = {}
     // Register function
     const register = async () => {
       if (password.value === confirmPassword.value) {
         try {
-          newUser = {
-            email: email.value,
-            password: password.value,
-            human: human.value
-          }
+          await createUser({
+                email: email.value,
+                password: password.value,
+                human: {
+                    _id: human.value
+                }
+            })
           router.push({ name: "Login" });
         } catch (error) {
           errorMsg.value = error.message;
@@ -116,7 +118,7 @@ name: "register",
         errorMsg.value = null;
       }, 5000);
     };
-    return { email, password, confirmPassword, human, errorMsg, register, newUser };
+    return { email, password, confirmPassword, human, errorMsg, register };
   },
 };
 </script>
