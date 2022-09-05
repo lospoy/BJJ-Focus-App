@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { stringifyQuery } from 'vue-router';
 
 const resource_uri = "http://localhost:8000/api"
 
@@ -17,12 +18,13 @@ const mutations = {
             human: payload.human,
             completed: false
         }
+        return newUser
     }
 }
 
 const actions = {
     async registerUser({ commit }) {
-        const res = await axios.post(resource_uri)
+        const res = await axios.post(resource_uri + 'users')
         commit("REGISTER_USER", res.data)
     }
 };
@@ -31,5 +33,5 @@ export const user = {
     namespaced: true,
     state,
     actions,
-    mutations
+    mutations,
 };
