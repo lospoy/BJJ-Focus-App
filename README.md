@@ -1,24 +1,14 @@
-# workout_tracker
+<img src="https://u.cubeupload.com/aa9988vvb/eeacover.png" width="100%">
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+<br>
+Edtech engagement app. Students can track their curriculum progression. Teachers can take attendance, sign up new students, and use tools that help them teach lessons effectively.
+<br><br>
+Database design following the Decorator pattern. Schemas structured using objects, avoiding primitive obsession. RESTful API and secure authentication with JSON Web Token. Currently connecting the frontend to the API/backend.
+<br><br>
+<h3 align="center">Built with the MEVN stack</h3>
+<p align="center">
+  <img alt="MongoDB" src="https://img.shields.io/badge/-MongoDB-13aa52?style=for-the-badge&logo=mongodb&logoColor=white" />
+    <img alt="Express" src="https://img.shields.io/badge/-Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
+    <img alt="Vue" src="https://img.shields.io/badge/-VueJS-42b883?style=for-the-badge&logo=vue.js&logoColor=white" />
+  <img alt="Nodejs" src="https://img.shields.io/badge/-Nodejs-43853d?style=for-the-badge&logo=Node.js&logoColor=white" />
+</p>
