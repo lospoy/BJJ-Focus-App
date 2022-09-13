@@ -30,11 +30,12 @@ const registerUser = asyncHandler(async (req, res) => {
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
 
+
     // Create user
     const user = await User.create({
         email,
         password: hashedPassword,
-        human,
+        human: human,
     })
 
     if (user) {
@@ -42,7 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
             _id: user.id,
             email: user.email,
             password: user.password,
-            human: user.human,
+            human: user.human._id,
             token: generateToken(user._id),
         })
     } else {
