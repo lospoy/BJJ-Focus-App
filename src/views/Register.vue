@@ -104,6 +104,7 @@ name: "register",
                     _id: human.value
                 }
             })
+            
           router.push({ name: "Login" });
         } catch (error) {
           errorMsg.value = error.message;
