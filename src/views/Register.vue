@@ -65,6 +65,7 @@
       <router-link class="text-sm mt-6 text-center" :to="{ name: 'Login' }">
         Already have an account? <span class="text-at-light-green">Login</span>
       </router-link>
+
     </form>
   </div>
 </template>
@@ -78,10 +79,10 @@ import { createUser } from "../services/userService"
 import Button from '../components/Button.vue'
 
 export default {
+    name: "register",
     components: {
         Button
     },
-name: "register",
   setup() {
     // Tools
     const router = useRouter();
@@ -104,7 +105,6 @@ name: "register",
                     _id: human.value
                 }
             })
-            
           router.push({ name: "Login" });
         } catch (error) {
           errorMsg.value = error.message;
@@ -119,6 +119,7 @@ name: "register",
         errorMsg.value = null;
       }, 5000);
     };
+
     return { email, password, confirmPassword, human, errorMsg, register };
   },
 };
