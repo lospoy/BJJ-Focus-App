@@ -6,14 +6,18 @@
     </div>
 
     <!--- Login --->
-    <form class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
+    <form
+        @submit.prevent="login"
+        class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg"
+    >
         <h1 class="text-3xl text-at-light-orange mb-4 self-center">Login</h1>
 
         <div class="flex flex-col mb-2">
             <label for="email" class="mb-1 text-sm text-at-light-orange">Email</label>
             <input
                 type="text"
-                required class="p-2 text-gray-500 focus:outline-none"
+                required
+                class="p-2 text-gray-500 focus:outline-none"
                 id="email"
                 v-model="email"
             />
@@ -23,7 +27,8 @@
             <label for="password" class="mb-1 text-sm text-at-light-orange">Password</label>
             <input
                 type="password"
-                required class="p-2 text-gray-500 focus:outline-none"
+                required
+                class="p-2 text-gray-500 focus:outline-none"
                 id="password"
                 v-model="password"
             />
@@ -41,22 +46,48 @@
 
 <script>
 import { ref } from "vue"
+import { useRouter } from "vue-router";
+import { authHeader, loginUser } from "../services/userService"
+
+// components import
 import Button from '../components/Button.vue'
 
 
 export default {
-  name: "login",
+    name: "login",
     components: {
-    Button
-  },
+        Button
+    },
   setup() {
-    // Create data / vars
-    const email = ref(null)
-    const password = ref(null)
-    const errorMsg = ref(null)
-    // Login function
+    // Tools
+    const router = useRouter();
 
-    return { email, password, errorMsg };
-  },
-};
+    // Variables
+    const email = ref(null);
+    const password = ref(null);
+    const errorMsg = ref(null);
+
+    // Login function
+    const login = async () => {
+        try {
+          await loginUser({
+                email: email.value,
+                password: password.value,
+            })
+          router.push({ name: "Home" });
+        } catch (error) {
+          errorMsg.value = error.message;
+          setTimeout(() => {
+            errorMsg.value = null;
+          }, 5000);
+        }
+      errorMsg.value = "Error: incorrect login";
+      setTimeout(() => {
+        errorMsg.value = null;
+      }, 5000);
+    };
+
+    return { email, password, errorMsg, login };
+  }
+}
 </script>
