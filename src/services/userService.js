@@ -23,7 +23,7 @@ export async function createUser(data) {
     }
 }
 
-export function authHeader() {
+export async function authHeader() {
     // return authorization header with jwt token
     let user = JSON.parse(localStorage.getItem('user'));
 
@@ -59,7 +59,10 @@ export async function loginUser(data) {
     }
 }
 
-
+// Logout user
+export async function logoutUser() {
+    localStorage.removeItem('user')
+}
 
 // // making HTTP requests here
 // import axios from 'axios'
