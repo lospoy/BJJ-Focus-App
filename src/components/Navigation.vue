@@ -4,24 +4,36 @@
         <div class="flex items-center gap-x-4">
             <img class="w-20" src="../assets/vector/default-monochrome-white.svg" alt="">
         </div>
-        <ul class="flex flex-1 justify-end gap-x-10"></ul>
-        <router-link class="cursor-pointer" :to="{name: 'Home'}">Home</router-link>
-        <router-link class="cursor-pointer" :to="{name: ''}">Create</router-link>
-        <router-link class="cursor-pointer" :to="{name: 'Login'}">Login</router-link>
+        <ul class="flex flex-1 justify-end gap-x-10">
+        <router-link v-if="user" class="cursor-pointer" :to="{name: 'Home'}">Home</router-link>
+        <router-link v-if="user" class="cursor-pointer" :to="{name: ''}">Create</router-link>
+        <router-link v-if="!user" class="cursor-pointer" :to="{name: 'Login'}">Login</router-link>
+        <li v-if="user" @click="logout" class="cursor-pointer">Logout</li>
+        </ul>
     </nav>
   </header>
 </template>
 
 <script>
+import store from '../store/index.js'
+import { computed } from 'vue'
+import { logoutUser } from '../services/userService'
+import { useRouter } from 'vue-router'
 export default {
   setup() {
     // Get user from store
+    const user = computed(() => !store.state.user) // Only works with "!" idk why
 
     // Setup ref to router
+    const router = useRouter()
 
     // Logout function
+    const logout = async () => {
+        await logoutUser()
+        router.push({ name: "Login" })
+    }
 
-    return {};
+    return { logout, user };
   },
 };
 </script>
