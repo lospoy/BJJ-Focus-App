@@ -13,7 +13,9 @@
       <h1 class="text-3xl text-at-light-green mb-4 self-center">Register</h1>
 
       <div class="flex flex-col mb-2">
-        <label for="email" class="mb-1 text-sm text-at-light-green">Email</label>
+        <label for="email" class="mb-1 text-sm text-at-light-green"
+          >Email</label
+        >
         <input
           type="text"
           required
@@ -24,7 +26,9 @@
       </div>
 
       <div class="flex flex-col mb-2">
-        <label for="password" class="mb-1 text-sm text-at-light-green">Password</label>
+        <label for="password" class="mb-1 text-sm text-at-light-green"
+          >Password</label
+        >
         <input
           type="password"
           required
@@ -48,9 +52,7 @@
       </div>
 
       <div class="flex flex-col mb-2">
-        <label for="human" class="mb-1 text-sm text-at-light-green"
-          >id</label
-        >
+        <label for="human" class="mb-1 text-sm text-at-light-green">id</label>
         <input
           type="text"
           required
@@ -60,12 +62,11 @@
         />
       </div>
 
-      <Button title="Register"/>
+      <Button title="Register" />
 
       <router-link class="text-sm mt-6 text-center" :to="{ name: 'Login' }">
         Already have an account? <span class="text-at-light-green">Login</span>
       </router-link>
-
     </form>
   </div>
 </template>
@@ -73,16 +74,16 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { createUser } from "../services/userService"
+import { createUser } from "../services/userService";
 
 // components import
-import Button from '../components/Button.vue'
+import Button from "../components/Button.vue";
 
 export default {
-    name: "register",
-    components: {
-        Button
-    },
+  name: "register",
+  components: {
+    Button,
+  },
   setup() {
     // Tools
     const router = useRouter();
@@ -91,7 +92,7 @@ export default {
     const email = ref(null);
     const password = ref(null);
     const confirmPassword = ref(null);
-    const human = ref(null)
+    const human = ref(null);
     const errorMsg = ref(null);
 
     // Register function
@@ -99,12 +100,12 @@ export default {
       if (password.value === confirmPassword.value) {
         try {
           await createUser({
-                email: email.value,
-                password: password.value,
-                human: {
-                    _id: human.value
-                }
-            })
+            email: email.value,
+            password: password.value,
+            human: {
+              _id: human.value,
+            },
+          });
           router.push({ name: "Login" });
         } catch (error) {
           errorMsg.value = error.message;
@@ -112,7 +113,7 @@ export default {
             errorMsg.value = null;
           }, 5000);
         }
-        return
+        return;
       }
       errorMsg.value = "Error: Passwords do not match";
       setTimeout(() => {

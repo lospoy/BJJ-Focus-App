@@ -1,67 +1,64 @@
-const API_URL = 'http://localhost:5000/api/users'
+const API_URL = "http://localhost:5000/api/users";
 
 export async function createUser(data) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-          })
-
-        if(!response.ok) {
-            throw new Error('error => response not ok')
-        } else {
-            return await response.json();
-        }
-    } catch (e) {
-        console.log(e);
-        this.setState({
-              isError: true,
-              errorMessage: e.message
-        });
+    if (!response.ok) {
+      throw new Error("error => response not ok");
+    } else {
+      return await response.json();
     }
+  } catch (e) {
+    console.log(e);
+    this.setState({
+      isError: true,
+      errorMessage: e.message,
+    });
+  }
 }
 
 export async function authHeader() {
-    // return authorization header with jwt token
-    let user = JSON.parse(localStorage.getItem('user'));
+  // return authorization header with jwt token
+  let user = JSON.parse(localStorage.getItem("user"));
 
-    if (user && user.token) {
-        return { 'Authorization': 'Bearer ' + user.token };
-    } else {
-        return {};
-    }
+  if (user && user.token) {
+    return { Authorization: "Bearer " + user.token };
+  } else {
+    return {};
+  }
 }
 
 export async function loginUser(data) {
+  try {
+    const response = await fetch(API_URL + "/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-    try {
-        const response = await fetch(API_URL + "/login", {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-          })
-
-        if(!response.ok) {
-            throw new Error('error => response not ok')
-        } else {
-            const user = await response.json()
-            localStorage.setItem('user', JSON.stringify(user))
-        }
-
-    } catch (e) {
-        console.log(e);
-        this.setState({
-              isError: true,
-              errorMessage: e.message
-        });
+    if (!response.ok) {
+      throw new Error("error => response not ok");
+    } else {
+      const user = await response.json();
+      localStorage.setItem("user", JSON.stringify(user));
     }
+  } catch (e) {
+    console.log(e);
+    this.setState({
+      isError: true,
+      errorMessage: e.message,
+    });
+  }
 }
 
 // Logout user
 export async function logoutUser() {
-    localStorage.removeItem('user')
+  localStorage.removeItem("user");
 }
 
 // // making HTTP requests here

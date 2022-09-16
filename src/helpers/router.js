@@ -4,7 +4,6 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Create from "../views/Create.vue";
 
-
 const routes = [
   {
     path: "/",
