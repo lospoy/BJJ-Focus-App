@@ -26,6 +26,7 @@ export default {
         const user = JSON.parse(localStorage.getItem('user'))
         // otherwise, make app ready
 
+        // ??? need to manually reload for changes in navigation to render
         if (!user) {
             appReady.value = true
             console.log('No user logged in')
@@ -35,7 +36,7 @@ export default {
             console.log('User logged in')
         }
 
-        return { appReady }
+        return { appReady, user }
     }
 };
 </script>
