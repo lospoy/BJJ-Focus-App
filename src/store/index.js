@@ -8,7 +8,7 @@ const state = reactive({
 
 const methods = {
     setUser(payload) {
-        state.user = payload ? payload.user : null
+        state.user = payload ? payload : null
     }
 }
 
