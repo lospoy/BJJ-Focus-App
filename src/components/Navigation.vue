@@ -21,9 +21,11 @@ import { logoutUser } from '../services/userService'
 import { useRouter } from 'vue-router'
 export default {
   setup() {
-    // Get user from store
-    const user = computed(() => !store.state.user) // Only works with "!" idk why
+    // ??? need to manually reload for changes in navigation to render
 
+    // Get user from store
+    const user = computed(() => store.state.user)
+    
     // Setup ref to router
     const router = useRouter()
 
