@@ -8,7 +8,6 @@
 <script>
 import Navigation from "./components/Navigation.vue";
 import { ref } from "vue";
-import { authHeader } from "./services/userService.js";
 import store from "./store/index.js";
 
 export default {
@@ -22,7 +21,6 @@ export default {
 
     // Check if user is already logged in
     // If logged in, set auth headers with bearer token
-    const userHeader = authHeader();
     const user = JSON.parse(localStorage.getItem("user"));
     // otherwise, make app ready
 
