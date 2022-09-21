@@ -14,7 +14,7 @@ Implementing basic search first
 
 
 export default {
-  name: "StudentSearch",
+  name: "StudentLiveSearch",
   setup() {
     function search(e) {
         let search = e.target.value.trim()
