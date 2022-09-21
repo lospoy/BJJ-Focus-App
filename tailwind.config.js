@@ -14,8 +14,8 @@ module.exports = {
       Poppins: ["Poppins, sans-serif"],
     },
     flex: {
-      "1": "1 1 0%",
-      "2": "2 2 0%",
+      1: "1 1 0%",
+      2: "2 2 0%",
     },
     container: {
       center: true,
