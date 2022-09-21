@@ -5,7 +5,7 @@ Implementing basic search first
 <template>
   <input
     type="text"
-    name="student-search"
+    name="student-live-search"
     class="p-2 text-grey-500 focus:outline-none"
     @keyup="search" />
 </template>
