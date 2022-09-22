@@ -79,7 +79,6 @@
             <!--- STUDENT LIST --->
             <div class="flex flex-col items-center">
                 <span>{{ studentList }}</span>
-                <span>{{ humanIdList }}</span>
             </div>
 
                 <Button title="Save Session" />
@@ -90,7 +89,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 import { getAllHumans } from '../services/humanService'
 
@@ -112,8 +111,8 @@ export default {
         const teacher = ref(null)
         const topic = ref('')
         const student = ref(null)
-        const studentList = [] // Initialize empty array show attending student list in DOM
-        const humanIdList = [] // Initialize empty array to store human ids for POST
+        const studentList = reactive([]) // Initialize empty array show attending student list in DOM
+        const humanIdList = reactive([]) // Initialize empty array to store human ids for POST
 
         // Error variables
         const statusMsg = ref(null)
@@ -129,10 +128,9 @@ export default {
             // Get student's human ID ***JUST A STRING SO IT WILL NEED TO BE CONVERTED TO OBJECT ID***
             const studentHumanId = foundStudent.map(x => x._id)[0]
 
+            // debugging
             console.log(studentName)
             console.log(studentHumanId)
-            console.log(`List of students: ${typeof(studentList)}`)
-            console.log(`List of human IDs: ${typeof(humanIdList)}`)
 
             const addStudentToList = async () => studentList.push(studentName)
             const addHumantoAttendance = async () => humanIdList.push(studentHumanId)
@@ -140,11 +138,15 @@ export default {
             return addStudentToList(), addHumantoAttendance()
         }
 
-
-
         // Save session
         // update attendance object and POST to API
-        const saveSession = async () => {}
+        const saveSession = async () => {
+            try {
+                await 
+            } catch (error) {
+                
+            }
+        }
 
         // Create workout
         // onSubmit => new Date()
