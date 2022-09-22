@@ -5,7 +5,6 @@ export async function getAllHumans() {
     // ideally should be code below, but importing authHeader() doesn't work?
     // only works when the header is written directly into the function
 
-
     // try {
     //   const response = await fetch(API_URL + '/humans', {
     //     method: "GET",
@@ -33,32 +32,4 @@ export async function getAllHumans() {
       errorMessage: e.message,
     });
   }
-}
-
-export async function loginUser(data) {
-  try {
-    const response = await fetch(API_URL + "/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error("error => response not ok");
-    } else {
-      const user = await response.json();
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-  } catch (e) {
-    console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
-  }
-}
-
-// Logout user
-export async function logoutUser() {
-  localStorage.removeItem("user");
 }
