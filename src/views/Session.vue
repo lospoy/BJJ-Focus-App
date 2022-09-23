@@ -73,7 +73,7 @@
         <div class="p-8 flex items-start bg-light-grey rounded-md shadow-lg">
             <!-- Form -->
             <form
-                @submit.prevent="saveSession"
+                @submit.prevent="session"
                 class="flex flex-col gap-y-2 w-full"
             >
             <!--- STUDENT LIST --->
@@ -90,8 +90,9 @@
 
 <script>
 import { ref, reactive } from 'vue'
-
 import { getAllHumans } from '../services/humanService'
+import { saveSession } from '../services/sessionService'
+import moment from 'moment'
 
 // components import
 import Button from "../components/Button.vue";
@@ -111,8 +112,12 @@ export default {
         const teacher = ref(null)
         const topic = ref('')
         const student = ref(null)
+        // gotta use reactive when dealing with objects/arrays
         const studentList = reactive([]) // Initialize empty array show attending student list in DOM
         const humanIdList = reactive([]) // Initialize empty array to store human ids for POST
+
+        // Current teacher is only Carlos
+        const carlosHumanId = '630e5c2da1c2a0bcf246c383'
 
         // Error variables
         const statusMsg = ref(null)
@@ -140,17 +145,37 @@ export default {
 
         // Save session
         // update attendance object and POST to API
-        const saveSession = async () => {
+        const session = async () => {
             try {
-                await 
+              await saveSession({
+                when: {
+                    date: moment().format()
+                },
+                who: {
+                    teacher: { _id: carlosHumanId },
+                    // creates array with '_id' as key and human id string as value
+                    students: humanIdList.reduce((s, a) => {
+                        s.push({_id: a})
+                        return s
+                    }, [])
+                },
+                what: {
+                    lesson: {
+                        focus: {
+                            topic: topic.value
+                        }
+                    }
+                }
+              });
+              router.push({ name: "Home" });
             } catch (error) {
-                
+              errorMsg.value = error.message;
+              setTimeout(() => {
+                errorMsg.value = null;
+              }, 5000);
             }
         }
-
-        // Create workout
-        // onSubmit => new Date()
-        return { teacher, student, topic, statusMsg, errorMsg, getStudent, saveSession, studentList, humanIdList }
+        return { teacher, student, topic, statusMsg, errorMsg, getStudent, session, studentList, humanIdList }
     },
 }
 </script>
