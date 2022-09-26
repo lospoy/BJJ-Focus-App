@@ -1,8 +1,8 @@
 import { createApp } from "vue";
 import { createStore } from "vuex";
 import App from "./App.vue";
-import router from "./helpers/router.js";
 import "./assets/tailwind.css";
+import router from "./router/router.js";
 
 createStore({
   // state, actions, mutations
