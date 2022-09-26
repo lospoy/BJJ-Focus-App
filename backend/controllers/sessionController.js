@@ -52,8 +52,8 @@ const saveSession = asyncHandler(async (req, res) => {
                 date: session.when.date,
             },
             who: {
-                teacher: session.who.teacher,
-                students: session.who.students
+                teacher: session.who.teacher._id,
+                students: session.who.students._id
             },
             what: session.what,
             createdBy: req.user.id
