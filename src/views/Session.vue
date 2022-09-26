@@ -13,14 +13,14 @@
             </p>
         </div>
 
-        <!-- Create -->
+        <!-- SESSION -->
         <div class="p-8 flex items-start bg-light-grey rounded-md shadow-lg">
             <!-- Form -->
             <form
                 @submit.prevent="getStudent"
                 class="flex flex-col gap-y-4 w-full"
             >
-                <h1 class="text-2xl text-at-light-orange">Save Session</h1>
+                <h1 class="text-3xl text-at-light-orange self-center">Save Session</h1>
 
                 <!-- Teacher -->
                 <div class="flex flex-col">
