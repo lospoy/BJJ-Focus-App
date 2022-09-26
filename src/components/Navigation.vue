@@ -14,6 +14,9 @@
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Home' }"
           >Home</router-link
         >
+        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'NewHuman' }"
+          >New Human</router-link
+        >
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Session' }"
           >Session</router-link
         >
