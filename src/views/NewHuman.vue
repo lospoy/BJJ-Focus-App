@@ -46,6 +46,7 @@
 <script>
 import { ref } from "vue";
 import { createHuman } from "../services/humanService";
+import { getAllHumans } from '../services/humanService'
 
 // components import
 import Button from "../components/Button.vue";
@@ -57,26 +58,40 @@ export default {
   },
   setup() {
     // Variables
+    const errorMsg = ref(null);
     const firstName = ref(null);
     const lastName = ref(null);
-    const errorMsg = ref(null);
 
     // New Human function
     const newHuman = async () => {
-        try {
-          await createHuman({
-            name: {
-                first: firstName.value,
-                last: lastName.value,
+        const allHumans = await getAllHumans()
+        // Check if human already exists
+        const foundHuman = allHumans.filter(human =>
+            human.name.first.toLowerCase() === firstName.value.toLowerCase())[0]
+            && allHumans.filter(human =>
+            human.name.last.toLowerCase() === lastName.value.toLowerCase())[0];
+
+        if (!foundHuman) {
+            try {
+              await createHuman({
+                name: {
+                    first: firstName.value,
+                    last: lastName.value,
+                }
+               });
+            } catch (error) {
+              errorMsg.value = error.message;
+              setTimeout(() => {
+                errorMsg.value = null;
+              }, 5000);
             }
-          });
-        } catch (error) {
-          errorMsg.value = error.message;
-          setTimeout(() => {
-            errorMsg.value = null;
-          }, 5000);
-        }
+            return;
       }
+      errorMsg.value = "Error: human with that exact name already exists in the database";
+      setTimeout(() => {
+        errorMsg.value = null;
+      }, 5000);
+    };
 
     return { firstName, lastName, errorMsg, newHuman };
   },
