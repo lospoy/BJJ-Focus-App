@@ -10,10 +10,10 @@
       @submit.prevent="register"
       class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg"
     >
-      <h1 class="text-3xl text-at-light-green mb-4 self-center">Register</h1>
+      <h1 class="text-3xl text-at-light-orange mb-4 self-center">Register</h1>
 
       <div class="flex flex-col mb-2">
-        <label for="email" class="mb-1 text-sm text-at-light-green"
+        <label for="email" class="mb-1 text-sm text-at-light-orange"
           >Email</label
         >
         <input
@@ -26,7 +26,7 @@
       </div>
 
       <div class="flex flex-col mb-2">
-        <label for="password" class="mb-1 text-sm text-at-light-green"
+        <label for="password" class="mb-1 text-sm text-at-light-orange"
           >Password</label
         >
         <input
@@ -39,7 +39,7 @@
       </div>
 
       <div class="flex flex-col mb-2">
-        <label for="confirmPassword" class="mb-1 text-sm text-at-light-green"
+        <label for="confirmPassword" class="mb-1 text-sm text-at-light-orange"
           >Confirm Password</label
         >
         <input
@@ -52,7 +52,7 @@
       </div>
 
       <div class="flex flex-col mb-2">
-        <label for="human" class="mb-1 text-sm text-at-light-green">id</label>
+        <label for="human" class="mb-1 text-sm text-at-light-orange">id</label>
         <input
           type="text"
           required
@@ -65,7 +65,7 @@
       <Button title="Register" />
 
       <router-link class="text-sm mt-6 text-center" :to="{ name: 'Login' }">
-        Already have an account? <span class="text-at-light-green">Login</span>
+        Already have an account? <span class="text-at-light-orange">Login</span>
       </router-link>
     </form>
   </div>
