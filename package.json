@@ -12,7 +12,8 @@
     "lint": "vue-cli-service lint",
     "api": "node api/server.js",
     "server": "nodemon backend/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "main": "server.js",
   "dependencies": {
@@ -42,6 +43,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "babel-eslint": "^10.1.0",
+    "concurrently": "^7.4.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^9.4.0",
@@ -50,6 +52,7 @@
     "sass": "^1.54.8",
     "sass-loader": "^13.0.2",
     "vue-cli-plugin-tailwind": "^3.0.0"
+    
   },
   "browserslist": [
     "> 1%",
