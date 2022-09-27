@@ -1,8 +1,8 @@
-const API_URL = "http://localhost:5000/api/users";
+const API_URL = process.env.API_URL
 
 export async function createUser(data) {
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(API_URL + '/users', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
