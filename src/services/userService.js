@@ -1,8 +1,8 @@
-const API_URL = process.env.VUE_APP_ROOT_API
+const API_URL = process.env.VUE_APP_ROOT_API + '/users'
 
 export async function createUser(data) {
   try {
-    const response = await fetch(API_URL + '/users', {
+    const response = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
