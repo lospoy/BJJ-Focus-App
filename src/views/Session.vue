@@ -22,6 +22,19 @@
             >
                 <h1 class="text-3xl text-at-light-orange self-center">Save Session</h1>
 
+                <!-- Date -->
+                <div class="flex flex-col">
+                <label for="date" class="text-sm text-at-light-orange">
+                    Date
+                </label>
+                <input
+                    type="date"
+                    class="p-2 text-grey-500 focus:outline-none"
+                    id="date"
+                    v-model="date"
+                />
+                </div>
+
                 <!-- Teacher -->
                 <div class="flex flex-col">
                 <label for="teacher" class="text-sm text-at-light-orange">
@@ -33,7 +46,7 @@
                     id="teacher"
                     v-model="teacher"
                 >
-                <option value="carlos-campoy">Carlos Campoy</option>
+                <option value="carlosCampoy">Carlos Campoy</option>
                 </select>
                 </div>
 
@@ -103,25 +116,29 @@ export default {
         Button,
     },
     setup() {
-        // *****************MOST RECENT SITUATION***************
-        // studentList and humanIdList are not behaving like arrays, but objects instead
-        // I want them to be arrays so I can push student name and human ids into them, respectively
-        // https://javascript.plainenglish.io/list-rendering-with-vue-js-v-for-directive-91a0a7756a68
+        // Human IDs
+        const carlosCampoy = '630e5c2da1c2a0bcf246c383'
 
         // Create data
-        const teacher = ref(null)
+        const teacher = carlosCampoy
         const topic = ref('')
         const student = ref(null)
+        const date = ref(null)
         // gotta use reactive when dealing with objects/arrays
         const studentList = reactive([]) // Initialize empty array show attending student list in DOM
         const humanIdList = reactive([]) // Initialize empty array to store human ids for POST
 
-        // Current teacher is only Carlos
-        const carlosHumanId = '630e5c2da1c2a0bcf246c383'
-
         // Error variables
         const statusMsg = ref(null)
         const errorMsg = ref(null)
+
+        // Date
+        const getDate = _ => {
+            // if date has not been selected, default to NOW
+            if(!date.value) { return moment().format() }
+            // otherwise return date selected
+            return date.value
+        }
         
         const getStudent = async () => {
             // Retrieve object with all humans in database
@@ -136,6 +153,7 @@ export default {
             // debugging
             console.log(studentName)
             console.log(studentHumanId)
+            console.log(date)
 
             const addStudentToList = async () => studentList.push(studentName)
             const addHumantoAttendance = async () => humanIdList.push(studentHumanId)
@@ -149,10 +167,10 @@ export default {
             try {
               await saveSession({
                 when: {
-                    date: moment().format()
+                    date: getDate()
                 },
                 who: {
-                    teacher: { _id: carlosHumanId },
+                    teacher: { _id: teacher },
                     // creates array with '_id' as key and human id string as value
                     students: humanIdList.reduce((s, a) => {
                         s.push({_id: a})
@@ -167,7 +185,6 @@ export default {
                     }
                 }
               });
-              router.push({ name: "Home" });
             } catch (error) {
               errorMsg.value = error.message;
               setTimeout(() => {
@@ -175,7 +192,7 @@ export default {
               }, 5000);
             }
         }
-        return { teacher, student, topic, statusMsg, errorMsg, getStudent, session, studentList, humanIdList }
+        return { teacher, student, date, topic, statusMsg, errorMsg, getStudent, session, studentList, humanIdList, getDate }
     },
 }
 </script>
