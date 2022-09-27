@@ -1,4 +1,4 @@
-const API_URL = process.env.API_URL
+const API_URL = process.env.VUE_APP_ROOT_API
 // import { getAuthHeader } from './userService';
 
 export async function getAllHumans() {
