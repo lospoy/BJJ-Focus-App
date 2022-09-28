@@ -34,6 +34,30 @@ export async function getAllHumans() {
   }
 }
 
+// GET HUMAN BY ID
+export async function getHuman(id) {
+    let user = JSON.parse(localStorage.getItem("user"))
+
+    try {
+      const response = await fetch(API_URL + '/humans/' + id, {
+        method: "GET",
+        headers: { "Authorization": "Bearer " + user.token }
+      });
+
+    if (!response.ok) {
+      throw new Error("error => response not ok");
+    } else {
+        return await response.json()
+    }
+  } catch (e) {
+    console.log(e);
+    this.setState({
+      isError: true,
+      errorMessage: e.message,
+    });
+  }
+}
+
 export async function createHuman(data) {
     let user = JSON.parse(localStorage.getItem("user"))
 
@@ -57,3 +81,5 @@ export async function createHuman(data) {
     });
   }
 }
+
+
