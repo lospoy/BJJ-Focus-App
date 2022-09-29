@@ -45,8 +45,7 @@
 
 <script>
 import { ref } from "vue";
-import { createHuman } from "../services/humanService";
-import { getAllHumans } from '../services/humanService'
+import { createHuman, getAllHumans } from "../services/humanService";
 
 // components import
 import Button from "../components/Button.vue";

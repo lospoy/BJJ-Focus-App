@@ -1,15 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import NewHuman from "../views/NewHuman.vue";
+import Progress from "../views/Progress.vue";
 import Register from "../views/Register.vue";
 import Session from "../views/Session.vue";
+import UserProfile from "../views/UserProfile.vue";
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home,
+    path: "/progress",
+    name: "Progress",
+    component: Progress,
   },
   {
     path: "/register",
@@ -30,6 +31,11 @@ const routes = [
     path: "/newHuman",
     name: "NewHuman",
     component: NewHuman,
+  },
+  {
+    path: "/profile",
+    name: "UserProfile",
+    component: UserProfile,
   },
 ];
 

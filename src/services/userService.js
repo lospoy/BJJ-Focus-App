@@ -61,44 +61,26 @@ export async function logoutUser() {
   localStorage.removeItem("user");
 }
 
-// // making HTTP requests here
-// import axios from 'axios'
+// Get user object
+export async function getLoggedUser() {
+    let user = JSON.parse(localStorage.getItem("user"))
 
-// // Register user
-// const registerUser = async (userData) => {
-//     const response = await axios.post(API_URL, userData)
+    try {
+      const response = await fetch(API_URL + '/me', {
+        method: "GET",
+        headers: { "Authorization": "Bearer " + user.token }
+      });
 
-//     // axios puts response inside an object called 'data'
-//     if(response.data) {
-//         // localStorage only accepts strings >> JSON.stringify
-//         localStorage.setItem('user', JSON.stringify(response.data))
-//     }
-
-//     return response.data
-// }
-
-// // Login user
-// const loginUser = async (userData) => {
-//     const response = await axios.post(API_URL + 'login', userData)
-
-//     // axios puts response inside an object called 'data'
-//     if(response.data) {
-//         // localStorage only accepts strings >> JSON.stringify
-//         localStorage.setItem('user', JSON.stringify(response.data))
-//     }
-
-//     return response.data
-// }
-
-// // Logout user
-// const logout = () => {
-//     localStorage.removeItem('user')
-// }
-
-// const userService = {
-//     registerUser,
-//     logout,
-//     loginUser,
-// }
-
-// export default userService
+    if (!response.ok) {
+      throw new Error("error => response not ok");
+    } else {
+      return await response.json()
+    }
+  } catch (e) {
+    console.log(e);
+    this.setState({
+      isError: true,
+      errorMessage: e.message,
+    });
+  }
+}
