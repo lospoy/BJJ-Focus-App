@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// https://stackoverflow.com/questions/67382005/how-to-use-dynamic-tailwind-classes-with-js-switch-statement-and-pass-them-corre
 export default {
   name: "Button",
   props: {
