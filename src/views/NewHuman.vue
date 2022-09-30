@@ -93,10 +93,8 @@ export default {
                     first: firstName.value,
                     last: lastName.value,
                 },});
-                if(res.status === 201) {
-                    await buttonSuccess()
-                }
-                return res
+                // Success button visual feedback
+                if(res.status === 201) { await buttonSuccess() }
             } catch (error) {
               errorMsg.value = error.message;
                 setTimeout(() => {
