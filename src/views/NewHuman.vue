@@ -62,7 +62,6 @@ export default {
     const lastName = ref(null);
     let buttonColor = ref(null)
     let buttonTitle = ref("Save New Human")
-    let httpResponse = ref(null)
 
     // Button success visual feedback
     const buttonSuccess = async () => {
@@ -95,8 +94,6 @@ export default {
                     last: lastName.value,
                 },});
                 if(res.status === 201) {
-                    httpResponse = 201
-                    console.log(httpResponse)
                     await buttonSuccess()
                 }
                 return res
@@ -114,7 +111,7 @@ export default {
       }, 5000);
     };
 
-    return { firstName, lastName, errorMsg, newHuman, buttonColor, buttonTitle, buttonSuccess, httpResponse };
+    return { firstName, lastName, errorMsg, newHuman, buttonColor, buttonTitle, buttonSuccess };
   },
 };
 </script>
