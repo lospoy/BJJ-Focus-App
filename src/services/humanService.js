@@ -71,7 +71,7 @@ export async function createHuman(data) {
     if (!response.ok) {
       throw new Error("error => response not ok");
     } else {
-      return await response.json();
+      return await response;
     }
   } catch (e) {
     console.log(e);
