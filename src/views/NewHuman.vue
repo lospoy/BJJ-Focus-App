@@ -38,7 +38,7 @@
         />
       </div>
 
-      <Button title="Save Human" />
+      <Button :title='buttonTitle' :color='buttonColor' />
     </form>
   </div>
 </template>nt
@@ -60,6 +60,28 @@ export default {
     const errorMsg = ref(null);
     const firstName = ref(null);
     const lastName = ref(null);
+    let buttonColor = ref(null)
+    let buttonTitle = ref(null)
+    let httpResponse = ref(null)
+
+    const buttonSuccess = () => {
+        buttonTitle = "Saving Human..."
+        buttonColor = "orange"
+        setTimeout(() => {
+            buttonTitle="Human Saved"
+            buttonColor="#33872a"
+        }, 500);
+        setTimeout(() => {
+            buttonTitle="Save New Human"
+            buttonColor="#33872a"
+        }, 2000);
+    }
+
+    const caca = async() => {
+    if (httpResponse === 201) {
+        return buttonTitle = "DOOMED FOR ETERNITY"
+    }}
+
 
     // New Human function
     const newHuman = async () => {
@@ -72,17 +94,22 @@ export default {
 
         if (!foundHuman) {
             try {
-              await createHuman({
+              const res = await createHuman({
                 name: {
                     first: firstName.value,
                     last: lastName.value,
+                },});
+                if(res.status === 201) {
+                    httpResponse = 201
+                    console.log(httpResponse)
+                    await caca()
                 }
-               });
+                return res
             } catch (error) {
               errorMsg.value = error.message;
-              setTimeout(() => {
-                errorMsg.value = null;
-              }, 5000);
+                setTimeout(() => {
+                  errorMsg.value = null;
+                }, 5000);
             }
             return;
       }
@@ -92,7 +119,7 @@ export default {
       }, 5000);
     };
 
-    return { firstName, lastName, errorMsg, newHuman };
+    return { firstName, lastName, errorMsg, newHuman, buttonColor, buttonTitle, buttonSuccess, httpResponse, caca };
   },
 };
 </script>
