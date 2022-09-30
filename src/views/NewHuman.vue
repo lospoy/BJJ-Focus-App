@@ -61,27 +61,22 @@ export default {
     const firstName = ref(null);
     const lastName = ref(null);
     let buttonColor = ref(null)
-    let buttonTitle = ref(null)
+    let buttonTitle = ref("Save New Human")
     let httpResponse = ref(null)
 
-    const buttonSuccess = () => {
-        buttonTitle = "Saving Human..."
-        buttonColor = "orange"
+    // Button success visual feedback
+    const buttonSuccess = async () => {
+        buttonTitle.value = "Saving Human..."
+        buttonColor.value = "orange"
         setTimeout(() => {
-            buttonTitle="Human Saved"
-            buttonColor="#33872a"
-        }, 500);
+            buttonTitle.value = "Human Saved"
+            buttonColor.value = "#33872a"
+        }, 600);
         setTimeout(() => {
-            buttonTitle="Save New Human"
-            buttonColor="#33872a"
-        }, 2000);
+            buttonTitle.value = "Save New Human"
+            buttonColor.value = ""
+        }, 2200);
     }
-
-    const caca = async() => {
-    if (httpResponse === 201) {
-        return buttonTitle = "DOOMED FOR ETERNITY"
-    }}
-
 
     // New Human function
     const newHuman = async () => {
@@ -102,7 +97,7 @@ export default {
                 if(res.status === 201) {
                     httpResponse = 201
                     console.log(httpResponse)
-                    await caca()
+                    await buttonSuccess()
                 }
                 return res
             } catch (error) {
@@ -119,7 +114,7 @@ export default {
       }, 5000);
     };
 
-    return { firstName, lastName, errorMsg, newHuman, buttonColor, buttonTitle, buttonSuccess, httpResponse, caca };
+    return { firstName, lastName, errorMsg, newHuman, buttonColor, buttonTitle, buttonSuccess, httpResponse };
   },
 };
 </script>
