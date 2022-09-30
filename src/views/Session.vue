@@ -94,8 +94,7 @@
                 <span>{{ studentList }}</span>
             </div>
 
-                <Button title="Save Session" />
-                
+                <Button :title='buttonTitle' :color='buttonColor' />
             </form>
         </div>
     </div>
@@ -127,10 +126,27 @@ export default {
         // gotta use reactive when dealing with objects/arrays
         const studentList = reactive([]) // Initialize empty array show attending student list in DOM
         const humanIdList = reactive([]) // Initialize empty array to store human ids for POST
-
         // Error variables
         const statusMsg = ref(null)
         const errorMsg = ref(null)
+        
+        // Button variables
+        let buttonColor = ref(null)
+        let buttonTitle = ref("Save New Session")
+
+        // Button success visual feedback
+        const buttonSuccess = async () => {
+            buttonTitle.value = "Saving Session..."
+            buttonColor.value = "orange"
+            setTimeout(() => {
+                buttonTitle.value = "Session Saved"
+                buttonColor.value = "#33872a"
+            }, 600);
+            setTimeout(() => {
+                buttonTitle.value = "Save New Session"
+                buttonColor.value = ""
+            }, 2200);
+        }
 
         // Date
         const getDate = _ => {
@@ -150,11 +166,6 @@ export default {
             // Get student's human ID ***JUST A STRING SO IT WILL NEED TO BE CONVERTED TO OBJECT ID***
             const studentHumanId = foundStudent.map(x => x._id)[0]
 
-            // debugging
-            console.log(studentName)
-            console.log(studentHumanId)
-            console.log(date)
-
             const addStudentToList = async () => studentList.push(studentName)
             const addHumantoAttendance = async () => humanIdList.push(studentHumanId)
             
@@ -165,7 +176,7 @@ export default {
         // update attendance object and POST to API
         const session = async () => {
             try {
-              await saveSession({
+              const res = await saveSession({
                 when: {
                     date: getDate()
                 },
@@ -185,6 +196,9 @@ export default {
                     }
                 }
               });
+                // Success button visual feedback
+                console.log(res.status)
+                if(res.status === 201) { await buttonSuccess() }
             } catch (error) {
               errorMsg.value = error.message;
               setTimeout(() => {
@@ -192,7 +206,9 @@ export default {
               }, 5000);
             }
         }
-        return { teacher, student, date, topic, statusMsg, errorMsg, getStudent, session, studentList, humanIdList, getDate }
+        return { teacher, student, date, topic, statusMsg, errorMsg,
+                getStudent, session, studentList, humanIdList, getDate,
+                buttonColor, buttonTitle, buttonSuccess }
     },
 }
 </script>
