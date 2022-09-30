@@ -51,7 +51,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { authHeader, loginUser } from "../services/userService";
+import { loginUser } from "../services/userService";
 
 // components import
 import Button from "../components/Button.vue";
@@ -69,6 +69,14 @@ export default {
     const email = ref(null);
     const password = ref(null);
     const errorMsg = ref(null);
+    let buttonColor = ref(null)
+    let buttonTitle = ref("Save New Human")
+
+    // Button success visual feedback
+    const buttonSuccess = async () => {
+        buttonTitle.value = "Logging in..."
+        buttonColor.value = "orange"
+    }
 
     // Login function
     const login = async () => {
@@ -77,6 +85,7 @@ export default {
           email: email.value,
           password: password.value,
         });
+
         router.push({ name: "Home" });
       } catch (error) {
         errorMsg.value = error.message;
@@ -84,13 +93,15 @@ export default {
           errorMsg.value = null;
         }, 5000);
       }
+
       errorMsg.value = "Error: incorrect login";
       setTimeout(() => {
         errorMsg.value = null;
       }, 5000);
+      router.push({ name: "Progress" })
     };
 
-    return { email, password, errorMsg, login };
+    return { email, password, errorMsg, login, buttonColor, buttonTitle, buttonSuccess };
   },
 };
 </script>
