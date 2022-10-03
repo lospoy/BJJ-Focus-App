@@ -38,7 +38,7 @@
         />
       </div>
 
-      <Button title="Save Human" />
+      <Button :title='buttonTitle' :color='buttonColor' />
     </form>
   </div>
 </template>nt
@@ -60,6 +60,22 @@ export default {
     const errorMsg = ref(null);
     const firstName = ref(null);
     const lastName = ref(null);
+    let buttonColor = ref(null)
+    let buttonTitle = ref("Save New Human")
+
+    // Button success visual feedback
+    const buttonSuccess = async () => {
+        buttonTitle.value = "Saving Human..."
+        buttonColor.value = "orange"
+        setTimeout(() => {
+            buttonTitle.value = "Human Saved"
+            buttonColor.value = "#33872a"
+        }, 600);
+        setTimeout(() => {
+            buttonTitle.value = "Save New Human"
+            buttonColor.value = ""
+        }, 2200);
+    }
 
     // New Human function
     const newHuman = async () => {
@@ -72,17 +88,18 @@ export default {
 
         if (!foundHuman) {
             try {
-              await createHuman({
+              const res = await createHuman({
                 name: {
                     first: firstName.value,
                     last: lastName.value,
-                }
-               });
+                },});
+                // Success button visual feedback
+                if(res.status === 201) { await buttonSuccess() }
             } catch (error) {
               errorMsg.value = error.message;
-              setTimeout(() => {
-                errorMsg.value = null;
-              }, 5000);
+                setTimeout(() => {
+                  errorMsg.value = null;
+                }, 5000);
             }
             return;
       }
@@ -92,7 +109,7 @@ export default {
       }, 5000);
     };
 
-    return { firstName, lastName, errorMsg, newHuman };
+    return { firstName, lastName, errorMsg, newHuman, buttonColor, buttonTitle, buttonSuccess };
   },
 };
 </script>

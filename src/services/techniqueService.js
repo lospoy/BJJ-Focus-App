@@ -1,21 +1,13 @@
+// TECHNIQUE SERVICE
+
 const API_URL = process.env.VUE_APP_ROOT_API
 // import { getAuthHeader } from './userService';
 
-export async function getAllHumans() {
-    // ideally should be code below, but importing authHeader() doesn't work?
-    // only works when the header is written directly into the function
-
-    // try {
-    //   const response = await fetch(API_URL + '/humans', {
-    //     method: "GET",
-    //     headers: getAuthHeader()
-    //   });
-
-    // this one works
+export async function getAllTechqniques() {
     let user = JSON.parse(localStorage.getItem("user"))
 
     try {
-      const response = await fetch(API_URL + '/humans', {
+      const response = await fetch(API_URL + '/technique', {
         method: "GET",
         headers: { "Authorization": "Bearer " + user.token }
       });
@@ -35,11 +27,11 @@ export async function getAllHumans() {
 }
 
 // GET HUMAN BY ID
-export async function getHuman(id) {
+export async function getTechnique(id) {
     let user = JSON.parse(localStorage.getItem("user"))
 
     try {
-      const response = await fetch(API_URL + '/humans/' + id, {
+      const response = await fetch(API_URL + '/technique/' + id, {
         method: "GET",
         headers: { "Authorization": "Bearer " + user.token }
       });
@@ -58,11 +50,11 @@ export async function getHuman(id) {
   }
 }
 
-export async function createHuman(data) {
+export async function createTechnique(data) {
     let user = JSON.parse(localStorage.getItem("user"))
 
     try {
-      const response = await fetch(API_URL + '/humans', {
+      const response = await fetch(API_URL + '/technique', {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + user.token },
         body: JSON.stringify(data),
