@@ -115,6 +115,9 @@ export default {
         Button,
     },
     setup() {
+        const statusMsg = ref(null)
+        const errorMsg = ref(null)
+
         // Human IDs
         const carlosCampoy = '630e5c2da1c2a0bcf246c383'
 
@@ -126,15 +129,11 @@ export default {
         // gotta use reactive when dealing with objects/arrays
         const studentList = reactive([]) // Initialize empty array show attending student list in DOM
         const humanIdList = reactive([]) // Initialize empty array to store human ids for POST
-        // Error variables
-        const statusMsg = ref(null)
-        const errorMsg = ref(null)
         
-        // Button variables
+        // Button success visual feedback
         let buttonColor = ref(null)
         let buttonTitle = ref("Save New Session")
 
-        // Button success visual feedback
         const buttonSuccess = async () => {
             buttonTitle.value = "Saving Session..."
             buttonColor.value = "orange"
