@@ -44,11 +44,11 @@ const moveSchema = mongoose.Schema(
                     type: Boolean,
                     required: false,
                 },
-                escape: {
+                guard: {
                     type: Boolean,
                     required: false,
                 },
-                control: {
+                escape: {
                     type: Boolean,
                     required: false,
                 },
@@ -57,6 +57,10 @@ const moveSchema = mongoose.Schema(
                     required: false,
                 },
                 sweep: {
+                    type: Boolean,
+                    required: false,
+                },
+                takedown: {
                     type: Boolean,
                     required: false,
                 },
