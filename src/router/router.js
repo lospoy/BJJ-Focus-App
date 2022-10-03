@@ -4,6 +4,7 @@ import NewHuman from "../views/NewHuman.vue";
 import Progress from "../views/Progress.vue";
 import Register from "../views/Register.vue";
 import Session from "../views/Session.vue";
+import Technique from "../views/Technique.vue";
 import UserProfile from "../views/UserProfile.vue";
 
 const routes = [
@@ -36,6 +37,11 @@ const routes = [
     path: "/profile",
     name: "UserProfile",
     component: UserProfile,
+  },
+  {
+    path: "/technique",
+    name: "Technique",
+    component: Technique,
   },
 ];
 
