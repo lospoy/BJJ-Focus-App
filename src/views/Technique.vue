@@ -36,7 +36,7 @@
           v-model="move"
         >
         <option value="pass">Pass</option>
-        <option value="guard">Guard</option>
+        <option value="entry">Guard</option>
         <option value="escape">Escape</option>
         <option value="submission">Submission</option>
         <option value="sweep">Sweep</option>
@@ -83,16 +83,16 @@ export default {
 
     // Move variables
     const pass = ref(null)
-    const guard = ref(null)
+    const entry = ref(null)
     const escape = ref(null)
     const submission = ref(null)
     const sweep = ref(null)
     const takedown = ref(null)
 
     // Button success visual feedback
-    let buttonColor = ref(null)
+    let buttonColor = ref(null) 
     let buttonTitle = ref("Save New Technique")
-    
+
     const buttonSuccess = async () => {
         buttonTitle.value = "Saving Technique..."
         buttonColor.value = "orange"
