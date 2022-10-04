@@ -1,6 +1,51 @@
 const asyncHandler = require('express-async-handler')
 const Move = require('../models/moveModel')
 
+// @desc    Save new move
+// @route   POST /api/techniques/moves
+// @access  Public
+const saveMove = asyncHandler(async (req, res) => {
+    const { name, category } = req.body
+
+    if (!name || !category) {
+        res.status(400)
+        throw new Error('Please fill in all fields')
+    }
+
+    // Check if move exists
+    const moveExists = await Technique.findOne({ name: name, category: category })
+
+    if (moveExists) {
+        res.status(400)
+        throw new Error(`Technique dated ${date} already exists`)
+    }
+
+    // ************ TBD
+    // Check for user permission to save move
+    // Must be admin or teacher
+    // const isAdmin = req.user.permissions.admin === true
+    // const isTeacher = req.user.permissions.teacher === true    
+    // if(isAdmin || isTeacher) {}
+  
+    // Create move
+    const move = await Move.create({
+        name: req.body.name,
+        category: req.body.category,
+        createdBy: req.user.id
+    })
+    if (move) {
+        res.status(201).json({
+            _id: move.id,
+            name: move.name,
+            category: move.category,
+            createdBy: req.user.id
+        })
+    } else {
+        res.status(400)
+        throw new Error('Invalid technique data')
+    }
+})
+
 // @desc    Get specific move data
 // @route   GET /api/techniques/moves/:id
 // @access  Private
@@ -58,6 +103,7 @@ const getAllMoves = asyncHandler(async (req, res) => {
 
 
 module.exports = {
+    saveMove,
     getMove,
     getAllMoves,
 }
