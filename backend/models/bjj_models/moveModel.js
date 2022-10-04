@@ -44,7 +44,7 @@ const moveSchema = mongoose.Schema(
                     type: Boolean,
                     required: false,
                 },
-                guard: {
+                entry: { 
                     type: Boolean,
                     required: false,
                 },
