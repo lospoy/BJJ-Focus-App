@@ -31,7 +31,7 @@ export async function getTechnique(id) {
     let user = JSON.parse(localStorage.getItem("user"))
 
     try {
-      const response = await fetch(API_URL + '/technique/' + id, {
+      const response = await fetch(API_URL + '/technique/id/' + id, {
         method: "GET",
         headers: { "Authorization": "Bearer " + user.token }
       });
