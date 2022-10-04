@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Move = require('../models/bjj_models/moveModel')
+const Move = require('../../models/bjj_models/moveModel')
 
 // @desc    Save new move
 // @route   POST /api/techniques/moves
@@ -13,11 +13,11 @@ const saveMove = asyncHandler(async (req, res) => {
     }
 
     // Check if move exists
-    const moveExists = await Technique.findOne({ name: name, category: category })
+    const moveExists = await Move.findOne({ name: name, category: category })
 
     if (moveExists) {
         res.status(400)
-        throw new Error(`Technique dated ${date} already exists`)
+        throw new Error(`Move ${name} ${category} already exists`)
     }
 
     // ************ TBD
