@@ -26,6 +26,7 @@ app.use('/api/appMetrics', require('./routes/app_routes/appMetricRoutes'))
 app.use('/api/users', require('./routes/app_routes/userRoutes'))
 app.use('/api/humans', require('./routes/humanRoutes'))
 app.use('/api/sessions', require('./routes/sessionRoutes'))
+app.use('/api/techniques', require('./routes/techniqueRoutes'))
 
 // Serve frontend >> *must* be under the API routes
 if(process.env.NODE_ENV === 'production') {
