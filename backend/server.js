@@ -26,7 +26,10 @@ app.use('/api/appMetrics', require('./routes/app_routes/appMetricRoutes'))
 app.use('/api/users', require('./routes/app_routes/userRoutes'))
 app.use('/api/humans', require('./routes/humanRoutes'))
 app.use('/api/sessions', require('./routes/sessionRoutes'))
-app.use('/api/techniques', require('./routes/techniqueRoutes'))
+app.use('/api/techniques', require('./routes/bjj_routes/techniqueRoutes'))
+app.use('/api/techniques/positions', require('./routes/bjj_routes/positionRoutes'))
+app.use('/api/techniques/moves', require('./routes/bjj_routes/moveRoutes'))
+app.use('/api/techniques/variations', require('./routes/bjj_routes/variationRoutes'))
 
 // Serve frontend >> *must* be under the API routes
 if(process.env.NODE_ENV === 'production') {
