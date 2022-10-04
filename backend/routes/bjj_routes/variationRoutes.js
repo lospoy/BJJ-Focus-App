@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { saveVariation, getVariation, updateVariation, getAllVariations } = require('../../controllers/variationController')
+const { saveVariation, getVariation, updateVariation, getAllVariations } = require('../../controllers/bjj_controllers/variationController')
 const { protect } = require('../../middleware/authMiddleware')
 
 router.post('/', protect, saveVariation)

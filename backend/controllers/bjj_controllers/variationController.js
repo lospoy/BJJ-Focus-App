@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Variation = require('../models/variationModel')
+const Variation = require('../models/bjj_models/variationModel')
 const User = require('../models/app_models/userModel')
 
 // @desc    Save new variation

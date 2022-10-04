@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Move = require('../models/moveModel')
+const Move = require('../models/bjj_models/moveModel')
 
 // @desc    Save new move
 // @route   POST /api/techniques/moves

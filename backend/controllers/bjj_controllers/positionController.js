@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Position = require('../models/positionModel')
+const Position = require('../models/bjj_models/positionModel')
 const User = require('../models/app_models/userModel')
 
 // @desc    Save new position

@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Technique = require('../models/techniqueModel')
+const Technique = require('../models/bjj_models/techniqueModel')
 const User = require('../models/app_models/userModel')
 
 // @desc    Save new technique
