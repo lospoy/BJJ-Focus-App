@@ -1,6 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Technique = require('../models/bjj_models/techniqueModel')
-const User = require('../models/app_models/userModel')
+const Technique = require('../../models/bjj_models/techniqueModel')
 
 // @desc    Save new technique
 // @route   POST /api/techniques
@@ -22,7 +21,7 @@ const saveTechnique = asyncHandler(async (req, res) => {
 
     if (techniqueExists) {
         res.status(400)
-        throw new Error(`Technique dated ${date} already exists`)
+        throw new Error(`Technique ${position} ${move} ${variation} already exists`)
     }
 
     // ************ TBD
@@ -54,7 +53,7 @@ const saveTechnique = asyncHandler(async (req, res) => {
 })
 
 // @desc    Get specific technique data
-// @route   GET /api/techniques/:id
+// @route   GET /api/techniques/id/:id
 // @access  Private
 const getTechnique = asyncHandler(async (req, res) => {
     const technique = await Technique.findById(req.params.id)
