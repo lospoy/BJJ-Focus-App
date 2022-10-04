@@ -1,6 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Variation = require('../models/bjj_models/variationModel')
-const User = require('../models/app_models/userModel')
+const Variation = require('../../models/bjj_models/variationModel')
 
 // @desc    Save new variation
 // @route   POST /api/techniques/variations
@@ -14,11 +13,11 @@ const saveVariation = asyncHandler(async (req, res) => {
     }
 
     // Check if variation exists
-    const variationExists = await Technique.findOne({ name: name })
+    const variationExists = await Variation.findOne({ name: name })
 
     if (variationExists) {
         res.status(400)
-        throw new Error(`Technique dated ${date} already exists`)
+        throw new Error(`Variation ${name} already exists`)
     }
 
     // ************ TBD
