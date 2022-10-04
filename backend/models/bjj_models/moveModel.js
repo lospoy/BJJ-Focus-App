@@ -36,7 +36,7 @@ const moveSchema = mongoose.Schema(
             },
 
         },
-        type: {
+        category: {
             type: Object,
             required: [true, 'Type required'],
             properties: {
