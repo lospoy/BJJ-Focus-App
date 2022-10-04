@@ -2,7 +2,6 @@ const asyncHandler = require('express-async-handler')
 const Technique = require('../models/techniqueModel')
 const User = require('../models/app_models/userModel')
 
-
 // @desc    Save new technique
 // @route   POST /api/techniques
 // @access  Public
@@ -139,13 +138,7 @@ const updateTechnique = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('User not authorized')
     }
-
-    // **************LATEST ACTION 22:45 08/30: UPDATE HUMAN
-    // update doesnt add to the property of the object, it replaces the property of the object
-    // expected is it ADDS to the property, not replace
-    // unsure if this needs to be done client side
 })
-
 
 module.exports = {
     saveTechnique,
