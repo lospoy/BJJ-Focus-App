@@ -4,8 +4,8 @@ const { saveTechnique, getTechnique, updateTechnique, getAllTechniques } = requi
 const { protect } = require('../../middleware/authMiddleware')
 
 router.post('/', protect, saveTechnique)
-router.get('/:id', protect, getTechnique)
-router.put('/:id', protect, updateTechnique)
+router.get('/id/:id', protect, getTechnique)
+router.put('/id/:id', protect, updateTechnique)
 router.get('/', protect, getAllTechniques)
 
 module.exports = router
