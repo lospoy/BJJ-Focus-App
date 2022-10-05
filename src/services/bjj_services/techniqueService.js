@@ -3,7 +3,7 @@
 const API_URL = process.env.VUE_APP_ROOT_API
 // import { getAuthHeader } from './userService';
 
-export async function getAllTechqniques() {
+export async function getAllTechniques() {
     let user = JSON.parse(localStorage.getItem("user"))
 
     try {
