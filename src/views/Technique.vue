@@ -26,22 +26,32 @@
       </div>
 
       <div class="flex flex-col mb-2">
+
         <label for="move" class="mb-1 text-sm text-at-light-orange"
           >Move</label
         >
-        <select
-          required
-          class="p-2 text-gray-500 focus:outline-none"
-          id="move"
-          v-model="move"
-        >
-        <option value="pass">Pass</option>
-        <option value="entry">Guard</option>
-        <option value="escape">Escape</option>
-        <option value="submission">Submission</option>
-        <option value="sweep">Sweep</option>
-        <option value="takedown">Takedown</option>
-        </select>
+        <div class="flex-row">
+            <input
+              type="text"
+              required
+              class="p-2 text-gray-500 focus:outline-none w-4/6"
+              id="position"
+              v-model="position"
+            />
+            <select
+              required
+              class="p-2 text-gray-500 focus:outline-none w-2/6"
+              id="move"
+              v-model="move"
+            >
+            <option value="pass">Pass</option>
+            <option value="entry">Guard</option>
+            <option value="escape">Escape</option>
+            <option value="submission">Submission</option>
+            <option value="sweep">Sweep</option>
+            <option value="takedown">Takedown</option>
+            </select>
+        </div>
       </div>
 
       <div class="flex flex-col mb-2">
@@ -79,19 +89,12 @@ export default {
     const errorMsg = ref(null);
     const position = ref(null);
     const move = ref(null);
+    const moveCategory = ref(null)
     const variation = ref(null);
-
-    // Move variables
-    const pass = ref(null)
-    const entry = ref(null)
-    const escape = ref(null)
-    const submission = ref(null)
-    const sweep = ref(null)
-    const takedown = ref(null)
 
     // Button success visual feedback
     let buttonColor = ref(null) 
-    let buttonTitle = ref("Save New Technique")
+    let buttonTitle = ref("Save Technique")
 
     const buttonSuccess = async () => {
         buttonTitle.value = "Saving Technique..."
@@ -101,7 +104,7 @@ export default {
             buttonColor.value = "#33872a"
         }, 600);
         setTimeout(() => {
-            buttonTitle.value = "Save New Technique"
+            buttonTitle.value = "Save Technique"
             buttonColor.value = ""
         }, 2200);
     }
@@ -110,18 +113,23 @@ export default {
     const newTechnique = async () => {
         const allTechniques = await getAllTechniques()
         // Check if human already exists
-        const foundTechnique = allTechniques.filter(human =>
-            human.name.first.toLowerCase() === position.value.toLowerCase())[0]
-            && allTechnique.filter(human =>
-            human.name.last.toLowerCase() === move.value.toLowerCase())[0];
+        const foundTechnique = allTechniques.filter(
+            position => position.name.english.toLowerCase() === position.value.toLowerCase())[0]
+            && allTechniques.filter(
+            move => move.name.toLowerCase() === move.value.toLowerCase())[0]
+            && allTechniques.filter(
+            variation => variation.name.toLowerCase() === variation.value.toLowerCase())[0];
 
         if (!foundTechnique) {
             try {
               const res = await createTechnique({
-                name: {
-                    first: position.value,
-                    last: move.value,
-                },});
+                position: { name: position.value },
+                move: {
+                    name: move.value,
+                    category: moveCategory.value
+                },
+                variation: { name: variation.value }
+                });
                 // Success button visual feedback
                 if(res.status === 201) { await buttonSuccess() }
             } catch (error) {
@@ -138,7 +146,7 @@ export default {
       }, 5000);
     };
 
-    return { position, move, variation, errorMsg, newTechnique, buttonColor, buttonTitle, buttonSuccess };
+    return { position, move, moveCategory, variation, errorMsg, newTechnique, buttonColor, buttonTitle, buttonSuccess };
   },
 };
 </script>
