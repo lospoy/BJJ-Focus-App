@@ -9,6 +9,7 @@
 import Navigation from "./components/Navigation.vue";
 import { ref } from "vue";
 import store from "./store/index.js";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   components: {
@@ -18,6 +19,7 @@ export default {
   setup() {
     // Data & variables
     const appReady = ref(null);
+    const router = useRouter()
 
     // Check if user is already logged in
     // If logged in, set auth headers with bearer token
@@ -28,10 +30,12 @@ export default {
     if (!user) {
       appReady.value = true;
       console.log("No user logged in");
+      router.push({ name: "Login" });
     } else {
       store.methods.setUser(user);
       appReady.value = true;
       console.log("User logged in");
+      router.push({ name: "ProgressView" });
     }
 
     return { appReady, user };
