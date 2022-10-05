@@ -119,7 +119,7 @@ export default {
     // **********************************************************************************************
     const newPosition = async () => {
         const allPositions = await getAllPositions()
-        // Check if position already exists
+        console.log(position.value)
         const foundPosition = allPositions.filter(
             position => position.name.english.toLowerCase() === position.value.toLowerCase())
 
