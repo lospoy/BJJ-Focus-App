@@ -7,7 +7,7 @@
 
     <!-- NewTechnique -->
     <form
-      @submit.prevent="newPosition"
+      @submit.prevent="newTechnique"
       class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg"
     >
       <h1 class="text-3xl text-at-light-orange mb-4 self-center">
@@ -45,12 +45,12 @@
               id="moveCategory"
               v-model="moveCategory"
             >
-            <option value="{ category: { pass: true }">Pass</option>
-            <option value="{ category: { entry: true }">Guard</option>
-            <option value="{ category: { escape: true }">Escape</option>
-            <option value="{ category: { submission: true }">Submission</option>
-            <option value="{ category: { sweep: true }">Sweep</option>
-            <option value="{ category: { takedown: true }">Takedown</option>
+            <option :value="passOption">Pass</option>
+            <option :value="entryOption">Entry</option>
+            <option :value="escapeOption">Escape</option>
+            <option :value="submissionOption">Submission</option>
+            <option :value="sweepOption">Sweep</option>
+            <option :value="takedownOption">Takedown</option>
             </select>
         </div>
       </div>
@@ -89,13 +89,23 @@ export default {
     Button,
   },
   setup() {
+    // Option variables (serialized)
+    const passOption = JSON.stringify({ pass: true })
+    const entryOption = JSON.stringify({ entry: true })
+    const escapeOption = JSON.stringify({ escape: true })
+    const submissionOption = JSON.stringify({ submission: true })
+    const sweepOption = JSON.stringify({ sweep: true })
+    const takedownOption = JSON.stringify({ takedown: true })
+
     // Variables
     const errorMsg = ref(null);
     const position = ref(null);
     let positionId = ref('')
-    let move = ref(null);
-    let moveCategory = ref(null)
-    let variation = ref(null);
+    const move = ref(null);
+    let moveId = ref('')
+    const moveCategory = ref(null)
+    const variation = ref(null);
+    let variationId = ref('')
 
     // Button success visual feedback
     let buttonColor = ref(null) 
@@ -119,29 +129,28 @@ export default {
     // **********************************************************************************************
     const newPosition = async () => {
         const allPositions = await getAllPositions()
-        console.log(position.value)
-        const foundPosition = allPositions.filter(
-            position => position.name.english.toLowerCase() === position.value.toLowerCase())
+        // Check if position already exists
+        const foundPosition = allPositions.filter(x =>
+            x.name.english.toLowerCase() === position.value.toLowerCase())[0]
 
-        positionId = foundPosition[0]._id // if found, assign id to global variable
-
+        if(foundPosition) {
+            positionId = foundPosition._id // if found, assign id to global variable
+            return positionId
+        }
+        
         if (!foundPosition) {
             try {
-              const res = await createPosition({ position: { name: { english: position.value }}});
+              const res = await createPosition({ name: { english: position.value }});
               if(res.status === 201) { await buttonSuccess() } // Success button visual feedback
-              position = res._id // assign id to global variable
+              const jsonRes = await res.json()  // get the response object
+              positionId = jsonRes._id // assign _id to global variable
+              return positionId
             } catch (error) {
-              errorMsg.value = error.message;
-                setTimeout(() => {
-                  errorMsg.value = null;
-                }, 5000);
+            //   no need for error catching since this view only saves new techniques
+            //  if a position already exists, the user does not need to know on this page
             }
             return;
         }
-        errorMsg.value = "Error: position with that exact name already exists in the database";
-            setTimeout(() => {
-                errorMsg.value = null;
-            }, 5000);
     }
 
     // **********************************************************************************************
@@ -149,31 +158,31 @@ export default {
     // **********************************************************************************************
     const newMove = async () => {
         const allMoves = await getAllMoves()
-        // Check if technique already exists
-        const foundMove = allMoves.filter(
-            move => move.name.english.toLowerCase() === move.value.toLowerCase())[0]
-            move = foundMove._id // if found, assign id to global variable
+        // Check if move already exists
+        const foundMove = allMoves.filter(x =>
+            x.name.english.toLowerCase() === move.value.toLowerCase())[0]
 
+        if(foundMove) {
+            moveId = foundMove._id // if found, assign id to global variable
+            return moveId
+        }
+        
         if (!foundMove) {
             try {
               const res = await createMove({
-                move: { name: { english: move.value }},
-                category: moveCategory.value
+                name: { english: move.value },
+                category: JSON.parse(moveCategory.value)
               });
               if(res.status === 201) { await buttonSuccess() } // Success button visual feedback
-              move = res._id // assign id to global variable
+              const jsonRes = await res.json()  // get the response object
+              moveId = jsonRes._id // assign _id to global variable
+              return moveId
             } catch (error) {
-              errorMsg.value = error.message;
-                setTimeout(() => {
-                  errorMsg.value = null;
-                }, 5000);
+            //   no need for error catching since this view only saves new techniques
+            //  if a move already exists, the user does not need to know on this page
             }
             return;
         }
-        errorMsg.value = "Error: move with that exact name already exists in the database";
-            setTimeout(() => {
-                errorMsg.value = null;
-            }, 5000);
     }
 
     // **********************************************************************************************
@@ -181,34 +190,34 @@ export default {
     // **********************************************************************************************
     const newVariation = async () => {
         const allVariations = await getAllVariations()
-        // Check if technique already exists
-        const foundVariation = allVariations.filter(
-            variation => variation.name.english.toLowerCase() === variation.value.toLowerCase())[0]
-            variation = foundVariation._id // if found, assign id to global variable
+        // Check if variation already exists
+        const foundVariation = allVariations.filter(x =>
+            x.name.english.toLowerCase() === variation.value.toLowerCase())[0]
 
+        if(foundVariation) {
+            variationId = foundVariation._id // if found, assign id to global variable
+            return variationId
+        }
+        
         if (!foundVariation) {
             try {
-              const res = await createVariation({ variation: { name: { english: variation.value }}});
+              const res = await createVariation({
+                name: { english: variation.value },
+              });
               if(res.status === 201) { await buttonSuccess() } // Success button visual feedback
-              variation = res._id // assign id to global variable
+              const jsonRes = await res.json()  // get the response object
+              variationId = jsonRes._id // assign _id to global variable
+              return variationId
             } catch (error) {
-              errorMsg.value = error.message;
-                setTimeout(() => {
-                  errorMsg.value = null;
-                }, 5000);
+            //   no need for error catching since this view only saves new techniques
+            //  if a variation already exists, the user does not need to know on this page
             }
             return;
         }
-        errorMsg.value = "Error: variation with that exact name already exists in the database";
-            setTimeout(() => {
-                errorMsg.value = null;
-            }, 5000);
     }
 
     // creating a new technique means creating a new COMBINATION of POSITION, MOVE, and VARIATION
-    // position may or may not exist
-    // move may or may not exist
-    // variation may or may not exist
+    // either position, move, or variation may or may not exist in database already
 
     // if Technique found, then we get a technique id
     // if Technique not found:
@@ -226,23 +235,31 @@ export default {
     // **********************************************************************************************
     //                                       TECHNIQUE
     // **********************************************************************************************
-    const newTechnique = async () => {        
+    const newTechnique = async () => {
+        console.log("position id is: " + await newPosition())
+        console.log("move id is: " + await newMove())
+        console.log("variation id is: " + await newVariation())
+
+        positionId = await newPosition()
+        moveId = await newMove()
+        variationId = await newVariation()
+        
         const allTechniques = await getAllTechniques()
         // Check if technique already exists
-        const foundTechnique = allTechniques.filter(
-            position => position.name.english.toLowerCase() === position.value.toLowerCase())[0]
-            && allTechniques.filter(
-            move => move.name.english.toLowerCase() === move.value.toLowerCase())[0]
-            && allTechniques.filter(
-            variation => variation.name.english.toLowerCase() === variation.value.toLowerCase())[0];
+        const foundTechnique = allTechniques.filter(a =>
+            a.position === positionId)[0]
+            && allTechniques.filter(b =>
+            b.move === moveId)[0]
+            && allTechniques.filter(c =>
+            c.variation === variationId)[0];
 
         if (!foundTechnique) {
             try {
               // These values should all be ids
               const res = await createTechnique({
-                position: position.value,
-                move: move.value,
-                variation: variation.value
+                position: positionId,
+                move: moveId,
+                variation: variationId
               });
               if(res.status === 201) { await buttonSuccess() } // Success button visual feedback
             } catch (error) {
@@ -253,14 +270,15 @@ export default {
             }
             return;
       }
-      errorMsg.value = "Error: technique already exists in the database";
+      errorMsg.value = "Technique already exists";
       setTimeout(() => {
         errorMsg.value = null;
       }, 5000);
     }
 
     return {
-        position, move, moveCategory, variation,
+        position, positionId, move, moveId, moveCategory, variation, variationId,
+        passOption, entryOption, escapeOption, submissionOption, sweepOption, takedownOption,
         errorMsg, buttonColor, buttonTitle, buttonSuccess,
         newPosition, newMove, newVariation, newTechnique
     };
