@@ -88,6 +88,8 @@ export default {
             && allHumans.filter(human =>
             human.name.last.toLowerCase() === lastName.value.toLowerCase())[0];
 
+        console.log(foundHuman._id)
+
         if (!foundHuman) {
             try {
               const res = await createHuman({
