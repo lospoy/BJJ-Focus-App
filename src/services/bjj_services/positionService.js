@@ -1,13 +1,13 @@
-// TECHNIQUE SERVICE
+// POSITION SERVICE
 
 const API_URL = process.env.VUE_APP_ROOT_API
 // import { getAuthHeader } from './userService';
 
-export async function getAllTechqniques() {
+export async function getAllPositions() {
     let user = JSON.parse(localStorage.getItem("user"))
 
     try {
-      const response = await fetch(API_URL + '/technique', {
+      const response = await fetch(API_URL + '/techniques/positions', {
         method: "GET",
         headers: { "Authorization": "Bearer " + user.token }
       });
@@ -27,11 +27,11 @@ export async function getAllTechqniques() {
 }
 
 // GET HUMAN BY ID
-export async function getTechnique(id) {
+export async function getPosition(id) {
     let user = JSON.parse(localStorage.getItem("user"))
 
     try {
-      const response = await fetch(API_URL + '/technique/' + id, {
+      const response = await fetch(API_URL + '/techniques/positions/' + id, {
         method: "GET",
         headers: { "Authorization": "Bearer " + user.token }
       });
@@ -50,11 +50,11 @@ export async function getTechnique(id) {
   }
 }
 
-export async function createTechnique(data) {
+export async function createPosition(data) {
     let user = JSON.parse(localStorage.getItem("user"))
 
     try {
-      const response = await fetch(API_URL + '/technique', {
+      const response = await fetch(API_URL + '/techniques/positions', {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + user.token },
         body: JSON.stringify(data),

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Login.vue";
 import NewHuman from "../views/NewHuman.vue";
-import Progress from "../views/Progress.vue";
+import ProgressView from "../views/ProgressView.vue";
 import Register from "../views/Register.vue";
 import Session from "../views/Session.vue";
 import Technique from "../views/Technique.vue";
@@ -9,9 +9,9 @@ import UserProfile from "../views/UserProfile.vue";
 
 const routes = [
   {
-    path: "/progress",
-    name: "Progress",
-    component: Progress,
+    path: "/",
+    name: "ProgressView",
+    component: ProgressView,
   },
   {
     path: "/register",

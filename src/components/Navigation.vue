@@ -11,11 +11,11 @@
         />
       </div>
       <ul class="flex flex-1 justify-end gap-x-10">
-        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Progress' }"
+        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'ProgressView' }"
           >Progress</router-link
         >
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'NewHuman' }"
-          >New Human</router-link
+          >Human</router-link
         >
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Technique' }"
           >Technique</router-link

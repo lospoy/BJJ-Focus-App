@@ -103,7 +103,7 @@ const getAllSessions = asyncHandler(async (req, res) => {
     const allSessions = await Session.find({})
 
     // Check for user permission to GET session data
-    // Must be admin, teacher, or the user's session
+    // Must be admin or teacher
     const isAdmin = req.user.permissions.admin
     const isTeacher = req.user.permissions.teacher
 

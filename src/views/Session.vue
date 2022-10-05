@@ -205,9 +205,11 @@ export default {
               }, 5000);
             }
         }
-        return { teacher, student, date, topic, statusMsg, errorMsg,
-                getStudent, session, studentList, humanIdList, getDate,
-                buttonColor, buttonTitle, buttonSuccess }
+        return {
+            teacher, student, date, topic, statusMsg, errorMsg,
+            getStudent, session, studentList, humanIdList, getDate,
+            buttonColor, buttonTitle, buttonSuccess,
+        }
     },
 }
 </script>

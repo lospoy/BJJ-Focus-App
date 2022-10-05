@@ -10,11 +10,13 @@
       @submit.prevent="newTechnique"
       class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg"
     >
-      <h1 class="text-3xl text-at-light-orange mb-4 self-center">New Technique</h1>
+      <h1 class="text-3xl text-at-light-orange mb-4 self-center">
+        New Technique</h1
+      >
 
       <div class="flex flex-col mb-2">
         <label for="position" class="mb-1 text-sm text-at-light-orange"
-          >position</label
+          >Position</label
         >
         <input
           type="text"
@@ -29,19 +31,28 @@
         <label for="move" class="mb-1 text-sm text-at-light-orange"
           >Move</label
         >
-        <select
-          required
-          class="p-2 text-gray-500 focus:outline-none"
-          id="move"
-          v-model="move"
-        >
-        <option value="pass">Pass</option>
-        <option value="guard">Guard</option>
-        <option value="escape">Escape</option>
-        <option value="submission">Submission</option>
-        <option value="sweep">Sweep</option>
-        <option value="takedown">Takedown</option>
-        </select>
+        <div class="flex-row">
+            <input
+              type="text"
+              required
+              class="p-2 text-gray-500 focus:outline-none w-4/6"
+              id="move"
+              v-model="move"
+            />
+            <select
+              required
+              class="p-2 text-gray-500 focus:outline-none w-2/6"
+              id="moveCategory"
+              v-model="moveCategory"
+            >
+            <option :value="passOption">Pass</option>
+            <option :value="entryOption">Entry</option>
+            <option :value="escapeOption">Escape</option>
+            <option :value="submissionOption">Submission</option>
+            <option :value="sweepOption">Sweep</option>
+            <option :value="takedownOption">Takedown</option>
+            </select>
+        </div>
       </div>
 
       <div class="flex flex-col mb-2">
@@ -60,11 +71,14 @@
       <Button :title='buttonTitle' :color='buttonColor' />
     </form>
   </div>
-</template>nt
+</template>
 
 <script>
 import { ref } from "vue";
-import { createTechnique, getAllTechniques } from "../services/humanService";
+import { createTechnique, getAllTechniques } from "../services/bjj_services/techniqueService";
+import { createPosition, getAllPositions } from "../services/bjj_services/positionService";
+import { createMove, getAllMoves } from "../services/bjj_services/moveService";
+import { createVariation, getAllVariations } from "../services/bjj_services/variationService";
 
 // components import
 import Button from "../components/Button.vue";
@@ -75,24 +89,28 @@ export default {
     Button,
   },
   setup() {
+    // Option variables (serialized)
+    const passOption = JSON.stringify({ pass: true })
+    const entryOption = JSON.stringify({ entry: true })
+    const escapeOption = JSON.stringify({ escape: true })
+    const submissionOption = JSON.stringify({ submission: true })
+    const sweepOption = JSON.stringify({ sweep: true })
+    const takedownOption = JSON.stringify({ takedown: true })
+
     // Variables
     const errorMsg = ref(null);
     const position = ref(null);
+    let positionId = ref('')
     const move = ref(null);
+    let moveId = ref('')
+    const moveCategory = ref(null)
     const variation = ref(null);
-
-    // Move variables
-    const pass = ref(null)
-    const guard = ref(null)
-    const escape = ref(null)
-    const submission = ref(null)
-    const sweep = ref(null)
-    const takedown = ref(null)
+    let variationId = ref('')
 
     // Button success visual feedback
-    let buttonColor = ref(null)
-    let buttonTitle = ref("Save New Technique")
-    
+    let buttonColor = ref(null) 
+    let buttonTitle = ref("Save Technique")
+
     const buttonSuccess = async () => {
         buttonTitle.value = "Saving Technique..."
         buttonColor.value = "orange"
@@ -101,29 +119,149 @@ export default {
             buttonColor.value = "#33872a"
         }, 600);
         setTimeout(() => {
-            buttonTitle.value = "Save New Technique"
+            buttonTitle.value = "Save Technique"
             buttonColor.value = ""
         }, 2200);
     }
 
-    // New Technique function
+    // **********************************************************************************************
+    //                                       POSITION
+    // **********************************************************************************************
+    const newPosition = async () => {
+        const allPositions = await getAllPositions()
+        // Check if position already exists
+        const foundPosition = allPositions.filter(x =>
+            x.name.english.toLowerCase() === position.value.toLowerCase())[0]
+
+        if(foundPosition) {
+            positionId = foundPosition._id // if found, assign id to global variable
+            return positionId
+        }
+        
+        if (!foundPosition) {
+            try {
+              const res = await createPosition({ name: { english: position.value }});
+              if(res.status === 201) { await buttonSuccess() } // Success button visual feedback
+              const jsonRes = await res.json()  // get the response object
+              positionId = jsonRes._id // assign _id to global variable
+              return positionId
+            } catch (error) {
+            //   no need for error catching since this view only saves new techniques
+            //  if a position already exists, the user does not need to know on this page
+            }
+            return;
+        }
+    }
+
+    // **********************************************************************************************
+    //                                       MOVE
+    // **********************************************************************************************
+    const newMove = async () => {
+        const allMoves = await getAllMoves()
+        // Check if move already exists
+        const foundMove = allMoves.filter(x =>
+            x.name.english.toLowerCase() === move.value.toLowerCase())[0]
+
+        if(foundMove) {
+            moveId = foundMove._id // if found, assign id to global variable
+            return moveId
+        }
+        
+        if (!foundMove) {
+            try {
+              const res = await createMove({
+                name: { english: move.value },
+                category: JSON.parse(moveCategory.value)
+              });
+              if(res.status === 201) { await buttonSuccess() } // Success button visual feedback
+              const jsonRes = await res.json()  // get the response object
+              moveId = jsonRes._id // assign _id to global variable
+              return moveId
+            } catch (error) {
+            //   no need for error catching since this view only saves new techniques
+            //  if a move already exists, the user does not need to know on this page
+            }
+            return;
+        }
+    }
+
+    // **********************************************************************************************
+    //                                       VARIATION
+    // **********************************************************************************************
+    const newVariation = async () => {
+        const allVariations = await getAllVariations()
+        // Check if variation already exists
+        const foundVariation = allVariations.filter(x =>
+            x.name.english.toLowerCase() === variation.value.toLowerCase())[0]
+
+        if(foundVariation) {
+            variationId = foundVariation._id // if found, assign id to global variable
+            return variationId
+        }
+        
+        if (!foundVariation) {
+            try {
+              const res = await createVariation({
+                name: { english: variation.value },
+              });
+              if(res.status === 201) { await buttonSuccess() } // Success button visual feedback
+              const jsonRes = await res.json()  // get the response object
+              variationId = jsonRes._id // assign _id to global variable
+              return variationId
+            } catch (error) {
+            //   no need for error catching since this view only saves new techniques
+            //  if a variation already exists, the user does not need to know on this page
+            }
+            return;
+        }
+    }
+
+    // creating a new technique means creating a new COMBINATION of POSITION, MOVE, and VARIATION
+    // either position, move, or variation may or may not exist in database already
+
+    // if Technique found, then we get a technique id
+    // if Technique not found:
+    // 1. Look for position that was entered in the form:
+    //      1.a. if found we get a position id
+    //      1.b. if not found => createPosition() and return position id
+    // 2. Look for move that was entered in the form:
+    //      2.a. if found we get a position id
+    //      2.b. if not found => createMove() and return move id
+    // 3. Look for variation that was entered in the form:
+    //      3.a. if found we get a position id
+    //      3.b. if not found => createVariation() and return variation id
+    // then with { position: _id, move: _id, variation: _id } => createTechnique()
+
+    // **********************************************************************************************
+    //                                       TECHNIQUE
+    // **********************************************************************************************
     const newTechnique = async () => {
+        console.log("position id is: " + await newPosition())
+        console.log("move id is: " + await newMove())
+        console.log("variation id is: " + await newVariation())
+
+        positionId = await newPosition()
+        moveId = await newMove()
+        variationId = await newVariation()
+        
         const allTechniques = await getAllTechniques()
-        // Check if human already exists
-        const foundTechnique = allTechniques.filter(human =>
-            human.name.first.toLowerCase() === position.value.toLowerCase())[0]
-            && allTechnique.filter(human =>
-            human.name.last.toLowerCase() === move.value.toLowerCase())[0];
+        // Check if technique already exists
+        const foundTechnique = allTechniques.filter(a =>
+            a.position === positionId)[0]
+            && allTechniques.filter(b =>
+            b.move === moveId)[0]
+            && allTechniques.filter(c =>
+            c.variation === variationId)[0];
 
         if (!foundTechnique) {
             try {
+              // These values should all be ids
               const res = await createTechnique({
-                name: {
-                    first: position.value,
-                    last: move.value,
-                },});
-                // Success button visual feedback
-                if(res.status === 201) { await buttonSuccess() }
+                position: positionId,
+                move: moveId,
+                variation: variationId
+              });
+              if(res.status === 201) { await buttonSuccess() } // Success button visual feedback
             } catch (error) {
               errorMsg.value = error.message;
                 setTimeout(() => {
@@ -132,13 +270,18 @@ export default {
             }
             return;
       }
-      errorMsg.value = "Error: human with that exact name already exists in the database";
+      errorMsg.value = "Technique already exists";
       setTimeout(() => {
         errorMsg.value = null;
       }, 5000);
-    };
+    }
 
-    return { position, move, variation, errorMsg, newTechnique, buttonColor, buttonTitle, buttonSuccess };
+    return {
+        position, positionId, move, moveId, moveCategory, variation, variationId,
+        passOption, entryOption, escapeOption, submissionOption, sweepOption, takedownOption,
+        errorMsg, buttonColor, buttonTitle, buttonSuccess,
+        newPosition, newMove, newVariation, newTechnique
+    };
   },
 };
 </script>

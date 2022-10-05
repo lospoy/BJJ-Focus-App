@@ -10,7 +10,9 @@
       @submit.prevent="newHuman"
       class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg"
     >
-      <h1 class="text-3xl text-at-light-orange mb-4 self-center">New Human</h1>
+      <h1 class="text-3xl text-at-light-orange mb-4 self-center">
+        New Human</h1
+      >
 
       <div class="flex flex-col mb-2">
         <label for="firstName" class="mb-1 text-sm text-at-light-orange"
@@ -41,7 +43,7 @@
       <Button :title='buttonTitle' :color='buttonColor' />
     </form>
   </div>
-</template>nt
+</template>
 
 <script>
 import { ref } from "vue";
@@ -61,7 +63,7 @@ export default {
     const firstName = ref(null);
     const lastName = ref(null);
     let buttonColor = ref(null)
-    let buttonTitle = ref("Save New Human")
+    let buttonTitle = ref("Save Human")
 
     // Button success visual feedback
     const buttonSuccess = async () => {
@@ -72,7 +74,7 @@ export default {
             buttonColor.value = "#33872a"
         }, 600);
         setTimeout(() => {
-            buttonTitle.value = "Save New Human"
+            buttonTitle.value = "Save Human"
             buttonColor.value = ""
         }, 2200);
     }
@@ -85,6 +87,8 @@ export default {
             human.name.first.toLowerCase() === firstName.value.toLowerCase())[0]
             && allHumans.filter(human =>
             human.name.last.toLowerCase() === lastName.value.toLowerCase())[0];
+
+        console.log(foundHuman._id)
 
         if (!foundHuman) {
             try {
