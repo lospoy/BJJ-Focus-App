@@ -50,6 +50,19 @@ export async function getTechnique(id) {
   }
 }
 
+// 10/04 @17:23 RESUME HERE
+//
+//
+// creating a new technique means creating a new COMBINATION of POSITION, MOVE, and VARIATION
+// position may or may not exist
+// move may or may not exist
+// variation may or may not exist
+
+// if Technique not found:
+// if Position not found => createPosition()
+// if Move not found => createMove()
+// if Variation not found => createVariation()
+// then createTechnique()
 export async function createTechnique(data) {
     let user = JSON.parse(localStorage.getItem("user"))
 
