@@ -10,7 +10,9 @@
       @submit.prevent="newHuman"
       class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg"
     >
-      <h1 class="text-3xl text-at-light-orange mb-4 self-center">New Human</h1>
+      <h1 class="text-3xl text-at-light-orange mb-4 self-center">
+        New Human</h1
+      >
 
       <div class="flex flex-col mb-2">
         <label for="firstName" class="mb-1 text-sm text-at-light-orange"
@@ -41,7 +43,7 @@
       <Button :title='buttonTitle' :color='buttonColor' />
     </form>
   </div>
-</template>nt
+</template>
 
 <script>
 import { ref } from "vue";
