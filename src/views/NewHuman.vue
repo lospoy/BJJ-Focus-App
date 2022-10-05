@@ -63,7 +63,7 @@ export default {
     const firstName = ref(null);
     const lastName = ref(null);
     let buttonColor = ref(null)
-    let buttonTitle = ref("Save New Human")
+    let buttonTitle = ref("Save Human")
 
     // Button success visual feedback
     const buttonSuccess = async () => {
@@ -74,7 +74,7 @@ export default {
             buttonColor.value = "#33872a"
         }, 600);
         setTimeout(() => {
-            buttonTitle.value = "Save New Human"
+            buttonTitle.value = "Save Human"
             buttonColor.value = ""
         }, 2200);
     }
