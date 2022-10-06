@@ -42,13 +42,10 @@ import { useRouter } from "vue-router";
 import { computed } from "vue";
 export default {
   setup() {
-    // ??? need to manually reload for changes in navigation to render
-
-    // Get user from store
-    const user = computed(() => store.state.user);
-
-    // Setup ref to router
     const router = useRouter();
+
+    // Get user from localStorage
+    let user = JSON.parse(localStorage.getItem("user"))
 
     // Logout function
     const logout = async () => {
