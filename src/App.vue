@@ -9,7 +9,8 @@
 import Navigation from "./components/Navigation.vue";
 import { ref } from "vue";
 import store from "./store/index.js";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
+import { getLoggedUser } from "./services/userService"
 
 export default {
   components: {
@@ -22,7 +23,7 @@ export default {
     const router = useRouter()
 
     // Check if user is already logged in
-    // If logged in, set auth headers with bearer token
+    // const user = getLoggedUser()
     const user = JSON.parse(localStorage.getItem("user"));
     // otherwise, make app ready
 
