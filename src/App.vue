@@ -24,6 +24,15 @@ export default {
 
     // Check if user is already logged in
     // const user = getLoggedUser()
+
+    // ******************************************************************
+    // ISSUE
+    // ******************************************************************
+    // right now authentication does not work as intended
+    // localStorage stores an empty object and that's being accepted by the app as a "logged in user"
+    // instead, the app should try to retrieve a logged user and otherwise pull up the login screen
+    // ******************************************************************
+
     const user = JSON.parse(localStorage.getItem("user"));
     // otherwise, make app ready
 
