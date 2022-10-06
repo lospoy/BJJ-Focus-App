@@ -140,11 +140,11 @@ export default {
             setTimeout(() => {
                 buttonTitle.value = "Session Saved"
                 buttonColor.value = "#33872a"
-            }, 600);
+            }, 900);
             setTimeout(() => {
                 buttonTitle.value = "Save New Session"
                 buttonColor.value = ""
-            }, 2200);
+            }, 2500);
         }
 
         // Date
