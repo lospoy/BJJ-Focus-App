@@ -36,16 +36,12 @@
 </template>
 
 <script>
-import store from "../store/index.js";
 import { logoutUser } from "../services/userService";
 import { useRouter } from "vue-router";
-import { computed } from "vue";
 export default {
   setup() {
     const router = useRouter();
-
-    // Get user from localStorage
-    let user = JSON.parse(localStorage.getItem("user"))
+    const user = JSON.parse(localStorage.getItem("user"))
 
     // Logout function
     const logout = async () => {
