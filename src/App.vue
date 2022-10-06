@@ -21,13 +21,12 @@ export default {
     // Data & variables
     const appReady = ref(null);
     const router = useRouter()
+    let user = ref(null)
 
     // Check if user is already logged in
-    // const user = getLoggedUser()
-    const user = JSON.parse(localStorage.getItem("user"));
-    // otherwise, make app ready
+    const localUser = JSON.parse(localStorage.getItem("user"))
+    if (localUser) { user = getLoggedUser() }
 
-    // ??? need to manually reload for changes in navigation to render
     if (!user) {
       appReady.value = true;
       console.log("No user logged in");

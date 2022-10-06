@@ -44,9 +44,8 @@ export async function loginUser(data) {
     if (!response.ok) {
       throw new Error("error => response not ok");
     } else {
-      const user = await response
-      localStorage.setItem("user", JSON.stringify(user.json()));
-      return user
+      localStorage.setItem("user", JSON.stringify(response.body));
+      return response
     }
   } catch (e) {
     console.log(e);
@@ -55,6 +54,11 @@ export async function loginUser(data) {
       errorMessage: e.message,
     });
   }
+}
+
+// Auth State Change
+export async function onAuthStateChange(user) {
+   console.log(user)
 }
 
 // Logout user

@@ -52,6 +52,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { loginUser } from "../services/userService";
+import store from '../store/index'
 
 // components import
 import Button from "../components/Button.vue";

@@ -1,5 +1,4 @@
 // Using Composition API
-
 import { reactive } from "vue";
 
 const state = reactive({
@@ -8,7 +7,7 @@ const state = reactive({
 
 const methods = {
   setUser(payload) {
-    state.user = payload ? payload : null;
+    state.user = payload ? payload.value : null;
   },
 };
 
