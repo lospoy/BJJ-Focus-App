@@ -86,7 +86,7 @@ export default {
           password: password.value,
         });
 
-        router.push({ name: "Home" });
+        router.push({ name: "ProgressView" });
       } catch (error) {
         errorMsg.value = error.message;
         setTimeout(() => {
