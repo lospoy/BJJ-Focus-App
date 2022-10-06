@@ -38,7 +38,7 @@
         />
       </div>
 
-      <Button title="Login" />
+      <Button :title='buttonTitle' :color='buttonColor' />
 
       <router-link class="text-sm mt-6 text-center" :to="{ name: 'Register' }">
         Don't have an account?
@@ -70,7 +70,7 @@ export default {
     const password = ref(null);
     const errorMsg = ref(null);
     let buttonColor = ref(null)
-    let buttonTitle = ref("Save New Human")
+    let buttonTitle = ref("Login")
 
     // Button success visual feedback
     const buttonSuccess = async () => {
@@ -80,25 +80,25 @@ export default {
 
     // Login function
     const login = async () => {
+        await buttonSuccess()
       try {
-        await loginUser({
+        const res = await loginUser({
           email: email.value,
           password: password.value,
         });
 
-        router.push({ name: "ProgressView" });
+        if (res.status === 200) {
+            setTimeout(() => {
+                router.push({ name: "ProgressView" })
+            }, 600);
+        }
+
       } catch (error) {
-        errorMsg.value = error.message;
+        errorMsg.value = "Error: incorrect login";
         setTimeout(() => {
           errorMsg.value = null;
         }, 5000);
       }
-
-      errorMsg.value = "Error: incorrect login";
-      setTimeout(() => {
-        errorMsg.value = null;
-      }, 5000);
-      router.push({ name: "Progress" })
     };
 
     return { email, password, errorMsg, login, buttonColor, buttonTitle, buttonSuccess };
