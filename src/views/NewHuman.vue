@@ -72,11 +72,11 @@ export default {
         setTimeout(() => {
             buttonTitle.value = "Human Saved"
             buttonColor.value = "#33872a"
-        }, 600);
+        }, 900);
         setTimeout(() => {
             buttonTitle.value = "Save Human"
             buttonColor.value = ""
-        }, 2200);
+        }, 2500);
     }
 
     // New Human function
