@@ -28,15 +28,15 @@ export default {
     // ******************************************************************
     // ISSUE
     // ******************************************************************
-    // right now authentication does not work as intended
+    // Authentication does not work as intended
     // localStorage stores an empty object and that's being accepted by the app as a "logged in user"
-    // instead, the app should try to retrieve a logged user and otherwise pull up the login screen
+    // instead, the app should try to retrieve a logged user and otherwise pull up the login screen.
+    //
+    // Fortunately, the API still requires a valid token, I just don't know where the app is getting it from
     // ******************************************************************
 
     const user = JSON.parse(localStorage.getItem("user"));
-    // otherwise, make app ready
 
-    // ??? need to manually reload for changes in navigation to render
     if (!user) {
       appReady.value = true;
       console.log("No user logged in");
