@@ -44,8 +44,9 @@ export async function loginUser(data) {
     if (!response.ok) {
       throw new Error("error => response not ok");
     } else {
-      const user = await response.json();
-      localStorage.setItem("user", JSON.stringify(user));
+      const user = await response
+      localStorage.setItem("user", JSON.stringify(user.json()));
+      return user
     }
   } catch (e) {
     console.log(e);
