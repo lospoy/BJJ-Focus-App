@@ -61,10 +61,22 @@
         >
         <input
           type="text"
-          required
           class="p-2 text-gray-500 focus:outline-none"
           id="variation"
           v-model="variation"
+          placeholder="Standard"
+        />
+      </div>
+
+      <div class="flex flex-col mb-2">
+        <label for="notes" class="mb-1 text-sm text-at-light-orange"
+          >Notes</label
+        >
+        <input
+          type="text"
+          class="p-2 text-gray-500 focus:outline-none"
+          id="notes"
+          v-model="notes"
         />
       </div>
 
@@ -106,6 +118,7 @@ export default {
     const moveCategory = ref(null)
     const variation = ref(null);
     let variationId = ref('')
+    const notes = ref(null)
 
     // Button success visual feedback
     let buttonColor = ref(null) 
@@ -189,6 +202,11 @@ export default {
     //                                       VARIATION
     // **********************************************************************************************
     const newVariation = async () => {
+        // Set default value
+        if (variation.value === null) {
+            variation.value = "Standard"
+        }
+
         const allVariations = await getAllVariations()
         // Check if variation already exists
         const foundVariation = allVariations.filter(x =>
@@ -259,7 +277,8 @@ export default {
               const res = await createTechnique({
                 position: positionId,
                 move: moveId,
-                variation: variationId
+                variation: variationId,
+                notes: notes.value
               });
               if(res.status === 201) { await buttonSuccess() } // Success button visual feedback
             } catch (error) {
@@ -277,7 +296,7 @@ export default {
     }
 
     return {
-        position, positionId, move, moveId, moveCategory, variation, variationId,
+        position, positionId, move, moveId, moveCategory, variation, variationId, notes,
         passOption, entryOption, escapeOption, submissionOption, sweepOption, takedownOption,
         errorMsg, buttonColor, buttonTitle, buttonSuccess,
         newPosition, newMove, newVariation, newTechnique
