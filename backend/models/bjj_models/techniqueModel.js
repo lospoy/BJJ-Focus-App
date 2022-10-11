@@ -14,9 +14,15 @@ const techniqueSchema = mongoose.Schema(
         },
         variation: {
             type: mongoose.Schema.Types.ObjectId,
-            required: [true, 'Specify variation, at least "standard".'],
+            required: false,
             ref: 'Variation'
         },
+        notes: {
+            type: String,
+            required: false,
+            ref: 'Variation'
+        },
+
     },
     {
         timestamps: true,
