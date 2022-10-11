@@ -9,11 +9,12 @@ const saveTechnique = asyncHandler(async (req, res) => {
         position,
         move,
         variation,
+        notes
     } = req.body
 
-    if (!position || !move || !variation) {
+    if (!position || !move) {
         res.status(400)
-        throw new Error('Please fill in all fields')
+        throw new Error('Please fill in position and move')
     }
 
     // Check if technique exists
@@ -36,6 +37,7 @@ const saveTechnique = asyncHandler(async (req, res) => {
         position: req.body.position,
         move: req.body.move,
         variation: req.body.variation,
+        notes: req.body.notes,
         createdBy: req.user.id
     })
     if (technique) {
@@ -44,6 +46,7 @@ const saveTechnique = asyncHandler(async (req, res) => {
             position: technique.position._id,
             move: technique.move._id,
             variation: technique.variation._id,
+            variation: technique.notes,
             createdBy: req.user.id
         })
     } else {
