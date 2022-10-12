@@ -207,6 +207,7 @@ export default {
         }
         return {
             teacher, student, date, topic, statusMsg, errorMsg,
+            techniqueList, techniqueIdArray,
             getStudent, session, studentList, humanIdList, getDate,
             buttonColor, buttonTitle, buttonSuccess,
         }
