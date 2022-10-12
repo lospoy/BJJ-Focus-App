@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 
 const focusLessonSchema = mongoose.Schema(
     {
-        number: {
-            type: Number,
-            required: [false, 'Number required.'],
-        },
         topic: {
             type: String,
             required: [true, 'Topic required.'],
