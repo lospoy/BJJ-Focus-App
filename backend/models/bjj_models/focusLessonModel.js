@@ -6,10 +6,16 @@ const focusLessonSchema = mongoose.Schema(
             type: String,
             required: [true, 'Topic required.'],
         },
-        techniques: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: [false, 'Techniques required.'],
-            ref: 'Technique',
+        content: {
+            type: Object,
+            required: [true, 'Contents of the lesson required.'],
+            properties: {
+                techniques: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    required: [true, 'Techniques required.'],
+                    ref: 'Technique',
+                },
+            }
         },
     },
     {
