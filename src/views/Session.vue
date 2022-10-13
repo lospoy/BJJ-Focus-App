@@ -55,13 +55,20 @@
                 <label for="topic" class="text-sm text-at-light-orange">
                     Topic
                 </label>
-                <input
-                    type="text"
-                    required
+                <select
                     class="p-2 text-grey-500 focus:outline-none"
                     id="topic"
                     v-model="topic"
-                />
+                >
+                    <option :value="backControl">Back Control</option>
+                    <option :value="mount">Mount</option>
+                    <option :value="halfGuard">Half Guard</option>
+                    <option :value="sideControl">Side Control</option>
+                    <option :value="fullGuard">Full Guard</option>
+                    <option :value="dlrAndRdlr">DLR and RDLR</option>
+                    <option :value="openGuard">Open Guard</option>
+                    <option :value="turtleAndTakedowns">Turtle and Takedowns</option>
+                </select>
                 </div>
 
                 <!-- Student Search -->
@@ -103,6 +110,7 @@
 <script>
 import { ref, reactive } from 'vue'
 import { getAllHumans } from '../services/humanService'
+import { getAllTechniques } from '../services/bjj_services/techniqueService'
 import { saveSession } from '../services/sessionService'
 import moment from 'moment'
 
@@ -118,6 +126,15 @@ export default {
         const statusMsg = ref(null)
         const errorMsg = ref(null)
 
+        const backControl = JSON.stringify({ pass: true })
+        const mount = JSON.stringify({ entry: true })
+        const halfGuard = JSON.stringify({ escape: true })
+        const sideControl = JSON.stringify({ submission: true })
+        const fullGuard = JSON.stringify({ sweep: true })
+        const dlrAndRdlr = JSON.stringify({ takedown: true })
+        const openGuard = JSON.stringify({ takedown: true })
+        const turtleAndTakedowns = JSON.stringify({ takedown: true })
+
         // Human IDs
         const carlosCampoy = '630e5c2da1c2a0bcf246c383'
 
@@ -129,6 +146,8 @@ export default {
         // gotta use reactive when dealing with objects/arrays
         const studentList = reactive([]) // Initialize empty array show attending student list in DOM
         const humanIdList = reactive([]) // Initialize empty array to store human ids for POST
+        const techniqueList = reactive([]) // Initialize empty array to show session techniques in DOM
+        const techniqueIdArray = reactive([]) // Initialize empty array to store technique ids for POST
         
         // Button success visual feedback
         let buttonColor = ref(null)
@@ -155,6 +174,7 @@ export default {
             return date.value
         }
         
+        // Retrieve student in search
         const getStudent = async () => {
             // Retrieve object with all humans in database
             const allHumans = await getAllHumans()
@@ -169,6 +189,23 @@ export default {
             const addHumantoAttendance = async () => humanIdList.push(studentHumanId)
             
             return addStudentToList(), addHumantoAttendance()
+        }
+
+        // Retrieve technique in search
+        const getTechnique = async () => {
+            // Retrieve object with all techniques in database
+            const allTechniques = await getAllTechniques()
+            // Get technique object based on position && move && variation search
+            const foundTechnique = allTechniques.filter(technique => technique.name.first.toLowerCase() === student.value.toLowerCase())
+            // Get student's name as string
+            const techniqueName = foundTechnique.map(x => x.name.first + " " + x.name.last)[0]
+            // Get student's technique ID ***JUST A STRING SO IT WILL NEED TO BE CONVERTED TO OBJECT ID***
+            const techniqueId = foundTechnique.map(x => x._id)[0]
+
+            const addTechniqueToList = async () => techniqueList.push(techniqueName)
+            const addTechniqueIdToArray = async () => techniqueIdArray.push(techniqueId)
+            
+            return addTechniqueToList(), addTechniqueIdToArray()
         }
 
         // Save session
@@ -207,7 +244,8 @@ export default {
         }
         return {
             teacher, student, date, topic, statusMsg, errorMsg,
-            techniqueList, techniqueIdArray,
+            backControl, mount, halfGuard, sideControl, fullGuard, dlrAndRdlr, openGuard, turtleAndTakedowns,
+            techniqueList, techniqueIdArray, getTechnique,
             getStudent, session, studentList, humanIdList, getDate,
             buttonColor, buttonTitle, buttonSuccess,
         }
