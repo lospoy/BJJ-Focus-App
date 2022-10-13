@@ -44,7 +44,7 @@ const saveFocusLesson = asyncHandler(async (req, res) => {
             _id: focusLesson.id,
             topic: focusLesson.topic,
             content: {
-                techniques: focusLesson.content.techniques._id,
+                techniques: focusLesson.content.techniques,
             },
             createdBy: req.user.id
         })
