@@ -5,7 +5,7 @@ const { protect } = require('../../middleware/authMiddleware')
 
 router.get('/', protect, getAllFocusLessons)
 router.post('/create', protect, saveFocusLesson)
-router.put('/update', protect, updateFocusLesson)
+router.put('/update/:id', protect, updateFocusLesson)
 router.get('/:id', protect, getFocusLesson)
 
 module.exports = router
