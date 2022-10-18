@@ -64,8 +64,8 @@
                     <option :value="mount">Mount</option>
                     <option :value="halfGuard">Half Guard</option>
                     <option :value="sideControl">Side Control</option>
-                    <option :value="fullGuard">Full Guard</option>
-                    <option :value="dlrAndRdlr">DLR and RDLR</option>
+                    <option :value="closedGuard">Closed Guard</option>
+                    <option :value="deLaRiva">De La Riva</option>
                     <option :value="openGuard">Open Guard</option>
                     <option :value="turtleAndTakedowns">Turtle and Takedowns</option>
                 </select>
@@ -126,14 +126,26 @@ export default {
         const statusMsg = ref(null)
         const errorMsg = ref(null)
 
-        const backControl = JSON.stringify({ pass: true })
-        const mount = JSON.stringify({ entry: true })
-        const halfGuard = JSON.stringify({ escape: true })
-        const sideControl = JSON.stringify({ submission: true })
-        const fullGuard = JSON.stringify({ sweep: true })
-        const dlrAndRdlr = JSON.stringify({ takedown: true })
-        const openGuard = JSON.stringify({ takedown: true })
-        const turtleAndTakedowns = JSON.stringify({ takedown: true })
+        // ***********************************************************************
+        // ***********************************************************************
+        // ***********************************************************************
+        
+        // THESE MUST PULL THE RELATED LESSON FROM FOCUSLESSONS
+        // LESSONS HAVE AN ID
+        // CURRENTLY VERY BROKEN
+
+        // ***********************************************************************
+        // ***********************************************************************
+        // ***********************************************************************
+
+        const backControl = "63476ca77c0c4048382acb04"
+        const mount = "634ecefa9f04894fb818c868"
+        const halfGuard = "634ed31717260c95e351de8d"
+        const sideControl = "634ed53c17260c95e351decb"
+        const closedGuard = "634ed77517260c95e351dfa3"
+        const deLaRiva = "634edb2337829d81a79048ab"
+        const openGuard = ""
+        const turtleAndTakedowns = ""
 
         // Human IDs
         const carlosCampoy = '630e5c2da1c2a0bcf246c383'
@@ -225,11 +237,7 @@ export default {
                     }, [])
                 },
                 what: {
-                    lesson: {
-                        focus: {
-                            topic: topic.value
-                        }
-                    }
+                    focus: { _id: topic.value }
                 }
               });
                 // Success button visual feedback
@@ -244,7 +252,7 @@ export default {
         }
         return {
             teacher, student, date, topic, statusMsg, errorMsg,
-            backControl, mount, halfGuard, sideControl, fullGuard, dlrAndRdlr, openGuard, turtleAndTakedowns,
+            backControl, mount, halfGuard, sideControl, closedGuard, deLaRiva, openGuard, turtleAndTakedowns,
             techniqueList, techniqueIdArray, getTechnique,
             getStudent, session, studentList, humanIdList, getDate,
             buttonColor, buttonTitle, buttonSuccess,
