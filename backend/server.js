@@ -30,6 +30,7 @@ app.use('/api/techniques', require('./routes/bjj_routes/techniqueRoutes'))
 app.use('/api/techniques/positions', require('./routes/bjj_routes/positionRoutes'))
 app.use('/api/techniques/moves', require('./routes/bjj_routes/moveRoutes'))
 app.use('/api/techniques/variations', require('./routes/bjj_routes/variationRoutes'))
+app.use('/api/focusLessons', require('./routes/bjj_routes/focusLessonRoutes'))
 
 // Serve frontend >> *must* be under the API routes
 if(process.env.NODE_ENV === 'production') {

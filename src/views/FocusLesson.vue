@@ -90,67 +90,89 @@
             All Techniques</h2
             >
             <div class="flex flex-col mb-2">
-                <label for="passList" class="mb-1 text-at-light-orange"
-                >Pass</label
+                <label for="backControlList" class="mb-1 text-sm text-at-light-orange"
+                >Back Control</label
                 >
-                <ul id="passList">
-                    <li v-for="(item, index) of passList" :key="index">
-                        - {{ item }}
+                <ul id="backControlList">
+                    <li v-for="(item, index) of backControlList" :key="index">
+                        {{ item }}
                     </li>
                 </ul>
             </div>
 
             <div class="flex flex-col mb-2">
-                <label for="entryList" class="mb-1 text-at-light-orange"
-                >Entry</label
+                <label for="mountList" class="mb-1 text-sm text-at-light-orange"
+                >Mount</label
                 >
-                <ul id="entryList">
-                    <li v-for="(item, index) of entryList" :key="index">
-                        - {{ item }}
+                <ul id="mountList">
+                    <li v-for="(item, index) of mountList" :key="index">
+                        {{ item }}
                     </li>
                 </ul>
             </div>
 
             <div class="flex flex-col mb-2">
-                <label for="escapeList" class="mb-1 text-at-light-orange"
-                >Escape</label
+                <label for="halfGuardList" class="mb-1 text-sm text-at-light-orange"
+                >Half Guard</label
                 >
-                <ul id="escapeList">
-                    <li v-for="(item, index) of escapeList" :key="index">
-                        - {{ item }}
+                <ul id="halfGuardList">
+                    <li v-for="(item, index) of halfGuardList" :key="index">
+                        {{ item }}
                     </li>
                 </ul>
             </div>
 
             <div class="flex flex-col mb-2">
-                <label for="submissionList" class="mb-1 text-at-light-orange"
-                >Submission</label
+                <label for="sideControlList" class="mb-1 text-sm text-at-light-orange"
+                >Side Control</label
                 >
-                <ul id="submissionList">
-                    <li v-for="(item, index) of submissionList" :key="index">
-                        - {{ item }}
+                <ul id="sideControlList">
+                    <li v-for="(item, index) of sideControlList" :key="index">
+                        {{ item }}
                     </li>
                 </ul>
             </div>
 
             <div class="flex flex-col mb-2">
-                <label for="sweepList" class="mb-1 text-at-light-orange"
-                >Sweep</label
+                <label for="fullGuardList" class="mb-1 text-sm text-at-light-orange"
+                >Full Guard</label
                 >
-                <ul id="sweepList">
-                    <li v-for="(item, index) of sweepList" :key="index">
-                        - {{ item }}
+                <ul id="fullGuardList">
+                    <li v-for="(item, index) of fullGuardList" :key="index">
+                        {{ item }}
                     </li>
                 </ul>
             </div>
 
             <div class="flex flex-col mb-2">
-                <label for="takedownList" class="mb-1 text-at-light-orange"
-                >Takedown</label
+                <label for="dlrAndRdlrList" class="mb-1 text-sm text-at-light-orange"
+                >DLR and RDLR</label
                 >
-                <ul id="takedownList">
-                    <li v-for="(item, index) of takedownList" :key="index">
-                        - {{ item }}
+                <ul id="dlrAndRdlrList">
+                    <li v-for="(item, index) of dlrAndRdlrList" :key="index">
+                        {{ item }}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="flex flex-col mb-2">
+                <label for="openGuardList" class="mb-1 text-sm text-at-light-orange"
+                >Open Guard</label
+                >
+                <ul id="openGuardList">
+                    <li v-for="(item, index) of openGuardList" :key="index">
+                        {{ item }}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="flex flex-col mb-2">
+                <label for="turtleAndTakedownsList" class="mb-1 text-sm text-at-light-orange"
+                >Turtle and Takedowns</label
+                >
+                <ul id="turtleAndTakedownsList">
+                    <li v-for="(item, index) of turtleAndTakedownsList" :key="index">
+                        {{ item }}
                     </li>
                 </ul>
             </div>
@@ -197,19 +219,19 @@ export default {
 
     // All Techniques
     const techniqueList = reactive([])
-    const passList = reactive([])
-    const entryList = reactive([])
-    const escapeList = reactive([])
-    const submissionList = reactive([])
-    const sweepList = reactive([])
-    const takedownList = reactive([])
+    const backControlList = reactive([])
+    const mountList = reactive([])
+    const halfGuardList = reactive([])
+    const sideControlList = reactive([])
+    const fullGuardList = reactive([])
+    const dlrAndRdlrList = reactive([])
+    const openGuardList = reactive([])
+    const turtleAndTakedownsList = reactive([])
     
 
     // **********************************************************************************************
     //                                       RENDER STORED TECHNIQUES
     // **********************************************************************************************
-    console.log(getAllTechniques())
-
     const showAllTechniques = async() => {
         const allTechniques = await getAllTechniques()
         
@@ -224,34 +246,23 @@ export default {
         const moveObject = await getMove(moveId)
         const variationObject = await getVariation(variationId)
 
-        if(moveObject.category.pass === true) {
-            passList.push(`${variationObject.name.english} ${moveObject.name.english} Pass from ${positionObject.name.english}`)
-        }
-
         if(moveObject.category.entry === true) {
-           entryList.push(`${variationObject.name.english} Entry ${moveObject.name.english} from ${positionObject.name.english}`)
+           return `${variationObject.name.english} Entry ${moveObject.name.english} from ${positionObject.name.english}`
         }
 
         if(moveObject.category.escape === true) {
-           escapeList.push(`${variationObject.name.english} ${moveObject.name.english} Escape from ${positionObject.name.english}`)
+           return `${variationObject.name.english} ${moveObject.name.english} Escape from ${positionObject.name.english}`
         }
 
-        if(moveObject.category.submission === true) {
-           submissionList.push(`${variationObject.name.english} ${moveObject.name.english} from ${positionObject.name.english}`)
+        if(moveObject.category.takedown === true) {
+           return `${variationObject.name.english} ${moveObject.name.english} Takedown from ${positionObject.name.english}`
         }
 
-        if(moveObject.category.sweep === true) {
-           sweepList.push(`${variationObject.name.english} ${moveObject.name.english} Sweep from ${positionObject.name.english}`)
+        if(moveObject.category.pass === true) {
+           return `${variationObject.name.english} ${moveObject.name.english} Pass from ${positionObject.name.english}`
         }
-
-        if(moveObject.category.takedown === true && positionObject.name.english === "Standing") {
-            takedownList.push(`${variationObject.name.english} ${moveObject.name.english} Takedown`)
-        } else if (moveObject.category.takedown === true) {
-            takedownList.push(`${variationObject.name.english} ${moveObject.name.english} Takedown from ${positionObject.name.english}`)
-        }
-
-
-
+        
+        return `${variationObject.name.english} ${moveObject.name.english} from ${positionObject.name.english}`
     }
     
 
@@ -275,11 +286,16 @@ export default {
     // **********************************************************************************************
     //                                       POSITION
     // **********************************************************************************************
-    const newPosition = async () => {
+    const findPosition = async() => {
         const allPositions = await getAllPositions()
-
         const foundPosition = allPositions.filter(x =>
             x.name.english.toLowerCase() === position.value.toLowerCase())[0]
+    
+        return foundPosition
+    }
+
+    const newPosition = async () => {
+        const foundPosition = findPosition()
 
         if(foundPosition) {
             positionId = foundPosition._id // if found, assign id to global variable
@@ -434,7 +450,7 @@ export default {
         position, positionId, move, moveId, moveCategory, variation, variationId, notes,
         passOption, entryOption, escapeOption, submissionOption, sweepOption, takedownOption,
         techniqueList, showAllTechniques, getMove, getPosition, getVariation, decryptTechnique,
-        passList, entryList, escapeList, submissionList, sweepList, takedownList,
+        backControlList, mountList, halfGuardList, sideControlList, fullGuardList, dlrAndRdlrList, openGuardList, turtleAndTakedownsList,
         errorMsg, buttonColor, buttonTitle, buttonSuccess,
         newPosition, newMove, newVariation, newTechnique
     };

@@ -37,12 +37,12 @@ const sessionSchema = mongoose.Schema(
         // gi or nogi
         what: {
             type: Object,
-            required: [true, 'Type of session "what" required.'],
+            required: [false, 'Type of session "what" required.'],
             properties: {
-                lesson: {
+                focus: {
                     type: mongoose.Schema.Types.ObjectId,
                     required: false,
-                    ref: 'Curriculum',
+                    ref: 'FocusLesson',
                 },
                 // seminar: {
 

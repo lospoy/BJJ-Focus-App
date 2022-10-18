@@ -2,18 +2,20 @@ const mongoose = require('mongoose')
 
 const focusLessonSchema = mongoose.Schema(
     {
-        number: {
-            type: Number,
-            required: [false, 'Number required.'],
-        },
         topic: {
             type: String,
             required: [true, 'Topic required.'],
         },
-        techniques: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: [false, 'Techniques required.'],
-            ref: 'Technique',
+        content: {
+            type: Object,
+            required: [true, 'Contents of the lesson required.'],
+            properties: {
+                techniques: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    required: [true, 'Techniques required.'],
+                    ref: 'Technique',
+                },
+            }
         },
     },
     {
