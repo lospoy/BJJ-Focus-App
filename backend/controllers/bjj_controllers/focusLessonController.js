@@ -106,7 +106,7 @@ const getAllFocusLessons = asyncHandler(async (req, res) => {
 })
 
 // @desc    Update focusLesson data
-// @route   PUT /api/focusLessons/:id
+// @route   PUT /api/focusLessons/update/:id
 // @access  Private
 const updateFocusLesson = asyncHandler(async (req, res) => {
     const focusLesson = await FocusLesson.findById(req.params.id)
