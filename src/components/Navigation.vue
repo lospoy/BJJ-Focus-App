@@ -5,7 +5,7 @@
     >
       <div class="flex items-center gap-x-4">
         <img
-          class="w-20"
+          class="w-32"
           src="../assets/vector/default-monochrome-white.svg"
           alt="bjj focus logo"
         />
