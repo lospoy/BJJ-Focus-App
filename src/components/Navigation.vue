@@ -34,6 +34,7 @@ import { useRouter } from "vue-router";
 import { Slide } from "vue3-burger-menu"
 
 export default {
+    // burger menu based on vue3-burger-menu
     components: {
         Slide
     },
