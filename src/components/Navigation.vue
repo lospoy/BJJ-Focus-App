@@ -63,11 +63,11 @@ export default {
     cursor: pointer;
   }
   .bm-burger-bars {
-    background-color: #ffffff;
+    background-color: #ffffff !important;
   }
   .line-style {
     position: absolute;
-    height: 15%;
+    height: 15% !important;
     left: 0;
     right: 0;
   }
@@ -78,7 +78,7 @@ export default {
     cursor: pointer;
   }
   .bm-cross {
-    background: #cc7317;
+    background: #cc7317 !important;
   }
   .bm-cross-button {
     height: 24px;
@@ -91,17 +91,17 @@ export default {
     z-index: 1000; /* Stay on top */
     top: 0;
     right: 0;
-    background-color: rgb(253, 253, 255); /* Black*/
+    background-color: rgb(253, 253, 255) !important; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.4s; /*0.5 second transition effect to slide in the sidenav*/
+    transition: 0.4s !important; /*0.5 second transition effect to slide in the sidenav*/
   }
 
   .bm-overlay {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.4) !important;
   }
   .bm-item-list {
-    color: #cc7317;
+    color: #cc7317 !important;
     margin-left: 10%;
     font-size: 20px;
   }
