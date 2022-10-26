@@ -52,6 +52,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { loginUser } from "../services/userService";
+import store from "../store/store"
 
 // components import
 import Button from "../components/Button.vue";
@@ -87,7 +88,10 @@ export default {
           password: password.value,
         });
 
+        const user = await res.json()
+
         if (res.status === 200) {
+            localStorage.setItem("BJJFocusUser", JSON.stringify(user));
             setTimeout(() => {
                 router.push({ name: "ProgressView" })
             }, 600);
