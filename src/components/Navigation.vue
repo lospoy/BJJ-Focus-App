@@ -10,6 +10,12 @@
           alt="bjj focus logo"
         />
       </div>
+      <!-- DELETE -->
+      Debugging
+      <!-- DELETE -->
+      <span class="flex flex-2 justify-end">{{user.email}}{{user.role}}</span>
+      <!-- DELETE -->
+      <!-- DELETE -->
       <Slide
         right
         :closeOnNavigation="true"
