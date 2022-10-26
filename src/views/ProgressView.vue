@@ -57,8 +57,8 @@ export default {
     // count how many weeks from start date
     // pass in variable below
 
-    // Counts how many weeks have passed since start date and "today"
-    const countWeeksPassed = _ => {
+    // Gets the week number we are currently on since the startDate
+    const currentWeekNumber = _ => {
          // Day the classes started
         const startDate = new Date("September 12, 2022 18:00:00")
         // Today's date
@@ -70,13 +70,13 @@ export default {
         return diffInWeeks
     }
 
-    const weeksFromStartToCurrent = Math.floor(countWeeksPassed() % 8)
-    const weeksFromStartToNext = Math.floor(countWeeksPassed() +1 % 8)
+    const currentTopicArrayIndex = Math.floor(currentWeekNumber() % 8)
+    const nextTopicArrayIndex = Math.floor(((currentWeekNumber() +1) % 8))
 
-    currentTopic.value = weeklyTopicList[weeksFromStartToCurrent]
-    nextTopic.value = weeklyTopicList[weeksFromStartToNext]
+    currentTopic.value = weeklyTopicList[currentTopicArrayIndex]
+    nextTopic.value = weeklyTopicList[nextTopicArrayIndex]
 
-    return { errorMsg, weeklyTopicList, currentTopic, nextTopic, countWeeksPassed };
+    return { errorMsg, weeklyTopicList, currentTopic, nextTopic, currentWeekNumber };
   },
 };
 </script>
