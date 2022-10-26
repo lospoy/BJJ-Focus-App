@@ -8,7 +8,7 @@
 <script>
 import Navigation from "./components/Navigation.vue";
 import { ref } from "vue";
-import store from "./store/index.js";
+import store from "./store/store.js";
 import { useRouter } from "vue-router";
 import { getLoggedUser } from "./services/userService"
 
