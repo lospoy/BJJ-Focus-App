@@ -1,16 +1,15 @@
 <template>
   <div v-if="appReady" class="min-h-full font-Poppins box-border">
-    <Navigation />
+    <Navigation :key="state" />
     <router-view />
   </div>
 </template>
 
 <script>
 import Navigation from "./components/Navigation.vue";
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import store from "./store/store.js";
 import { useRouter } from "vue-router";
-import { getLoggedUser } from "./services/userService"
 
 export default {
   components: {
@@ -22,20 +21,8 @@ export default {
     const appReady = ref(null);
     const router = useRouter()
 
-    // Check if user is already logged in
-    // const user = getLoggedUser()
-
-    // ******************************************************************
-    // ISSUE
-    // ******************************************************************
-    // Authentication does not work as intended
-    // localStorage stores an empty object and that's being accepted by the app as a "logged in user"
-    // instead, the app should try to retrieve a logged user and otherwise pull up the login screen.
-    //
-    // Fortunately, the API still requires a valid token, I just don't know where the app is getting it from
-    // ******************************************************************
-
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+    const state = store.methods.setUser(user)
 
     if (!user) {
       appReady.value = true;
@@ -48,7 +35,7 @@ export default {
       router.push({ name: "ProgressView" });
     }
 
-    return { appReady, user };
+    return { appReady, user, state };
   },
 };
 </script>
