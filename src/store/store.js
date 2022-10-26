@@ -10,7 +10,9 @@ const methods = {
   setUser(payload) {
     state.user = payload ? payload : null;
   },
-  
+  getUser() {
+    return JSON.stringify(state.user)
+  }
 };
 
 export default {
