@@ -11,9 +11,9 @@
         />
       </div>
       <!-- DELETE -->
-      Debugging
+      Development mode
       <!-- DELETE -->
-      <span class="flex flex-2 justify-end">{{user.email}}{{user.role}}</span>
+      <span class="flex flex-2 justify-end" v-if="user">{{store.state.user.role}}{{store.state.user.email}}</span>
       <!-- DELETE -->
       <!-- DELETE -->
       <Slide
@@ -28,7 +28,7 @@
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Session' }">Session</router-link>
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'UserProfile' }">My Profile</router-link>
         <router-link v-if="!user" class="cursor-pointer" :to="{ name: 'Login' }">Login</router-link>
-        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Login' }">Logout</router-link>
+        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Login' }" @click="logout">Logout</router-link>
       </Slide>
     </nav>
   </header>
@@ -38,6 +38,7 @@
 import { logoutUser } from "../services/userService";
 import { useRouter } from "vue-router";
 import { Slide } from "vue3-burger-menu"
+import store from "../store/store"
 
 export default {
     components: {
@@ -46,13 +47,15 @@ export default {
 
     setup() {
       const router = useRouter();
-      const user = JSON.parse(localStorage.getItem("user")) 
+      const user = store.state.user
+
       // Logout function
       const logout = async () => {
-        await logoutUser();
+        logoutUser();
+        store.methods.setUser()
         router.push({ name: "Login" });
       };    
-      return { logout, user, Slide };
+      return { logout, Slide, store, user };
     },
 
 };
