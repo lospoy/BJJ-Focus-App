@@ -39,6 +39,7 @@ import { logoutUser } from "../services/userService";
 import { useRouter } from "vue-router";
 import { Slide } from "vue3-burger-menu"
 import store from "../store/store"
+import { inject } from "vue"        // required for the emitter (EventBus)
 
 export default {
     components: {
@@ -46,16 +47,28 @@ export default {
     },
 
     setup() {
+    // Emitter (EventBus) this section emits an event that can be listened to globally
+    const emitter = inject('emitter')
+    const emitLogout = _ => {
+        emitter.emit('userHasLoggedOut', true)
+    }
+
       const router = useRouter();
-      const user = store.state.user
+      let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
       // Logout function
       const logout = async () => {
         logoutUser();
-        store.methods.setUser()
-        router.push({ name: "Login" });
+        store.methods.setUser(user)
+        
+        setTimeout(() => {
+            emitLogout()
+        }, 1);
+        setTimeout(() => {
+            router.push({ name: "Login" });
+        }, 700);
       };    
-      return { logout, Slide, store, user };
+      return { logout, Slide, store, user, emitLogout };
     },
 
 };
