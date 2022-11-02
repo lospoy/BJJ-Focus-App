@@ -24,6 +24,7 @@ import { ref } from "vue";
 export default {
   name: "progressView",
   setup() {
+
     // Variables
     const errorMsg = ref(null);
     const currentTopic = ref(null);

@@ -24,7 +24,7 @@ export async function createUser(data) {
 
 export async function getAuthHeader() {
   // return authorization header with jwt token
-  let user = JSON.parse(localStorage.getItem("user"));
+  let user = JSON.parse(localStorage.getItem("BJJFocusUser"));
 
   if (user && user.token) {
     return { "Authorization": "Bearer " + user.token };
@@ -44,9 +44,7 @@ export async function loginUser(data) {
     if (!response.ok) {
       throw new Error("error => response not ok");
     } else {
-      const user = await response.json()
-      localStorage.setItem("user", JSON.stringify(user));
-      return user
+      return response
     }
   } catch (e) {
     console.log(e);
@@ -59,12 +57,12 @@ export async function loginUser(data) {
 
 // Logout user
 export async function logoutUser() {
-  localStorage.removeItem("user");
+  return localStorage.removeItem("BJJFocusUser");
 }
 
 // Get user object
 export async function getLoggedUser() {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/me', {
