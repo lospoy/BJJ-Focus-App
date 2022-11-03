@@ -6,7 +6,7 @@
       <div class="flex items-center gap-x-4">
         <img
           class="w-32"
-          src="../assets/vector/default-monochrome-white.svg"
+          src="../assets/vector/default-gold-white.svg"
           alt="bjj focus logo"
         />
       </div>
@@ -28,6 +28,7 @@
         <!-- login/logout routes -->
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Login' }" @click="logout">Logout</router-link>
         <router-link v-if="!user" class="cursor-pointer" :to="{ name: 'Login' }">Login</router-link>
+        <router-link v-if="!user" class="cursor-pointer" :to="{ name: 'Register' }">Sign up</router-link>
 
         <!-- not in use currently -->
         <!-- <router-link v-if="user" class="cursor-pointer" :to="{ name: 'UserProfile' }">My Profile</router-link> -->
@@ -109,7 +110,7 @@ export default {
     cursor: pointer;
   }
   .bm-cross {
-    background: #cc7317 !important;
+    background: #d85a3b !important;
   }
   .bm-cross-button {
     height: 24px;
@@ -122,17 +123,13 @@ export default {
     z-index: 1000; /* Stay on top */
     top: 0;
     right: 0;
-    background-color: rgb(253, 253, 255) !important; /* Black*/
+    background-color: #fff4f0 !important; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.4s !important; /*0.5 second transition effect to slide in the sidenav*/
   }
-
-  .bm-overlay {
-    background: rgba(0, 0, 0, 0.4) !important;
-  }
   .bm-item-list {
-    color: #cc7317 !important;
+    color: #d85a3b !important;
     margin-left: 10%;
     font-size: 20px;
   }
