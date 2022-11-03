@@ -10,24 +10,27 @@
           alt="bjj focus logo"
         />
       </div>
-      <!-- DELETE -->
-      <!-- DELETE -->
-      <!-- <span class="flex flex-2 justify-end" v-if="user">{{store.state.user.role}}{{store.state.user.email}}</span> -->
-      <!-- DELETE -->
-      <!-- DELETE -->
+      <span class="flex flex-2 justify-end" v-if="user">{{store.state.user.role}}{{store.state.user.email}}</span>
       <Slide
         right
         :closeOnNavigation="true"
         width="200"
         class="flex flex-1 justify-end gap-x-10"
       >
-        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'ProgressView' }">Progress</router-link>
-        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'NewHuman' }">Human</router-link>
-        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Technique' }">Technique</router-link>
-        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Session' }">Session</router-link>
-        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'UserProfile' }">My Profile</router-link>
-        <router-link v-if="!user" class="cursor-pointer" :to="{ name: 'Login' }">Login</router-link>
+        <!-- student routes -->
+        <router-link v-if="user && student" class="cursor-pointer" :to="{ name: 'ProgressView' }">Progress</router-link>
+
+        <!-- admin routes -->
+        <router-link v-if="user && admin" class="cursor-pointer" :to="{ name: 'NewHuman' }">Human</router-link>
+        <router-link v-if="user && admin" class="cursor-pointer" :to="{ name: 'Technique' }">Technique</router-link>
+        <router-link v-if="user && admin" class="cursor-pointer" :to="{ name: 'Session' }">Session</router-link>
+        
+        <!-- login/logout routes -->
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Login' }" @click="logout">Logout</router-link>
+        <router-link v-if="!user" class="cursor-pointer" :to="{ name: 'Login' }">Login</router-link>
+
+        <!-- not in use currently -->
+        <!-- <router-link v-if="user" class="cursor-pointer" :to="{ name: 'UserProfile' }">My Profile</router-link> -->
       </Slide>
     </nav>
   </header>
@@ -38,7 +41,7 @@ import { logoutUser } from "../services/userService";
 import { useRouter } from "vue-router";
 import { Slide } from "vue3-burger-menu"
 import store from "../store/store"
-import { inject } from "vue"        // required for the emitter (EventBus)
+import { inject, ref } from "vue"        // required for the emitter (EventBus)
 
 export default {
     components: {
@@ -52,8 +55,15 @@ export default {
         emitter.emit('userHasLoggedOut', true)
     }
 
-      const router = useRouter();
-      let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+    const router = useRouter();
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+    const admin = ref(null)
+    const student = ref(null)
+
+    if(user) {
+        admin.value = user.role.admin
+        student.value = user.role.student
+    }
 
       // Logout function
       const logout = async () => {
@@ -67,7 +77,7 @@ export default {
             router.push({ name: "Login" });
         }, 700);
       };    
-      return { logout, Slide, store, user, emitLogout };
+      return { logout, Slide, store, user, admin, student, emitLogout };
     },
 
 };
