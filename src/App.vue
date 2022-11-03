@@ -27,11 +27,9 @@ export default {
     // Listener (EventBus) this section listens to the emitters
     const emitter = inject('emitter')
     emitter.on('userHasLoggedIn', (value) => {
-        console.log('userHasLoggedIn received!', `value: ${value}`)
         navRerenderKey.value += 1
     })
     emitter.on('userHasLoggedOut', (value) => {
-        console.log('userHasLoggedOut received!', `value: ${value}`)
         navRerenderKey.value += 1
     })
     
