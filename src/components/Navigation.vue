@@ -10,6 +10,11 @@
           alt="bjj focus logo"
         />
       </div>
+      <!-- DELETE -->
+      <!-- DELETE -->
+      <!-- <span class="flex flex-2 justify-end" v-if="user">{{store.state.user.role}}{{store.state.user.email}}</span> -->
+      <!-- DELETE -->
+      <!-- DELETE -->
       <Slide
         right
         :closeOnNavigation="true"
@@ -22,7 +27,7 @@
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Session' }">Session</router-link>
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'UserProfile' }">My Profile</router-link>
         <router-link v-if="!user" class="cursor-pointer" :to="{ name: 'Login' }">Login</router-link>
-        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Login' }">Logout</router-link>
+        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Login' }" @click="logout">Logout</router-link>
       </Slide>
     </nav>
   </header>
@@ -32,6 +37,8 @@
 import { logoutUser } from "../services/userService";
 import { useRouter } from "vue-router";
 import { Slide } from "vue3-burger-menu"
+import store from "../store/store"
+import { inject } from "vue"        // required for the emitter (EventBus)
 
 export default {
     components: {
@@ -39,14 +46,28 @@ export default {
     },
 
     setup() {
+    // Emitter (EventBus) this section emits an event that can be listened to globally
+    const emitter = inject('emitter')
+    const emitLogout = _ => {
+        emitter.emit('userHasLoggedOut', true)
+    }
+
       const router = useRouter();
-      const user = JSON.parse(localStorage.getItem("user")) 
+      let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+
       // Logout function
       const logout = async () => {
-        await logoutUser();
-        router.push({ name: "Login" });
+        logoutUser();
+        store.methods.setUser(user)
+        
+        setTimeout(() => {
+            emitLogout()
+        }, 1);
+        setTimeout(() => {
+            router.push({ name: "Login" });
+        }, 700);
       };    
-      return { logout, user, Slide };
+      return { logout, Slide, store, user, emitLogout };
     },
 
 };
