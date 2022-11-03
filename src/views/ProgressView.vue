@@ -19,8 +19,6 @@
 <script>
 import { ref } from "vue";
 
-// components import
-
 export default {
   name: "progressView",
   setup() {
@@ -31,31 +29,15 @@ export default {
 
     // One topic per week
     const weeklyTopicList = [
-        "Back Control",     // semana 1
-        "Half Guard",       // semana 2
-        "Side Control",     // semana 3
-        "Closed Guard",     // ...
+        "Back Control",
+        "Half Guard",
+        "Side Control",
+        "Closed Guard",
         "Mount",
         "De la Riva",
-        "Open Guard & North-South", // estamos aqui semana 7
+        "Open Guard & North-South",
         "Turtle and Takedowns"  
     ]
-
-    // Cambiar el 6 por una variable
-    // Cambio basado en Date() o algo asi
-    // Al final del array, vuelve al principio
-
-    // Sistema tiene que ser consciente del dia actual
-    // Evento al cambio de fecha -> checkeo una vez, si el dia es X -> cambio
-    // Hay que almacenar el numero de la semana de lo que llevamos de curso
-
-    // Crear cuentaSemana en base de datos
-    // Cada vez que pasa una semana cuentaSemana+1
-    // get cuentaSemana y pasarlo en la funcion de abajo
-
-    // Set a start date
-    // count how many weeks from start date
-    // pass in variable below
 
     // Gets the week number we are currently on since the startDate
     const currentWeekNumber = _ => {
