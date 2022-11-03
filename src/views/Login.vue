@@ -96,7 +96,6 @@ export default {
         });
 
         const userData = await res.json()
-        console.log(res.status)
 
         if (res.status === 200) {
             localStorage.setItem("BJJFocusUser", JSON.stringify(userData));

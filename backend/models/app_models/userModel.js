@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema(
             type: String,
             required: [true, 'Please add a password'],
         },
-        permissions: {
+        role: {
             type: Object,
             required: false,
             properties: {

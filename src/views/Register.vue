@@ -102,9 +102,8 @@ export default {
           await createUser({
             email: email.value,
             password: password.value,
-            human: {
-              _id: human.value,
-            },
+            human: { _id: human.value },
+            role: { student: true }
           });
           router.push({ name: "Login" });
         } catch (error) {
