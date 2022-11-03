@@ -1,5 +1,5 @@
 <template>
-  <div v-if="appReady" class="min-h-full font-Poppins box-border">
+  <div v-if="appReady" class="min-h-full font-Poppins box-border bg-at-light-orange">
     <Navigation :key="navRerenderKey" />
     <router-view />
   </div>
