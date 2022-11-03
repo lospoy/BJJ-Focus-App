@@ -10,7 +10,7 @@
           alt="bjj focus logo"
         />
       </div>
-      <span class="flex flex-2 justify-end" v-if="user">{{store.state.user.role}}{{store.state.user.email}}</span>
+      <!-- <span class="flex flex-2 justify-end" v-if="user">{{store.state.user.role}}{{store.state.user.email}}</span> -->
       <Slide
         right
         :closeOnNavigation="true"
