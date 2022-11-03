@@ -6,8 +6,9 @@ module.exports = {
       colors: {
         "at-faint-orange": "#fe6945",
         "at-light-orange": "#d85a3b",
-        "at-orange": "#d85a3b",
-        "light-grey": "#f1f1f1",
+        "at-orange": "#a4442d",
+        "light-grey": "#f7f7f7",
+        "gold": "#d5c73a"
       },
     },
     fontFamily: {
