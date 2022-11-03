@@ -42,7 +42,7 @@
 
       <router-link class="text-sm mt-6 text-center" :to="{ name: 'Register' }">
         Don't have an account?
-        <span class="text-at-light-orange">Register</span>
+        <span class="text-at-light-orange">Sign up</span>
       </router-link>
     </form>
   </div>
