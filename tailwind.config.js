@@ -8,7 +8,7 @@ module.exports = {
         "at-light-orange": "#d85a3b",
         "at-orange": "#a4442d",
         "light-grey": "#f7f7f7",
-        "gold": "#d5c73a"
+        "gold": "#d8c93b"
       },
     },
     fontFamily: {
