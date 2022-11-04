@@ -8,6 +8,7 @@ module.exports = {
         "at-light-orange": "#d85a3b",
         "at-orange": "#a4442d",
         "light-grey": "#f7f7f7",
+        "dark-grey": "#3d4250",
         "gold": "#d8c93b"
       },
     },
