@@ -67,7 +67,7 @@
                     <option :value="closedGuard">Closed Guard</option>
                     <option :value="deLaRiva">De La Riva</option>
                     <option :value="openGuard">Open Guard</option>
-                    <option :value="turtleAndTakedowns">Turtle and Takedowns</option>
+                    <option :value="turtle">Turtle</option>
                 </select>
                 </div>
 
@@ -145,7 +145,7 @@ export default {
         const closedGuard = "634ed77517260c95e351dfa3"
         const deLaRiva = "634edb2337829d81a79048ab"
         const openGuard = ""
-        const turtleAndTakedowns = ""
+        const turtle = ""
 
         // Human IDs
         const carlosCampoy = '630e5c2da1c2a0bcf246c383'
@@ -252,7 +252,7 @@ export default {
         }
         return {
             teacher, student, date, topic, statusMsg, errorMsg,
-            backControl, mount, halfGuard, sideControl, closedGuard, deLaRiva, openGuard, turtleAndTakedowns,
+            backControl, mount, halfGuard, sideControl, closedGuard, deLaRiva, openGuard, turtle,
             techniqueList, techniqueIdArray, getTechnique,
             getStudent, session, studentList, humanIdList, getDate,
             buttonColor, buttonTitle, buttonSuccess,
