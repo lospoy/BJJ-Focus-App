@@ -67,12 +67,12 @@ const getHuman = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET human data
     // Must be admin, teacher, or the user's human
-    const isAdmin = req.user.permissions.admin === true
-    const isTeacher = req.user.permissions.teacher === true
-    const studentIsUser = human.user ? human.user.toString() : ''
-    const isTheStudentItself = studentIsUser === req.user.id
+    // **** Could be implemented later, as right now only your own ID can be passed in the request
+    // const isAdmin = req.user.role.admin === true
+    // const isTeacher = req.user.role.teacher === true
+    // const isTheSameHuman = JSON.stringify(req.user.human) === req.params.id
 
-    if(isAdmin || isTeacher || isTheStudentItself) {
+    if(req.user) {
         res.status(200).json(human)
     } else {
         res.status(401)
@@ -88,8 +88,8 @@ const getAllHumans = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET human data
     // Must be admin, teacher, or the user's human
-    const isAdmin = req.user.permissions.admin === true
-    const isTeacher = req.user.permissions.teacher === true
+    const isAdmin = req.user.role.admin === true
+    const isTeacher = req.user.role.teacher === true
 
     if(isAdmin || isTeacher) {
         res.status(200).json(allHumans)
@@ -118,11 +118,10 @@ const updateHuman = asyncHandler(async (req, res) => {
 
     // Check for user permission to update human
     // Must be admin, teacher, or the user's human
-    const isAdmin = req.user.permissions.admin === true
-    const isTeacher = req.user.permissions.teacher === true
+    const isAdmin = req.user.role.admin === true
+    const isTeacher = req.user.role.teacher === true
     const studentIsUser = human.user ? human.user.toString() : ''
     const isTheStudentItself = studentIsUser === req.user.id
-    
 
     if( isAdmin || isTeacher || isTheStudentItself ) {
             const updatedHuman = await Human.findByIdAndUpdate(req.params.id, req.body, {
