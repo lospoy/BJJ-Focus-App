@@ -4,11 +4,9 @@
       class="container py-5 px-4 flex flex-column gap-4 items-center sm:flex-row"
     >
       <div class="flex items-center gap-x-4">
-        <img
-          class="w-32"
-          src="../assets/vector/default-gold-white.svg"
-          alt="bjj focus logo"
-        />
+        <a href="http://www.bjjfocus.com">
+            <img class="w-32" src="../assets/vector/default-gold-white.svg" alt="bjj focus logo"/>
+        </a>
       </div>
       <!-- <span class="flex flex-2 justify-end" v-if="user">{{store.state.user.role}}{{store.state.user.email}}</span> -->
       <Slide
@@ -143,4 +141,5 @@ export default {
     font-weight: 700;
     color: white;
   }
+
 </style>
