@@ -4,26 +4,25 @@
       class="container py-5 px-4 flex flex-column gap-4 items-center sm:flex-row"
     >
       <div class="flex items-center gap-x-4">
-        <img
-          class="w-32"
-          src="../assets/vector/default-gold-white.svg"
-          alt="bjj focus logo"
-        />
+        <a href="http://www.bjjfocus.com">
+            <img class="w-32" src="../assets/vector/default-gold-white.svg" alt="bjj focus logo"/>
+        </a>
       </div>
-      <!-- <span class="flex flex-2 justify-end" v-if="user">{{store.state.user.role}}{{store.state.user.email}}</span> -->
       <Slide
         right
         :closeOnNavigation="true"
         width="200"
-        class="flex flex-1 justify-end gap-x-10"
+        class="flex flex-1 justify-end"
       >
+        <span class="rounded-md bg-at-light-orange mr-7 text-white p-1.5 mb-4 justify-center" v-if="user">{{ humanName }}</span>
+        
         <!-- student routes -->
-        <router-link v-if="user && student" class="cursor-pointer" :to="{ name: 'ProgressView' }">Progress</router-link>
+        <router-link v-if="user && isStudent" class="cursor-pointer" :to="{ name: 'ProgressView' }">Progress</router-link>
 
         <!-- admin routes -->
-        <router-link v-if="user && admin" class="cursor-pointer" :to="{ name: 'NewHuman' }">Human</router-link>
-        <router-link v-if="user && admin" class="cursor-pointer" :to="{ name: 'Technique' }">Technique</router-link>
-        <router-link v-if="user && admin" class="cursor-pointer" :to="{ name: 'Session' }">Session</router-link>
+        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'NewHuman' }">Human</router-link>
+        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'Technique' }">Technique</router-link>
+        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'Session' }">Session</router-link>
         
         <!-- login/logout routes -->
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Login' }" @click="logout">Logout</router-link>
@@ -42,6 +41,7 @@ import { logoutUser } from "../services/userService";
 import { useRouter } from "vue-router";
 import { Slide } from "vue3-burger-menu"
 import store from "../store/store"
+import { getHuman } from "../services/humanService"
 import { inject, ref } from "vue"        // required for the emitter (EventBus)
 
 export default {
@@ -50,20 +50,30 @@ export default {
     },
 
     setup() {
+    // VARIABLES
+    const router = useRouter();
+    const humanName = ref(null)
+    const isAdmin = ref(null)
+    const isStudent = ref(null)
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+
+    // On-login the app does some checks
+    if(user) {
+        // Gets currently logged human's name and assigns to the variable
+        const getHumanName = async () => {
+            const res = await getHuman(user.human)
+            humanName.value = res.name.first
+        }
+        getHumanName()
+        // If user logs in, checks for their role to display relevant routes
+        isAdmin.value = user.role.admin
+        isStudent.value = user.role.student
+    }
+
     // Emitter (EventBus) this section emits an event that can be listened to globally
     const emitter = inject('emitter')
     const emitLogout = _ => {
         emitter.emit('userHasLoggedOut', true)
-    }
-
-    const router = useRouter();
-    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
-    const admin = ref(null)
-    const student = ref(null)
-
-    if(user) {
-        admin.value = user.role.admin
-        student.value = user.role.student
     }
 
       // Logout function
@@ -78,7 +88,7 @@ export default {
             router.push({ name: "Login" });
         }, 700);
       };    
-      return { logout, Slide, store, user, admin, student, emitLogout };
+      return { logout, Slide, store, user, isAdmin, isStudent, emitLogout, humanName };
     },
 
 };
@@ -143,4 +153,5 @@ export default {
     font-weight: 700;
     color: white;
   }
+
 </style>

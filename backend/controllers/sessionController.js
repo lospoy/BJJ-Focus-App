@@ -29,8 +29,8 @@ const saveSession = asyncHandler(async (req, res) => {
     // ************ TBD
     // Check for user permission to save session
     // Must be admin or teacher
-    // const isAdmin = req.user.permissions.admin === true
-    // const isTeacher = req.user.permissions.teacher === true    
+    // const isAdmin = req.user.role.admin === true
+    // const isTeacher = req.user.role.teacher === true    
     // if(isAdmin || isTeacher) {}
   
     // Create session
@@ -83,8 +83,8 @@ const getSession = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET session data
     // Must be admin, teacher, or the user's session
-    const isAdmin = req.user.permissions.admin
-    const isTeacher = req.user.permissions.teacher
+    const isAdmin = req.user.role.admin
+    const isTeacher = req.user.role.teacher
     const studentIsUser = session.user ? session.user.toString() : ''
     const isTheStudentItself = studentIsUser === req.user.id
 
@@ -104,10 +104,10 @@ const getAllSessions = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET session data
     // Must be admin or teacher
-    const isAdmin = req.user.permissions.admin
-    const isTeacher = req.user.permissions.teacher
+    const isAdmin = req.user.role.admin
+    const isTeacher = req.user.role.teacher
 
-    if(isAdmin || isTeacher) {
+    if(req.user) {
         res.status(200).json(allSessions)
     } else {
         res.status(401)
@@ -134,8 +134,8 @@ const updateSession = asyncHandler(async (req, res) => {
 
     // Check for user permission to update session
     // Must be admin, teacher, or the user's session
-    const isAdmin = req.user.permissions.admin === true
-    const isTeacher = req.user.permissions.teacher === true
+    const isAdmin = req.user.role.admin === true
+    const isTeacher = req.user.role.teacher === true
     const studentIsUser = session.user ? session.user.toString() : ''
     const isTheStudentItself = studentIsUser === req.user.id
     

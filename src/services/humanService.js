@@ -12,7 +12,7 @@ export async function getAllHumans() {
     //   });
 
     // this one works
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/humans', {
@@ -21,8 +21,7 @@ export async function getAllHumans() {
       });
 
     if (!response.ok) {
-      throw new Error("error => response not ok");
-    } else {
+      throw new Error("error => response not ok");    } else {
       return await response.json();
     }
   } catch (e) {
@@ -36,7 +35,7 @@ export async function getAllHumans() {
 
 // GET HUMAN BY ID
 export async function getHuman(id) {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/humans/' + id, {
@@ -59,7 +58,7 @@ export async function getHuman(id) {
 }
 
 export async function createHuman(data) {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/humans', {

@@ -28,9 +28,11 @@ export default {
     const emitter = inject('emitter')
     emitter.on('userHasLoggedIn', (value) => {
         navRerenderKey.value += 1
+        console.log("(emitter) Logged In")
     })
     emitter.on('userHasLoggedOut', (value) => {
         navRerenderKey.value += 1
+        console.log("(emitter) Logged Out")
     })
     
 

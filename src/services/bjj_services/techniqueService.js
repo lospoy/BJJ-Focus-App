@@ -4,7 +4,7 @@ const API_URL = process.env.VUE_APP_ROOT_API
 // import { getAuthHeader } from './userService';
 
 export async function getAllTechniques() {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/techniques', {
@@ -28,7 +28,7 @@ export async function getAllTechniques() {
 
 // GET HUMAN BY ID
 export async function getTechnique(id) {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/techniques/id/' + id, {
@@ -51,7 +51,7 @@ export async function getTechnique(id) {
 }
 
 export async function createTechnique(data) {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/techniques', {
