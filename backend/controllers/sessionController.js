@@ -107,7 +107,7 @@ const getAllSessions = asyncHandler(async (req, res) => {
     const isAdmin = req.user.role.admin
     const isTeacher = req.user.role.teacher
 
-    if(isAdmin || isTeacher) {
+    if(req.user) {
         res.status(200).json(allSessions)
     } else {
         res.status(401)
