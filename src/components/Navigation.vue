@@ -62,7 +62,7 @@ export default {
         // Gets currently logged human's name and assigns to the variable
         const getHumanName = async () => {
             const res = await getHuman(user.human)
-            humanName.value = res.name.first
+            humanName.value = `${res.name.first} ${res.name.last}`
         }
         getHumanName()
         // If user logs in, checks for their role to display relevant routes
