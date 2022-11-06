@@ -5,9 +5,15 @@
       <p class="text-red-500">{{ errorMsg }}</p>
     </div>
 
-    <!-- TOP SQUARE -->
+    <!-- Hi, user! -->
+    <div class="p-5 rounded-md shadow-lg">
+        <span class="flex text-2xl text-white -mb-2">Hi, {{ humanName }}!</span>
+        <span class="flex text-xl text-white">Focus Sessions: {{ hoursTrained }}</span>
+    </div>
+
+    <!-- HEADER AND TOPICS -->
     <div class="flex flex-col bg-light-grey rounded-md shadow-lg mb-8">
-      <!-- HEADER AND TOPICS -->
+      <!-- content -->
       <div class="self-center flex flex-col p-5">
         <h2 class="self-center text-2xl text-dark-grey -mb-1">This week:</h2>
         <h1 class="self-center text-5xl mb-3 rounded-md bg-at-light-orange text-white py-1.5 px-20 text-white">{{ currentTopic }}</h1>
@@ -16,16 +22,17 @@
       </div>
     </div>
 
-    <!-- BOTTOM SQUARE -->
-    <div class="p-8 bg-light-grey rounded-md shadow-lg">
-    <span class="flex text-2xl text-dark-grey -mb-2">Hi, {{ humanName }}!</span>
-    <span class="flex text-xl text-dark-grey">Focus Sessions: {{ hoursTrained }}</span>
-      <div class="flex flex-col p-6">
-        <span class="text-2xl rounded-md bg-at-light-orange text-white py-1 px-4 mb-1">My Stats</span>
-            <ul class="list-inside space-y-1">
-                <li class="text-xl text-dark-grey">Focus Training: {{ totalTrained }}</li>
+    <!-- MY STATS -->
+    <div class="p-5 bg-light-grey rounded-md shadow-lg flex">
+      <div class="rounded-md bg-at-light-orange">
+        <span class="flex text-xl text-white px-4 py-2 justify-center">My<br>Stats</span>
+      </div>
+      <div class="py-2 pl-4">
+            <ul class="list-inside space-y-1 justify-center">
+                <li class="text-xl text-dark-grey">Latest Session: {{ latestSession }}</li>
                 <li class="text-xl text-dark-grey">First Session: {{ firstSession }}</li>
-                <li class="text-xl text-dark-grey">Latest Session: {{ lastSession }}</li>
+                <li class="text-xl text-dark-grey">Focus Training: {{ totalTrained }}</li>
+                
             </ul>
       </div>
     </div>
@@ -52,7 +59,7 @@ export default {
     const hoursTrained = ref(null)
     const totalTrained = ref(null)
     const firstSession = ref(null)
-    const lastSession = ref(null)
+    const latestSession = ref(null)
 
     const getHumanName = async () => {
         const res = await getHuman(user.human)
@@ -75,15 +82,11 @@ export default {
         "Turtle"  
     ]
 
-    // FUNCTION
-    //
     // Gets the week number we are currently on since the startDate
     const currentWeekNumber = _ => {
          // Day the classes started
         const startDate = new Date("September 12, 2022 18:00:00")
-        // Today's date
         const endDate = new Date()
-
         const diffInMs = new Date(endDate) - new Date(startDate)
         const diffInWeeks = diffInMs / (1000 * 60 * 60 * 24 ) / 7;
 
@@ -100,27 +103,23 @@ export default {
     // END OF CURRENT & NEXT TOPIC
 
 
-    //  **************  TRAINING DATA ************** 
+    //  **************  MY STATS ************** 
     //
     const getTrainingData = async() => {
         const allSessions = await getAllSessions()
-        // GETS HOURS TRAINED BY USER
-        // Sessions are 1 hour by default, so 1 session = 1 hour of training
+
         const sessionsAttendedByUser = allSessions.filter(session => JSON.stringify(session.who.students).includes(user.human))
         hoursTrained.value = sessionsAttendedByUser.length
         
-        // GETS FIRST SESSION ATTENDED BY USER
         const firstSessionAttendedByUser = sessionsAttendedByUser[0]
         firstSession.value = new Date(firstSessionAttendedByUser.when.date).toLocaleDateString()
 
-        // GETS FIRST SESSION ATTENDED BY USER
-        const lastSessionAttendedByUser = sessionsAttendedByUser[sessionsAttendedByUser.length-1]
-        lastSession.value = new Date(lastSessionAttendedByUser.when.date).toLocaleDateString()
+        const latestSessionAttendedByUser = sessionsAttendedByUser[sessionsAttendedByUser.length-1]
+        const diffInDays = new Date(latestSessionAttendedByUser.when.date) - new Date(firstSessionAttendedByUser.when.date) // in miliseconds
+        latestSession.value = `${Math.floor(diffInDays / (1000 * 60 * 60 * 24 ))} days ago`
 
-        // GETS TOTAL MONTHS SINCE FIRST SESSION
         const totalTrainedByUser = new Date() - new Date(firstSessionAttendedByUser.when.date)  // in miliseconds
-        // const diffInWeeks = totalTrainedByUser / (1000 * 60 * 60 * 24 ) / 7
-        const diffInWeeks = 6
+        const diffInWeeks = totalTrainedByUser / (1000 * 60 * 60 * 24 ) / 7
         if (diffInWeeks < 1) {
             totalTrained.value = "Just Started!💪"
         } else if (diffInWeeks >= 1 && diffInWeeks < 8) {
@@ -130,15 +129,13 @@ export default {
         } else {
             totalTrained.value = `${(diffInWeeks/4/12).toFixed(2)} years⚡`
         }
-        // 
-
     }
     getTrainingData()
 
 
     return {
         errorMsg, weeklyTopicList, currentTopic, nextTopic, currentWeekNumber, humanName,
-        hoursTrained, totalTrained, firstSession, lastSession
+        hoursTrained, totalTrained, firstSession, latestSession
     };
   },
 };
