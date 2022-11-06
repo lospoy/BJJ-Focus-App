@@ -15,23 +15,23 @@
     <div class="flex flex-col bg-light-grey rounded-md shadow-lg mb-8">
       <!-- content -->
       <div class="self-center flex flex-col p-5">
-        <h2 class="self-center text-2xl text-dark-grey -mb-1">This week:</h2>
+        <h2 class="self-center text-2xl text-dark-grey -mb-1 uppercase">This week:</h2>
         <h1 class="self-center text-5xl mb-3 rounded-md bg-at-light-orange text-white py-1.5 px-20 text-white">{{ currentTopic }}</h1>
-        <h2 class="self-center text-2xl text-dark-grey -mb-2">Next week:</h2>
-        <h2 class="self-center text-2xl text-dark-grey">{{ nextTopic }}</h2>
+        <h2 class="self-center text-xl text-dark-grey -mb-2 uppercase">Next week:</h2>
+        <h2 class="self-center text-l text-dark-grey uppercase">{{ nextTopic }}</h2>
       </div>
     </div>
 
     <!-- MY STATS -->
     <div class="p-5 bg-light-grey rounded-md shadow-lg flex justify-center">
       <div class="rounded-md bg-at-light-orange">
-        <span class="flex text-xl text-white px-4 py-2 justify-center">My<br>Stats</span>
+        <span class="flex text-xl text-white px-2 py-2">Stats</span>
       </div>
       <div class="py-2 pl-4">
             <ul class="list-inside space-y-1 justify-center">
-                <li class="text-xl text-dark-grey">Latest Session: {{ latestSession }}</li>
-                <li class="text-xl text-dark-grey">First Session: {{ firstSession }}</li>
-                <li class="text-xl text-dark-grey">Focus Training: {{ totalTrained }}</li>
+                <li class="text-l text-dark-grey uppercase">Latest Session: {{ latestSession }}</li>
+                <li class="text-l text-dark-grey uppercase">First Session: {{ firstSession }}</li>
+                <li class="text-l text-dark-grey uppercase">Focus Training: {{ totalTrained }}</li>
                 
             </ul>
       </div>
