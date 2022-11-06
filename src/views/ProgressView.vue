@@ -23,7 +23,7 @@
     </div>
 
     <!-- MY STATS -->
-    <div class="p-5 bg-light-grey rounded-md shadow-lg flex">
+    <div class="p-5 bg-light-grey rounded-md shadow-lg flex justify-center">
       <div class="rounded-md bg-at-light-orange">
         <span class="flex text-xl text-white px-4 py-2 justify-center">My<br>Stats</span>
       </div>
