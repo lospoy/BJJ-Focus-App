@@ -13,7 +13,7 @@
             </p>
         </div>
 
-        <!-- SESSION -->
+        <!-- SAVE SESSION -->
         <div class="p-8 flex items-start bg-light-grey rounded-md shadow-lg">
             <!-- Form -->
             <form
@@ -46,7 +46,7 @@
                     id="teacher"
                     v-model="teacher"
                 >
-                <option value="carlosCampoy">Carlos Campoy</option>
+                <option :value="teacher">Carlos Campoy</option>
                 </select>
                 </div>
 
@@ -61,9 +61,9 @@
                     v-model="topic"
                 >
                     <option :value="backControl">Back Control</option>
-                    <option :value="mount">Mount</option>
                     <option :value="halfGuard">Half Guard</option>
                     <option :value="sideControl">Side Control</option>
+                    <option :value="mount">Mount</option>
                     <option :value="closedGuard">Closed Guard</option>
                     <option :value="deLaRiva">De La Riva</option>
                     <option :value="openGuard">Open Guard</option>
@@ -89,8 +89,8 @@
             </form>
         </div>
 
-
-        <div class="p-8 flex items-start bg-light-grey rounded-md shadow-lg">
+        <!-- student list and save button -->
+        <div class="p-8 flex items-start bg-light-grey rounded-md shadow-lg mt-4">
             <!-- Form -->
             <form
                 @submit.prevent="session"
@@ -104,6 +104,20 @@
                 <Button :title='buttonTitle' :color='buttonColor' />
             </form>
         </div>
+
+        <!-- LATEST SESSION SAVED -->
+        <div class="p-5 bg-light-grey rounded-md shadow-lg flex justify-center mt-4">
+          <div class="rounded-md bg-at-light-orange">
+            <span class="flex text-xl text-white px-2 py-2">Info</span>
+          </div>
+          <div class="py-2 pl-4">
+                <ul class="list-inside space-y-1 justify-center">
+                    <li class="text-l text-dark-grey uppercase">Latest session saved: {{ latestSessionSaved }}</li>
+
+                </ul>
+          </div>
+        </div>
+
     </div>
 </template>
 
@@ -111,7 +125,7 @@
 import { ref, reactive } from 'vue'
 import { getAllHumans } from '../services/humanService'
 import { getAllTechniques } from '../services/bjj_services/techniqueService'
-import { saveSession } from '../services/sessionService'
+import { saveSession, getAllSessions } from '../services/sessionService'
 import moment from 'moment'
 
 // components import
@@ -146,12 +160,14 @@ export default {
         const deLaRiva = "634edb2337829d81a79048ab"
         const openGuard = ""
         const turtle = ""
+        const teacher = ref(null)
+        const latestSessionSaved = ref(null)
 
         // Human IDs
         const carlosCampoy = '630e5c2da1c2a0bcf246c383'
 
         // Create data
-        const teacher = carlosCampoy
+        teacher.value = carlosCampoy
         const topic = ref('')
         const student = ref(null)
         const date = ref(null)
@@ -160,10 +176,17 @@ export default {
         const humanIdList = reactive([]) // Initialize empty array to store human ids for POST
         const techniqueList = reactive([]) // Initialize empty array to show session techniques in DOM
         const techniqueIdArray = reactive([]) // Initialize empty array to store technique ids for POST
+
+        // LATEST SESSION SAVED
+        const displayLatestSessionSaved = async() => {
+            const allSessions = await getAllSessions()
+            latestSessionSaved.value = new Date(allSessions[allSessions.length-1].when.date).toLocaleDateString()
+        }
+        displayLatestSessionSaved()
         
         // Button success visual feedback
         let buttonColor = ref(null)
-        let buttonTitle = ref("Save New Session")
+        let buttonTitle = ref("Save")
 
         const buttonSuccess = async () => {
             buttonTitle.value = "Saving Session..."
@@ -173,7 +196,7 @@ export default {
                 buttonColor.value = "#33872a"
             }, 900);
             setTimeout(() => {
-                buttonTitle.value = "Save New Session"
+                buttonTitle.value = "Save"
                 buttonColor.value = ""
             }, 2500);
         }
@@ -256,6 +279,7 @@ export default {
             techniqueList, techniqueIdArray, getTechnique,
             getStudent, session, studentList, humanIdList, getDate,
             buttonColor, buttonTitle, buttonSuccess,
+            latestSessionSaved
         }
     },
 }
