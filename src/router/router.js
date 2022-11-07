@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Login.vue";
 import NewHuman from "../views/NewHuman.vue";
+import PrivateClass from "../views/PrivateClass.vue";
 import ProgressView from "../views/ProgressView.vue";
 import Register from "../views/Register.vue";
 import Session from "../views/Session.vue";
@@ -42,6 +43,11 @@ const routes = [
     path: "/technique",
     name: "Technique",
     component: Technique,
+  },
+  {
+    path: "/private-class",
+    name: "PrivateClass",
+    component: PrivateClass,
   },
 ];
 

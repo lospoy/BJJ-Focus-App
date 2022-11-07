@@ -18,6 +18,7 @@
         
         <!-- student routes -->
         <router-link v-if="user && isStudent" class="cursor-pointer" :to="{ name: 'ProgressView' }">Progress</router-link>
+        <router-link v-if="user && isStudent" class="cursor-pointer" :to="{ name: 'PrivateClass' }">Private Class</router-link>
 
         <!-- admin routes -->
         <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'NewHuman' }">Human</router-link>

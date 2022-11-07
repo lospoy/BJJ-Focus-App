@@ -5,38 +5,16 @@
       <p class="text-red-500">{{ errorMsg }}</p>
     </div>
 
-    <!-- Hi, user! -->
-    <div class="p-5">
-        <span class="flex text-2xl text-white -mb-2">Hi, {{ humanName }}!</span>
-        <span class="flex text-xl text-white">Focus Sessions: {{ hoursTrained }}</span>
+    <!-- CALENDLY -->
+    <div class="flex bg-light-grey h-fit rounded-md shadow-lg justify-center">
+        <!-- Calendly inline widget begin -->
+        <div
+            class="flex justify-center calendly-inline-widget"
+            data-url="https://calendly.com/lospoy/private-class?&hide_gdpr_banner=1&background_color=f7f7f7&text_color=3d4250&primary_color=d85a3b"
+            style="display:flex;height:55vh;min-width:97%;align-items: stretch;"
+            >
+        </div>
     </div>
-
-    <!-- HEADER AND TOPICS -->
-    <div class="flex flex-col bg-light-grey rounded-md shadow-lg mb-8">
-      <!-- content -->
-      <div class="self-center flex flex-col p-5">
-        <h2 class="self-center text-2xl text-dark-grey -mb-1 uppercase">This week:</h2>
-        <h1 class="self-center text-5xl mb-3 rounded-md bg-at-light-orange text-white py-1.5 px-20 text-white">{{ currentTopic }}</h1>
-        <h2 class="self-center text-xl text-dark-grey -mb-2 uppercase">Next week:</h2>
-        <h2 class="self-center text-l text-dark-grey uppercase">{{ nextTopic }}</h2>
-      </div>
-    </div>
-
-    <!-- MY STATS -->
-    <div class="p-5 bg-light-grey rounded-md shadow-lg flex justify-center">
-      <div class="rounded-md bg-at-light-orange">
-        <span class="flex text-xl text-white px-2 py-2">Stats</span>
-      </div>
-      <div class="py-2 pl-4">
-            <ul class="list-inside space-y-1 justify-center">
-                <li class="text-l text-dark-grey uppercase">Latest Session: {{ latestSession }}</li>
-                <li class="text-l text-dark-grey uppercase">First Session: {{ firstSession }}</li>
-                <li class="text-l text-dark-grey uppercase">Focus Training: {{ totalTrained }}</li>
-                
-            </ul>
-      </div>
-    </div>
-    
   </div>
 </template>
 
@@ -47,8 +25,13 @@ import { getAllSessions } from "../services/sessionService"
 import store from "../store/store"
 
 export default {
-  name: "progressView",
+  name: "privateClass",
   setup() {
+
+    // Calendly
+    const recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute('src', 'https://assets.calendly.com/assets/external/widget.js')
+    document.head.appendChild(recaptchaScript)
 
     // Variables
     const errorMsg = ref(null);
