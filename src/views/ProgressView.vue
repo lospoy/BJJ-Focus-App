@@ -85,7 +85,7 @@ export default {
     // Gets the week number we are currently on since the startDate
     const currentWeekNumber = _ => {
          // Day the classes started
-        const startDate = new Date("September 12, 2022 18:00:00")
+        const startDate = new Date("September 12, 2022 00:00:00")
         const endDate = new Date()
         const diffInMs = new Date(endDate) - new Date(startDate)
         const diffInWeeks = diffInMs / (1000 * 60 * 60 * 24 ) / 7;
