@@ -11,7 +11,7 @@
         <div
             class="flex justify-center calendly-inline-widget"
             data-url="https://calendly.com/lospoy/private-class?&hide_gdpr_banner=1&background_color=f7f7f7&text_color=3d4250&primary_color=d85a3b"
-            style="display:flex;height:80vh;min-width:97%;align-items: stretch;"
+            style="display:flex;height:70vh;min-width:97%;align-items: stretch;"
             >
         </div>
     </div>
