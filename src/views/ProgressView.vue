@@ -6,7 +6,7 @@
     </div>
 
     <!-- Hi, user! -->
-    <div class="p-5 rounded-md shadow-lg">
+    <div class="p-5">
         <span class="flex text-2xl text-white -mb-2">Hi, {{ humanName }}!</span>
         <span class="flex text-xl text-white">Focus Sessions: {{ hoursTrained }}</span>
     </div>
