@@ -1,9 +1,11 @@
 const history = require('connect-history-api-fallback');
 const express = require('express');
 
-const app = express();
-app.use(history({
+const apiRedirect = express();
+apiRedirect.use(history({
     rewrites: [
         { from: /\/.*/, to: '/index.html' }
     ]
 }));
+
+module.exports = { apiRedirect }
