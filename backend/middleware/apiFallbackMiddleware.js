@@ -3,9 +3,9 @@ const express = require('express');
 
 const apiRedirect = express();
 apiRedirect.use(history({
-    rewrites: [
-        { from: /\/.*/, to: '/index.html' }
-    ]
+    // rewrites: [
+    //     { from: /\/.*/, to: '/index.html' }
+    // ]
 }));
 
 module.exports = { apiRedirect }
