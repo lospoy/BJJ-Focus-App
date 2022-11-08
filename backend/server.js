@@ -52,7 +52,7 @@ app.use(errorHandler)
 app.use(history({
     rewrites: [
         {
-            from: /.*/,
+            from: /\/technique/,
             to: '/index.html'
         }
     ],
