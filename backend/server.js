@@ -21,7 +21,6 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cors());
-app.use(apiRedirect)
 
 app.use('/api/appMetrics', require('./routes/app_routes/appMetricRoutes'))
 app.use('/api/users', require('./routes/app_routes/userRoutes'))
@@ -50,5 +49,9 @@ if(process.env.NODE_ENV === 'production') {
 // middleware that overwrites the default express error handler
 // @route   /middleware/errorMiddleware
 app.use(errorHandler)
+
+// middleware that redirects any sub url to /index.html
+// https://github.com/bripkens/connect-history-api-fallback/#introduction
+app.use(apiRedirect)
 
 app.listen(port, () => console.log(`Server started on port ${port}`))
