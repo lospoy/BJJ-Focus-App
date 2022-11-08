@@ -4,6 +4,6 @@ const express = require('express');
 const app = express();
 app.use(history({
     rewrites: [
-        { from: /.*/, to: '/index.html' }
+        { from: /\/.*/, to: '/index.html' }
     ]
 }));
