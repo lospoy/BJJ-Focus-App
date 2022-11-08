@@ -6,7 +6,7 @@ const express = require('express')
 const colors = require('colors')
 const dotenv = require('dotenv').config()
 // **
-const history = require('connect-history-api-fallback');
+const history = require('connect-history-api-fallback'); // // API REDIRECTS
 const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
 const port = process.env.PORT || 8000
@@ -49,6 +49,7 @@ if(process.env.NODE_ENV === 'production') {
 // @route   /middleware/errorMiddleware
 app.use(errorHandler)
 
+// API REDIRECTS
 // middleware that redirects any sub url to /index.html
 // https://github.com/bripkens/connect-history-api-fallback/#introduction
 app.use(history())
