@@ -1,13 +1,17 @@
 const path = require('path')
 const cors = require('cors')
 const express = require('express')
-// **colors AND dotenv required to start server - even if the IDE marks it as "not in use"**
+// **colors AND dotenv required to start server**
+// **even if the IDE marks it as "not in use"**
 const colors = require('colors')
 const dotenv = require('dotenv').config()
+// **
+const { apiRedirect } = require("./middleware/apiFallbackMiddleware")
 const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
 const port = process.env.PORT || 8000
-const history = require('connect-history-api-fallback');
+
+
 
 connectDB()
 
@@ -49,14 +53,6 @@ app.use(errorHandler)
 
 // middleware that redirects any sub url to /index.html
 // https://github.com/bripkens/connect-history-api-fallback/#introduction
-app.use(history({
-    rewrites: [
-        {
-            from: /\/technique/,
-            to: '/index.html'
-        }
-    ],
-    verbose: true
-}));
+app.use(apiRedirect)
 
 app.listen(port, () => console.log(`Server started on port ${port}`))
