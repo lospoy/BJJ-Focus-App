@@ -1,5 +1,4 @@
 import { createApp } from "vue";
-import { createStore } from "vuex";
 import App from "./App.vue";
 import "./assets/tailwind.css";
 import router from "./router/router.js";
@@ -7,11 +6,11 @@ import router from "./router/router.js";
 import mitt from "mitt"; // import mitt (EventBus)
 const emitter = mitt()  // initialize mitt
 
+import VCalendar from 'v-calendar';
+import 'v-calendar/dist/style.css';
 
-
-
-createStore({
-  // state, actions, mutations
-});
-
-createApp(App).use(router).provide('emitter', emitter).mount("#app");
+createApp(App)
+  .use(router)
+  .use(VCalendar, {})
+  .provide('emitter', emitter)
+  .mount("#app");
