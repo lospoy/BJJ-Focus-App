@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        "faint-peach": "#fff4f0",
         "at-faint-orange": "#fe6945",
         "at-light-orange": "#d85a3b",
         "at-orange": "#a4442d",
