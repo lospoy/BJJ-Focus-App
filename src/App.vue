@@ -22,7 +22,7 @@ export default {
     const appReady = ref(null)
     const router = useRouter()
     const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
-    const navRerenderKey = ref(0)
+    const navRerenderKey = ref(0) // works alongside the listener/emitter
 
     // Listener (EventBus) this section listens to the emitters
     const emitter = inject('emitter')
@@ -34,7 +34,6 @@ export default {
         navRerenderKey.value += 1
         console.log("(emitter) Logged Out")
     })
-    
 
     if (!user) {
       appReady.value = true;
