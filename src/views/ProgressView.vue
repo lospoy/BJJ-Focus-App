@@ -23,7 +23,7 @@
     </div>
 
     <!-- CALENDAR (components) -->
-    <SessionCalendar />
+    <!-- <SessionCalendar /> -->
 
     <!-- STATS (components) -->
     <StudentStats />
@@ -35,8 +35,9 @@
 import { ref } from "vue";
 import { getHuman } from "../services/humanService"
 import store from "../store/store"
-import SessionCalendar from "../components/SessionCalendar.vue";
-import StudentStats from "../components/StudentStats.vue";
+import SessionCalendar from "../components/SessionCalendar.vue"
+import StudentStats from "../components/StudentStats.vue"
+import { setTrainingData } from "../store/trainingData"
 
 export default {
   name: "progressView",
@@ -45,24 +46,28 @@ export default {
     StudentStats
   },
   setup() {
+    const processTrainingData = async() => {
+      await setTrainingData()
+    }
+    processTrainingData()
 
     // Variables
     const errorMsg = ref(null);
-    const user = JSON.parse(store.methods.getUser())
+    const user = store.methods.getUser()
 
     const currentTopic = ref(null);
     const nextTopic = ref(null)
     const humanName = ref(null)
     const focusSessions = ref(null)
 
-    const setFocusSessions = async() => {
+    const displayFocusSessions = async() => {
       focusSessions.value = "..."
 
       setTimeout(() => {
-        focusSessions.value = store.methods.getStudent().focusSessions
-      }, 1800);
+        focusSessions.value = store.methods.getStudent().training.focusSessions
+      }, 2300);
     }
-    setFocusSessions()
+    displayFocusSessions()
 
     const getHumanName = async () => {
         const res = await getHuman(user.human)
