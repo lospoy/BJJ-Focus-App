@@ -54,8 +54,6 @@ import { useRouter } from "vue-router";
 import { loginUser } from "../services/userService";
 import store from "../store/store"
 import { inject } from "vue"        // required for the emitter (EventBus)
-
-// components import
 import Button from "../components/Button.vue";
 
 export default {
@@ -64,7 +62,7 @@ export default {
     Button,
   },
   setup() {
-    // Emitter (EventBus) this section emits an event that can be listened to globally
+    // Emitter (EventBus) emits an event that can be listened to globally
     const emitter = inject('emitter')
     const emitLogin = _ => {
         emitter.emit('userHasLoggedIn', true)
@@ -101,9 +99,9 @@ export default {
             localStorage.setItem("BJJFocusUser", JSON.stringify(userData));
             store.methods.setUser(userData)
             setTimeout(() => {
-                emitLogin()
+                emitLogin() // emits the login event
                 router.push({ name: "ProgressView" })
-            }, 600);
+            }, 600);                
         }
 
       } catch (error) {
