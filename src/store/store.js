@@ -1,5 +1,4 @@
 // Using Composition API
-
 import { reactive } from "vue";
 
 const state = reactive({
@@ -8,7 +7,8 @@ const state = reactive({
 });
 
 const student = reactive({
-  data: null
+  data: null,
+  training: null,
 });
 
 const methods = {
@@ -17,7 +17,7 @@ const methods = {
     state.isLoggedIn = state.user ? true : false
   },
   getUser() {
-    return JSON.stringify(state.user)
+    return JSON.parse(JSON.stringify(state.user))
   },
   checkLogin() {
     return state.isLoggedIn
@@ -25,9 +25,12 @@ const methods = {
   setStudent(payload) {
     student.data = payload ? payload : null
   },
+  setTraining(payload) {
+    student.training = payload ? payload : null
+  },
   getStudent() {
-    return JSON.parse(JSON.stringify(student.data))
-  }
+    return JSON.parse(JSON.stringify(student))
+  },
 };
 
 export default {
