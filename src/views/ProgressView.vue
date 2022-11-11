@@ -8,58 +8,66 @@
     <!-- Hi, user! -->
     <div class="p-5">
         <span class="flex text-2xl text-white -mb-2">Hi, {{ humanName }}!</span>
-        <span class="flex text-xl text-white">Focus Sessions: {{ hoursTrained }}</span>
+        <span class="flex text-xl text-white">Focus Sessions: {{ focusSessions }}</span>
     </div>
 
-    <!-- HEADER AND TOPICS -->
-    <div class="flex flex-col bg-light-grey rounded-md shadow-lg mb-8">
+    <!-- THIS WEEK, NEXT WEEK -->
+    <div class="flex flex-col bg-light-grey rounded-md shadow-lg mb-4">
       <!-- content -->
       <div class="self-center flex flex-col p-5">
         <h2 class="self-center text-2xl text-dark-grey -mb-1 uppercase">This week:</h2>
-        <h1 class="self-center text-5xl mb-3 rounded-md bg-at-light-orange text-white py-1.5 px-20 text-white">{{ currentTopic }}</h1>
+        <h1 class="self-center text-5xl mb-3 rounded-md bg-at-light-orange text-white py-1.5 px-20">{{ currentTopic }}</h1>
         <h2 class="self-center text-xl text-dark-grey -mb-2 uppercase">Next week:</h2>
         <h2 class="self-center text-l text-dark-grey uppercase">{{ nextTopic }}</h2>
       </div>
     </div>
 
-    <!-- MY STATS -->
-    <div class="p-5 bg-light-grey rounded-md shadow-lg flex justify-center">
-      <div class="rounded-md bg-at-light-orange">
-        <span class="flex text-xl text-white px-2 py-2">Stats</span>
-      </div>
-      <div class="py-2 pl-4">
-            <ul class="list-inside space-y-1 justify-center">
-                <li class="text-l text-dark-grey uppercase">Latest Session: {{ latestSession }}</li>
-                <li class="text-l text-dark-grey uppercase">First Session: {{ firstSession }}</li>
-                <li class="text-l text-dark-grey uppercase">Focus Training: {{ totalTrained }}</li>
-                
-            </ul>
-      </div>
-    </div>
+    <!-- CALENDAR (components) -->
+    <SessionCalendar />
+
+    <!-- STATS (components) -->
+    <StudentStats />
     
   </div>
 </template>
 
 <script>
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { getHuman } from "../services/humanService"
-import { getAllSessions } from "../services/sessionService"
 import store from "../store/store"
+import SessionCalendar from "../components/SessionCalendar.vue"
+import StudentStats from "../components/StudentStats.vue"
+import { setTrainingData } from "../store/trainingData"
 
 export default {
   name: "progressView",
+  components: {
+    SessionCalendar,
+    StudentStats
+  },
   setup() {
+    const processTrainingData = async() => {
+      await setTrainingData()
+    }
+    processTrainingData()
 
     // Variables
     const errorMsg = ref(null);
+    const user = store.methods.getUser()
+
     const currentTopic = ref(null);
     const nextTopic = ref(null)
     const humanName = ref(null)
-    const user = JSON.parse(store.methods.getUser())
-    const hoursTrained = ref(null)
-    const totalTrained = ref(null)
-    const firstSession = ref(null)
-    const latestSession = ref(null)
+    const focusSessions = ref(null)
+
+    const displayFocusSessions = async() => {
+      focusSessions.value = "..."
+
+      setTimeout(() => {
+        focusSessions.value = store.methods.getStudent().training.focusSessions
+      }, 3000);
+    }
+    displayFocusSessions()
 
     const getHumanName = async () => {
         const res = await getHuman(user.human)
@@ -101,41 +109,11 @@ export default {
     nextTopic.value = weeklyTopicList[nextTopicArrayIndex]
     // 
     // END OF CURRENT & NEXT TOPIC
-
-
-    //  **************  MY STATS ************** 
-    //
-    const getTrainingData = async() => {
-        const allSessions = await getAllSessions()
-
-        const sessionsAttendedByUser = allSessions.filter(session => JSON.stringify(session.who.students).includes(user.human))
-        hoursTrained.value = sessionsAttendedByUser.length
-        
-        const firstSessionAttendedByUser = sessionsAttendedByUser[0]
-        firstSession.value = new Date(firstSessionAttendedByUser.when.date).toLocaleDateString()
-
-        const latestSessionAttendedByUser = sessionsAttendedByUser[sessionsAttendedByUser.length-1]
-        const diffInDays = new Date(latestSessionAttendedByUser.when.date) - new Date(firstSessionAttendedByUser.when.date) // in miliseconds
-        latestSession.value = `${Math.floor(diffInDays / (1000 * 60 * 60 * 24 ))} days ago`
-
-        const totalTrainedByUser = new Date() - new Date(firstSessionAttendedByUser.when.date)  // in miliseconds
-        const diffInWeeks = totalTrainedByUser / (1000 * 60 * 60 * 24 ) / 7
-        if (diffInWeeks < 1) {
-            totalTrained.value = "Just Started!💪"
-        } else if (diffInWeeks >= 1 && diffInWeeks < 8) {
-            totalTrained.value = `${Math.floor(diffInWeeks)} weeks🔥`
-        } else if (diffInWeeks >= 8 && diffInWeeks < 52) {
-            totalTrained.value = `${Math.floor(diffInWeeks/4)} months⚡`
-        } else {
-            totalTrained.value = `${(diffInWeeks/4/12).toFixed(2)} years⚡`
-        }
-    }
-    getTrainingData()
-
-
+    
     return {
-        errorMsg, weeklyTopicList, currentTopic, nextTopic, currentWeekNumber, humanName,
-        hoursTrained, totalTrained, firstSession, latestSession
+        errorMsg,
+        weeklyTopicList, currentTopic, nextTopic, currentWeekNumber, humanName,
+        focusSessions
     };
   },
 };
