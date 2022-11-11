@@ -35,7 +35,7 @@ export default {
     const latestSession = ref(null)
     const skeleton = ref(null)  // v-if
     const stats = ref(null) // v-if
-    const delay = 2300  // ms delay to sync the skeletonService and displayStudentData setTimeouts
+    const delay = 3000  // ms delay to sync the skeletonService and displayStudentData setTimeouts
 
     const skeletonService = _ => {
       skeleton.value = true
@@ -53,7 +53,7 @@ export default {
       firstSession.value = '...'
       totalTrained.value = '...'
 
-      setTimeout(() => {
+      setTimeout(() => {  // data pulled from the store, but set @store/trainingData.js
         const training = store.methods.getStudent().training
 
         // LATEST SESSION
