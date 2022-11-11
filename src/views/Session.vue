@@ -105,17 +105,17 @@
             </form>
         </div>
 
-        <!-- LATEST SESSION SAVED -->
-        <div class="p-5 bg-light-grey rounded-md shadow-lg flex justify-center mt-4">
-          <div class="rounded-md bg-at-light-orange">
-            <span class="flex text-xl text-white px-2 py-2">Info</span>
+        <!-- MY STATS -->
+        <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col justify-center mt-4">
+          <div class="rounded-md bg-at-light-orange mb-2 self-center">
+            <span class="flex text-m text-white px-24">Latest Session Saved</span>
           </div>
-          <div class="py-2 pl-4">
-                <ul class="list-inside space-y-1 justify-center">
-                    <li class="text-l text-dark-grey uppercase">Latest session saved: {{ latestSessionSaved }}</li>
-
-                </ul>
-          </div>
+            <div class="flex pl-4 px-6 justify-center">
+                  <ul class="list-inside space-y-1 justify-center list-disc">
+                    <li class="text-l text-dark-grey uppercase -mb-1">Date: {{ latestSessionSavedDate }}</li>
+                    <li class="text-l text-dark-grey uppercase">Topic: {{ latestSessionSavedTopic }}</li>
+                  </ul>
+            </div>
         </div>
 
     </div>
@@ -125,6 +125,7 @@
 import { ref, reactive } from 'vue'
 import { getAllHumans } from '../services/humanService'
 import { getAllTechniques } from '../services/bjj_services/techniqueService'
+import { getAllFocusLessons } from '../services/bjj_services/focusLessonService'
 import { saveSession, getAllSessions } from '../services/sessionService'
 import moment from 'moment'
 
@@ -137,21 +138,13 @@ export default {
         Button,
     },
     setup() {
+        // CURRENTLY THE ONLY CURRICULUM IS FOCUS LESSONS
+        // OTHER TYPES OF SESSIONS THAT ARE NOT FOCUS @18:15PM WILL REQUIRE TESTING
+
         const statusMsg = ref(null)
         const errorMsg = ref(null)
 
-        // ***********************************************************************
-        // ***********************************************************************
-        // ***********************************************************************
-        
-        // THESE MUST PULL THE RELATED LESSON FROM FOCUSLESSONS
-        // LESSONS HAVE AN ID
-        // CURRENTLY VERY BROKEN
-
-        // ***********************************************************************
-        // ***********************************************************************
-        // ***********************************************************************
-
+        // These are Focus Lesson IDs
         const backControl = "63476ca77c0c4048382acb04"
         const mount = "634ecefa9f04894fb818c868"
         const halfGuard = "634ed31717260c95e351de8d"
@@ -161,7 +154,8 @@ export default {
         const openGuard = ""
         const turtle = ""
         const teacher = ref(null)
-        const latestSessionSaved = ref(null)
+        const latestSessionSavedDate = ref(null)
+        const latestSessionSavedTopic = ref(null)
 
         // Human IDs
         const carlosCampoy = '630e5c2da1c2a0bcf246c383'
@@ -177,10 +171,14 @@ export default {
         const techniqueList = reactive([]) // Initialize empty array to show session techniques in DOM
         const techniqueIdArray = reactive([]) // Initialize empty array to store technique ids for POST
 
-        // LATEST SESSION SAVED
+        // INFO
         const displayLatestSessionSaved = async() => {
             const allSessions = await getAllSessions()
-            latestSessionSaved.value = new Date(allSessions[allSessions.length-1].when.date).toLocaleDateString()
+            const allFocusLessons = await getAllFocusLessons()
+            const latestLessonId = allSessions[allSessions.length-1].what.focus._id
+
+            latestSessionSavedDate.value = new Date(allSessions[allSessions.length-1].when.date).toLocaleDateString()
+            latestSessionSavedTopic.value = allFocusLessons.filter(position => JSON.stringify(position._id).includes(latestLessonId))[0].topic
         }
         displayLatestSessionSaved()
         
@@ -201,12 +199,13 @@ export default {
             }, 2500);
         }
 
-        // Date
+        // Date & Focus Lesson time formatting
+        const focusLessonTime = 'T18:15:00Z'
         const getDate = _ => {
             // if date has not been selected, default to NOW
             if(!date.value) { return moment().format() }
             // otherwise return date selected
-            return date.value
+            return date.value + focusLessonTime
         }
         
         // Retrieve student in search
@@ -252,7 +251,7 @@ export default {
                     date: getDate()
                 },
                 who: {
-                    teacher: { _id: teacher },
+                    teacher: { _id: teacher.value },
                     // creates array with '_id' as key and human id string as value
                     students: humanIdList.reduce((s, a) => {
                         s.push({_id: a})
@@ -279,7 +278,7 @@ export default {
             techniqueList, techniqueIdArray, getTechnique,
             getStudent, session, studentList, humanIdList, getDate,
             buttonColor, buttonTitle, buttonSuccess,
-            latestSessionSaved
+            latestSessionSavedDate, latestSessionSavedTopic
         }
     },
 }

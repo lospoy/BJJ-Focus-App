@@ -1,13 +1,14 @@
-// POSITION SERVICE
+// FOCUS LESSON SERVICE
 
 const API_URL = process.env.VUE_APP_ROOT_API
 // import { getAuthHeader } from './userService';
 
-export async function getAllPositions() {
+// GET ALL
+export async function getAllFocusLessons() {
     let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
-      const response = await fetch(API_URL + '/techniques/positions', {
+      const response = await fetch(API_URL + '/focusLessons', {
         method: "GET",
         headers: { "Authorization": "Bearer " + user.token }
       });
@@ -26,12 +27,12 @@ export async function getAllPositions() {
   }
 }
 
-// GET HUMAN BY ID
-export async function getPosition(id) {
+// GET BY ID
+export async function getFocusLesson(id) {
     let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
-      const response = await fetch(API_URL + '/techniques/positions/' + id, {
+      const response = await fetch(API_URL + '/focusLessons' + id, {
         method: "GET",
         headers: { "Authorization": "Bearer " + user.token }
       });
@@ -50,11 +51,12 @@ export async function getPosition(id) {
   }
 }
 
-export async function createPosition(data) {
+// CREATE
+export async function createFocusLesson(data) {
     let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
-      const response = await fetch(API_URL + '/techniques/positions', {
+      const response = await fetch(API_URL + '/focusLessons/create', {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + user.token },
         body: JSON.stringify(data),

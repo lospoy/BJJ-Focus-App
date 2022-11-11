@@ -23,8 +23,8 @@ const savePosition = asyncHandler(async (req, res) => {
     // ************ TBD
     // Check for user permission to save position
     // Must be admin or teacher
-    // const isAdmin = req.user.permissions.admin === true
-    // const isTeacher = req.user.permissions.teacher === true    
+    // const isAdmin = req.user.role.admin === true
+    // const isTeacher = req.user.role.teacher === true    
     // if(isAdmin || isTeacher) {}
   
     // Create position
@@ -63,8 +63,8 @@ const getPosition = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET position data
     // Must be admin or teacher
-    const isAdmin = req.user.permissions.admin
-    const isTeacher = req.user.permissions.teacher
+    const isAdmin = req.user.role.admin
+    const isTeacher = req.user.role.teacher
 
     if(isAdmin || isTeacher) {
         res.status(200).json(position)
@@ -82,8 +82,8 @@ const getAllPositions = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET technique data
     // Must be admin, teacher, or the user's technique
-    const isAdmin = req.user.permissions.admin
-    const isTeacher = req.user.permissions.teacher
+    const isAdmin = req.user.role.admin
+    const isTeacher = req.user.role.teacher
 
     if(isAdmin || isTeacher) {
         res.status(200).json(allPositions)
