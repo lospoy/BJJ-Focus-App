@@ -138,6 +138,9 @@ export default {
         Button,
     },
     setup() {
+        // CURRENTLY THE ONLY CURRICULUM IS FOCUS LESSONS
+        // OTHER TYPES OF SESSIONS THAT ARE NOT FOCUS @18:15PM WILL REQUIRE TESTING
+
         const statusMsg = ref(null)
         const errorMsg = ref(null)
 
@@ -196,12 +199,13 @@ export default {
             }, 2500);
         }
 
-        // Date
+        // Date & Focus Lesson time formatting
+        const focusLessonTime = 'T18:15:00Z'
         const getDate = _ => {
             // if date has not been selected, default to NOW
             if(!date.value) { return moment().format() }
             // otherwise return date selected
-            return date.value.moment().format()
+            return date.value + focusLessonTime
         }
         
         // Retrieve student in search
@@ -247,7 +251,7 @@ export default {
                     date: getDate()
                 },
                 who: {
-                    teacher: { _id: teacher },
+                    teacher: { _id: teacher.value },
                     // creates array with '_id' as key and human id string as value
                     students: humanIdList.reduce((s, a) => {
                         s.push({_id: a})
