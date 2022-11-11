@@ -33,8 +33,9 @@ export default {
     const totalTrained = ref(null)
     const firstSession = ref(null)
     const latestSession = ref(null)
-    const skeleton = ref(null)
-    const stats = ref(null)
+    const skeleton = ref(null)  // v-if
+    const stats = ref(null) // v-if
+    const delay = 2300  // ms delay to sync the skeletonService and displayStudentData setTimeouts
 
     const skeletonService = _ => {
       skeleton.value = true
@@ -43,7 +44,7 @@ export default {
       setTimeout(() => {
         skeleton.value = false
         stats.value = true
-      }, 2300);
+      }, delay);
     }
     skeletonService()
 
@@ -73,7 +74,7 @@ export default {
             totalTrained.value = `${(weeksTrained/4/12).toFixed(2)} years⚡`
         }
         
-      }, 2300);
+      }, delay);
     }
     displayStudentData()
 
