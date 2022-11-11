@@ -28,8 +28,8 @@ const saveTechnique = asyncHandler(async (req, res) => {
     // ************ TBD
     // Check for user permission to save technique
     // Must be admin or teacher
-    // const isAdmin = req.user.permissions.admin === true
-    // const isTeacher = req.user.permissions.teacher === true    
+    // const isAdmin = req.user.role.admin === true
+    // const isTeacher = req.user.role.teacher === true    
     // if(isAdmin || isTeacher) {}
   
     // Create technique
@@ -74,8 +74,8 @@ const getTechnique = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET technique data
     // Must be admin, teacher, or the user's technique
-    const isAdmin = req.user.permissions.admin
-    const isTeacher = req.user.permissions.teacher
+    const isAdmin = req.user.role.admin
+    const isTeacher = req.user.role.teacher
     const studentIsUser = technique.user ? technique.user.toString() : ''
     const isTheStudentItself = studentIsUser === req.user.id
 
@@ -95,8 +95,8 @@ const getAllTechniques = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET technique data
     // Must be admin, teacher, or the user's technique
-    const isAdmin = req.user.permissions.admin
-    const isTeacher = req.user.permissions.teacher
+    const isAdmin = req.user.role.admin
+    const isTeacher = req.user.role.teacher
 
     if(isAdmin || isTeacher) {
         res.status(200).json(allTechniques)
@@ -125,8 +125,8 @@ const updateTechnique = asyncHandler(async (req, res) => {
 
     // Check for user permission to update technique
     // Must be admin, teacher, or the user's technique
-    const isAdmin = req.user.permissions.admin === true
-    const isTeacher = req.user.permissions.teacher === true
+    const isAdmin = req.user.role.admin === true
+    const isTeacher = req.user.role.teacher === true
     const studentIsUser = technique.user ? technique.user.toString() : ''
     const isTheStudentItself = studentIsUser === req.user.id
     
