@@ -27,8 +27,8 @@ const saveFocusLesson = asyncHandler(async (req, res) => {
     // ************ TBD
     // Check for user permission to save focusLesson
     // Must be admin or techniques
-    // const isAdmin = req.user.permissions.admin === true
-    // const isTeacher = req.user.permissions.techniques === true    
+    // const isAdmin = req.user.role.admin === true
+    // const isTeacher = req.user.role.techniques === true    
     // if(isAdmin || isTeacher) {}
   
     // Create focusLesson
@@ -73,8 +73,8 @@ const getFocusLesson = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET focusLesson data
     // Must be admin, techniques, or the user's focusLesson
-    const isAdmin = req.user.permissions.admin
-    const isTeacher = req.user.permissions.techniques
+    const isAdmin = req.user.role.admin
+    const isTeacher = req.user.role.techniques
     const studentIsUser = focusLesson.user ? focusLesson.user.toString() : ''
     const isTheStudentItself = studentIsUser === req.user.id
 
@@ -94,8 +94,8 @@ const getAllFocusLessons = asyncHandler(async (req, res) => {
 
     // Check for user permission to GET focusLesson data
     // Must be admin or techniques
-    const isAdmin = req.user.permissions.admin
-    const isTeacher = req.user.permissions.techniques
+    const isAdmin = req.user.role.admin
+    const isTeacher = req.user.role.techniques
 
     if(isAdmin || isTeacher) {
         res.status(200).json(allFocusLessons)
@@ -124,8 +124,8 @@ const updateFocusLesson = asyncHandler(async (req, res) => {
 
     // Check for user permission to update focusLesson
     // Must be admin, techniques, or the user's focusLesson
-    const isAdmin = req.user.permissions.admin === true
-    const isTeacher = req.user.permissions.techniques === true
+    const isAdmin = req.user.role.admin === true
+    const isTeacher = req.user.role.techniques === true
     const studentIsUser = focusLesson.user ? focusLesson.user.toString() : ''
     const isTheStudentItself = studentIsUser === req.user.id
     
