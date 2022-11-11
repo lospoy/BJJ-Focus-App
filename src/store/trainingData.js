@@ -1,4 +1,5 @@
 // Gets user's training data from server and sets it in the store
+// Used in /views/StudentStats.vue
 import { getAllSessions } from "../services/sessionService";
 import store from './store';
 
@@ -7,6 +8,8 @@ export async function setTrainingData() {
   const allSessions = await getAllSessions()
 
   const sessionsAttendedByUser = allSessions.filter(session => JSON.stringify(session.who.students).includes(user.human))
+  const sessionsUnattendedByUser = allSessions.filter(session => !JSON.stringify(session.who.students).includes(user.human))
+  
   const focusSessions = sessionsAttendedByUser.length
 
   const firstSessionAttendedByUser = sessionsAttendedByUser[0]
@@ -20,10 +23,12 @@ export async function setTrainingData() {
   const weeksTrained = totalTrainedInMsInMs / (1000 * 60 * 60 * 24 ) / 7
 
   store.methods.setTraining({
+    unattendedSessions: sessionsUnattendedByUser,
     focusSessions: focusSessions,
     firstSession: firstSession,
     latestSession: latestSessionAttendedByUser.when.date,
     weeksTrained: weeksTrained,
-    daysSinceLatestSession: daysSinceLatestSession
+    daysSinceLatestSession: daysSinceLatestSession,
+    attendedSessions: sessionsAttendedByUser
   })
 }
