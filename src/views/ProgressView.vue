@@ -23,7 +23,7 @@
     </div>
 
     <!-- CALENDAR (components) -->
-    <!-- <SessionCalendar /> -->
+    <SessionCalendar />
 
     <!-- STATS (components) -->
     <StudentStats />
@@ -65,7 +65,7 @@ export default {
 
       setTimeout(() => {
         focusSessions.value = store.methods.getStudent().training.focusSessions
-      }, 2300);
+      }, 3000);
     }
     displayFocusSessions()
 
