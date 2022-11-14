@@ -16,11 +16,11 @@ export async function setTrainingData() {
   const firstSession = new Date(firstSessionAttendedByUser.when.date)
 
   const latestSessionAttendedByUser = sessionsAttendedByUser[sessionsAttendedByUser.length-1]
-  const diffInDays = new Date(latestSessionAttendedByUser.when.date) - new Date(firstSessionAttendedByUser.when.date) // in miliseconds
-  const daysSinceLatestSession = Math.floor(diffInDays / (1000 * 60 * 60 * 24 ))
+  const diffInMs = new Date() - new Date(latestSessionAttendedByUser.when.date) // in miliseconds
+  const daysSinceLatestSession = Math.floor(diffInMs / (1000 * 60 * 60 * 24 ))
 
-  const totalTrainedInMsInMs = new Date() - new Date(firstSessionAttendedByUser.when.date)  // in miliseconds
-  const weeksTrained = totalTrainedInMsInMs / (1000 * 60 * 60 * 24 ) / 7
+  const totalTrainedInMsInMs = new Date(latestSessionAttendedByUser.when.date) - new Date(firstSessionAttendedByUser.when.date)  // in miliseconds
+  const weeksTrained = Math.round(totalTrainedInMsInMs / (1000 * 60 * 60 * 24 ) / 7)
 
   store.methods.setTraining({
     unattendedSessions: sessionsUnattendedByUser,
