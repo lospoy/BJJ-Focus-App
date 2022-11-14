@@ -16,7 +16,7 @@
       <!-- content -->
       <div class="self-center flex flex-col p-5">
         <h2 class="self-center text-2xl text-dark-grey -mb-1 uppercase">This week:</h2>
-        <h1 class="self-center text-5xl mb-3 rounded-md bg-at-light-orange text-white py-1.5 px-20">{{ currentTopic }}</h1>
+        <h1 class="self-center text-3xl mb-3 rounded-md bg-at-light-orange text-white py-1.5 px-16 text-center">{{ currentTopic }}</h1>
         <h2 class="self-center text-xl text-dark-grey -mb-2 uppercase">Next week:</h2>
         <h2 class="self-center text-l text-dark-grey uppercase">{{ nextTopic }}</h2>
       </div>
