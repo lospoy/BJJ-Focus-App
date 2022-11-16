@@ -32,7 +32,7 @@ export async function getFocusLesson(id) {
     let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
-      const response = await fetch(API_URL + '/focusLessons' + id, {
+      const response = await fetch(API_URL + '/focusLessons/' + id, {
         method: "GET",
         headers: { "Authorization": "Bearer " + user.token }
       });
@@ -44,10 +44,6 @@ export async function getFocusLesson(id) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
   }
 }
 
