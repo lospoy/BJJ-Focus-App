@@ -56,7 +56,7 @@ const saveFocusLesson = asyncHandler(async (req, res) => {
 
 // @desc    Get specific focusLesson data
 // @route   GET /api/focusLessons/:id
-// @access  Private
+// @access  Public
 const getFocusLesson = asyncHandler(async (req, res) => {
     const focusLesson = await FocusLesson.findById(req.params.id)
 
@@ -71,14 +71,15 @@ const getFocusLesson = asyncHandler(async (req, res) => {
         throw new Error('User not found')
     }
 
+    // ************ TBD
     // Check for user permission to GET focusLesson data
     // Must be admin, techniques, or the user's focusLesson
-    const isAdmin = req.user.role.admin
-    const isTeacher = req.user.role.techniques
-    const studentIsUser = focusLesson.user ? focusLesson.user.toString() : ''
-    const isTheStudentItself = studentIsUser === req.user.id
+    // const isAdmin = req.user.role.admin
+    // const isTeacher = req.user.role.techniques
+    // const studentIsUser = focusLesson.user ? focusLesson.user.toString() : ''
+    // const isTheStudentItself = studentIsUser === req.user.id
 
-    if(isAdmin || isTeacher || isTheStudentItself) {
+    if(req.user) {
         res.status(200).json(focusLesson)
     } else {
         res.status(401)
@@ -88,26 +89,15 @@ const getFocusLesson = asyncHandler(async (req, res) => {
 
 // @desc    Get all focusLessons
 // @route   GET /api/focusLessons
-// @access  Private
+// @access  Public
 const getAllFocusLessons = asyncHandler(async (req, res) => {
     const allFocusLessons = await FocusLesson.find({})
-
-    // Check for user permission to GET focusLesson data
-    // Must be admin or techniques
-    const isAdmin = req.user.role.admin
-    const isTeacher = req.user.role.techniques
-
-    if(isAdmin || isTeacher) {
-        res.status(200).json(allFocusLessons)
-    } else {
-        res.status(401)
-        throw new Error('User not authorized')
-    }
+    res.status(200).json(allFocusLessons)
 })
 
 // @desc    Update focusLesson data
 // @route   PUT /api/focusLessons/update/:id
-// @access  Private
+// @access  Public
 const updateFocusLesson = asyncHandler(async (req, res) => {
     const focusLesson = await FocusLesson.findById(req.params.id)
 
@@ -139,11 +129,6 @@ const updateFocusLesson = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('User not authorized')
     }
-
-    // **************LATEST ACTION 22:45 08/30: UPDATE HUMAN
-    // update doesnt add to the property of the object, it replaces the property of the object
-    // expected is it ADDS to the property, not replace
-    // unsure if this needs to be done client side
 })
 
 
