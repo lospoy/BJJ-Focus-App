@@ -12,39 +12,15 @@
         v-if="skeleton"
       />
       <!-- Actual calendar with data -->
-      <!-- Seems to be using V-Slots, not working as of now -->
       <v-calendar
         is-expanded
-        :attributes="attr"
+        :attributes="attributes"
         @dayclick = 'dayClicked'
         v-if="calendar"
       >
-        <template #day-popover>
-          <div>
-            <ul>
-              <li
-                v-for="{key, customData} in attr"
-                :key="key">
-                {{ customData.description }}
-              </li>
-            </ul>
-          </div>
-        </template>
-
-        <div
-          v-if='selectedDay'
-          class='selected-day'>
-          <h3>{{ selectedDay.date.toDateString() }}</h3>
-          <ul>
-            <li
-              v-for='attr in selectedDay.attributes'
-              :key='attr.key'>
-              {{ attr.customData.description }}
-            </li>
-          </ul>
-        </div>
 
       </v-calendar>
+
       </div>
     </div>
 </template>
@@ -52,6 +28,7 @@
 <script>
 import { ref } from "vue";
 import store from "../store/store"
+import { getAllFocusLessons } from "../services/bjj_services/focusLessonService"
 
 export default {
   name: "SessionCalendar",
@@ -62,17 +39,7 @@ export default {
     const calendar = ref(null) // v-if
     const delay = 3000  // ms delay to sync the skeletonService and displayStudentData setTimeouts
     const selectedDay = ref(null)
-
-    // Calendar data
-    const todos = [
-      {
-        id: 1,
-        description: 'Take Noah to basketball practice.',
-        isComplete: false,
-        dates: new Date(2022, 10, 15),
-        color: 'red',
-      }
-    ]
+    const dayDescription = ref(null)
     
     const skeletonService = _ => {
       skeleton.value = true
@@ -87,67 +54,77 @@ export default {
 
     // **************  CALENDAR ************** 
     const date = ref(null)
-    const attr = ref(null)
+    const attributes = ref(null)
 
     setTimeout(() => {
+      
       const training = store.methods.getStudent().training
-      const unattendedSessions = training.unattendedSessions.map(session => session.when.date)
-      const attendedSessions = training.attendedSessions.map(session => session.when.date)
+      const unattendedSessions = training.unattendedSessions
+      const attendedSessions = training.attendedSessions
+      const unattendedSessionsDates = unattendedSessions.map(session => session.when.date)
+      const attendedSessionsDates = attendedSessions.map(session => session.when.date)
+      
+      // GET FOCUS LESSON TOPIC NAME (string)
+      const getTopic = async(topicId) => {
+        const allFocusLessons = await getAllFocusLessons()
+        return await allFocusLessons.filter(_id => JSON.stringify(_id).includes(topicId))[0].topic
+      }
 
-      attr.value = [  // Attributes are supplied as an array
-        // HELD AND ATTENDED SESSIONS (WORKING)
-        // { // today
-        //   key: 'today',
-        //   dot: 'yellow',
-        //   dates: new Date(),
-        // },
-        // { // sessions held but unnattended by user
-        //   highlight: {
-        //     style: {
-        //       backgroundColor: 'rgba(231, 201, 59, .3)',
-        //       borderColor : 'rgba(231, 201, 59, 0)'
-        //     },
-        //     fillMode: 'outline'
-        //   },
-        //   dates: unattendedSessions,
-        // },
-        // { // sessions attended by user
-        //   highlight: {
-        //     style: {
-        //       backgroundColor: '#E7C93B',
-        //       borderColor : '#E7C93B'
-        //     },
-        //     fillMode: 'outline'
-        //   },
-        //   dates: attendedSessions,
-        // },
-        // END OF HELD AND ATTENDED SESSIONS (WORKING)
+      // Returns array of promises (attended sessions)
+      const attendedPromise = attendedSessions.map(async aS => ({
+        highlight: {
+          style: {
+            backgroundColor: '#E7C93B',
+            borderColor: '#E7C93B'
+          },
+          fillMode: 'outline'
+        },
+        popover: {
+          label: `${await getTopic(aS.what.focus._id)}`,
+        },
+        dates: aS.when.date
+      }))
 
-        // Scoped slots for the Calendar (date on-click/hover)
-        todos.map(t => ({
-          key: `todo.${t.id}`,
-          dates: t.dates,
-          dot: {
-            color: t.color,
-            class: t.isComplete ? 'opacity-75' : '',
+      // Returns array of promises (unattended sessions)
+      const unattendedPromise = unattendedSessions.map(async uS => ({
+        highlight: {
+          style: {
+            backgroundColor: 'rgba(231, 201, 59, .3)',
+            borderColor: 'rgba(231, 201, 59, 0)'
           },
-          popover: {
-            label: t.description,
-          },
-          customData: t,
-        })),
-      ]
+          fillMode: 'outline'
+        },
+        popover: {
+          label: `${await getTopic(uS.what.focus._id)}`,
+        },
+        dates: uS.when.date
+      }))
+
+      const todayMarker = [{ // Style for a marker that marks today's date
+          key: 'today',
+          dot: 'yellow',
+          dates: new Date(),
+        }]
+
+      // Returns resolved array of promises
+      const resolvePromiseArrays = async(arr1, arr2) => {
+        const res1 = await Promise.all(arr1)
+        const res2 = await Promise.all(arr2)
+        attributes.value = res1.concat(res2).concat(todayMarker)
+      }
+      resolvePromiseArrays(attendedPromise, unattendedPromise)
     }, delay);
 
     const dayClicked = day => {
       selectedDay.value = day
-      console.log(selectedDay.value)
+      console.log(selectedDay._rawValue.id)
     }
 
     return {
-        errorMsg, date, attr,
+        errorMsg, date, attributes,
         skeleton, calendar,
-        todos, dayClicked, selectedDay
+        dayClicked, selectedDay,
+        dayDescription
     };
   },
 };
