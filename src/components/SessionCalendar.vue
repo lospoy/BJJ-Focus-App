@@ -57,12 +57,9 @@ export default {
     const attributes = ref(null)
 
     setTimeout(() => {
-      
-      const training = store.methods.getStudent().training
-      const unattendedSessions = training.unattendedSessions
-      const attendedSessions = training.attendedSessions
-      const unattendedSessionsDates = unattendedSessions.map(session => session.when.date)
-      const attendedSessionsDates = attendedSessions.map(session => session.when.date)
+      const studentTrainingData = store.methods.getStudent().training
+      const unattendedSessions = studentTrainingData.unattendedSessions
+      const attendedSessions = studentTrainingData.attendedSessions
       
       // GET FOCUS LESSON TOPIC NAME (string)
       const getTopic = async(topicId) => {
@@ -115,10 +112,22 @@ export default {
       resolvePromiseArrays(attendedPromise, unattendedPromise)
     }, delay);
 
+
+    // DISPLAY A DIV WITH SESSION DATA IF THE CLICKED DATE IS A FOCUS SESSION DATE
+    // CURRENTLY IT JUST CONSOLE LOGS 'ths works'
     const dayClicked = day => {
-      selectedDay.value = day
-      console.log(selectedDay._rawValue.id)
+      selectedDay.value = day.date
+
+      const displaySessionData = async(dayClicked) => {
+        dayClicked = selectedDay.value.toLocaleDateString()
+
+        if(dayClicked === new Date().toLocaleDateString()) {console.log('ths works')}
+      }
+      displaySessionData()
+      
     }
+
+
 
     return {
         errorMsg, date, attributes,
