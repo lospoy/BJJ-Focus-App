@@ -23,6 +23,7 @@ export async function setTrainingData() {
   const weeksTrained = Math.round(totalTrainedInMsInMs / (1000 * 60 * 60 * 24 ) / 7)
 
   store.methods.setTraining({
+    allSessions: allSessions,
     unattendedSessions: sessionsUnattendedByUser,
     focusSessions: focusSessions,
     firstSession: firstSession,
