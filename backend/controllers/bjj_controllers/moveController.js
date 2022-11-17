@@ -63,12 +63,12 @@ const getMove = asyncHandler(async (req, res) => {
         throw new Error('User not found')
     }
 
-    // Check for user permission to GET move data
-    // Must be admin or teacher
+    // Check for user permission to GET technique data
     const isAdmin = req.user.role.admin
     const isTeacher = req.user.role.teacher
+    const isStudent = req.user.role.student
 
-    if(isAdmin || isTeacher) {
+    if(isAdmin || isTeacher || isStudent) {
         res.status(200).json(move)
     } else {
         res.status(401)
@@ -86,8 +86,9 @@ const getAllMoves = asyncHandler(async (req, res) => {
     // Must be admin, teacher, or the user's technique
     const isAdmin = req.user.role.admin
     const isTeacher = req.user.role.teacher
+    const isStudent = req.user.role.student
 
-    if(isAdmin || isTeacher) {
+    if(isAdmin || isTeacher || isStudent) {
         res.status(200).json(allMoves)
     } else {
         res.status(401)

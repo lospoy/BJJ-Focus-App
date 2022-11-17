@@ -19,10 +19,7 @@ export async function getAllPositions() {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
@@ -43,10 +40,7 @@ export async function getPosition(id) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
@@ -67,10 +61,7 @@ export async function createPosition(data) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 

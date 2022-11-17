@@ -73,13 +73,11 @@ const getTechnique = asyncHandler(async (req, res) => {
     }
 
     // Check for user permission to GET technique data
-    // Must be admin, teacher, or the user's technique
     const isAdmin = req.user.role.admin
     const isTeacher = req.user.role.teacher
-    const studentIsUser = technique.user ? technique.user.toString() : ''
-    const isTheStudentItself = studentIsUser === req.user.id
+    const isStudent = req.user.role.student
 
-    if(isAdmin || isTeacher || isTheStudentItself) {
+    if(isAdmin || isTeacher || isStudent) {
         res.status(200).json(technique)
     } else {
         res.status(401)
@@ -97,8 +95,9 @@ const getAllTechniques = asyncHandler(async (req, res) => {
     // Must be admin, teacher, or the user's technique
     const isAdmin = req.user.role.admin
     const isTeacher = req.user.role.teacher
+    const isStudent = req.user.role.student
 
-    if(isAdmin || isTeacher) {
+    if(isAdmin || isTeacher || isStudent) {
         res.status(200).json(allTechniques)
     } else {
         res.status(401)

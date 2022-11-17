@@ -19,10 +19,6 @@ export async function getAllTechniques() {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
   }
 }
 
@@ -43,10 +39,7 @@ export async function getTechnique(id) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
@@ -67,10 +60,7 @@ export async function createTechnique(data) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 

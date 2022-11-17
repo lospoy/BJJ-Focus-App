@@ -20,10 +20,6 @@ export async function getAllFocusLessons() {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
   }
 }
 
@@ -65,10 +61,6 @@ export async function createFocusLesson(data) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
   }
 }
 

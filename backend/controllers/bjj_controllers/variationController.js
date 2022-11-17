@@ -61,12 +61,13 @@ const getVariation = asyncHandler(async (req, res) => {
         throw new Error('User not found')
     }
 
-    // Check for user permission to GET variation data
-    // Must be admin or teacher
+    // Check for user permission to GET technique data
+    // Must be admin, teacher, or the user's technique
     const isAdmin = req.user.role.admin
     const isTeacher = req.user.role.teacher
+    const isStudent = req.user.role.student
 
-    if(isAdmin || isTeacher) {
+    if(isAdmin || isTeacher || isStudent) {
         res.status(200).json(variation)
     } else {
         res.status(401)
@@ -84,8 +85,9 @@ const getAllVariations = asyncHandler(async (req, res) => {
     // Must be admin, teacher, or the user's technique
     const isAdmin = req.user.role.admin
     const isTeacher = req.user.role.teacher
+    const isStudent = req.user.role.student
 
-    if(isAdmin || isTeacher) {
+    if(isAdmin || isTeacher || isStudent) {
         res.status(200).json(allVariations)
     } else {
         res.status(401)
