@@ -71,15 +71,12 @@ const getFocusLesson = asyncHandler(async (req, res) => {
         throw new Error('User not found')
     }
 
-    // ************ TBD
-    // Check for user permission to GET focusLesson data
-    // Must be admin, techniques, or the user's focusLesson
-    // const isAdmin = req.user.role.admin
-    // const isTeacher = req.user.role.techniques
-    // const studentIsUser = focusLesson.user ? focusLesson.user.toString() : ''
-    // const isTheStudentItself = studentIsUser === req.user.id
+    // Check for user permission to GET technique data
+    const isAdmin = req.user.role.admin
+    const isTeacher = req.user.role.teacher
+    const isStudent = req.user.role.student
 
-    if(req.user) {
+    if(isAdmin || isTeacher || isStudent) {
         res.status(200).json(focusLesson)
     } else {
         res.status(401)
