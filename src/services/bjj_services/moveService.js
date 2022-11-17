@@ -4,7 +4,7 @@ const API_URL = process.env.VUE_APP_ROOT_API
 // import { getAuthHeader } from './userService';
 
 export async function getAllMoves() {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/techniques/moves', {
@@ -19,16 +19,13 @@ export async function getAllMoves() {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
 // GET HUMAN BY ID
 export async function getMove(id) {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/techniques/moves/' + id, {
@@ -43,15 +40,12 @@ export async function getMove(id) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
 export async function createMove(data) {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/techniques/moves', {
@@ -67,10 +61,7 @@ export async function createMove(data) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
