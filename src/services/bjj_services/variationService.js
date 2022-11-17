@@ -4,7 +4,7 @@ const API_URL = process.env.VUE_APP_ROOT_API
 // import { getAuthHeader } from './userService';
 
 export async function getAllVariations() {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/techniques/variations', {
@@ -19,16 +19,13 @@ export async function getAllVariations() {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
 // GET HUMAN BY ID
 export async function getVariation(id) {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/techniques/variations/' + id, {
@@ -43,15 +40,12 @@ export async function getVariation(id) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
 export async function createVariation(data) {
-    let user = JSON.parse(localStorage.getItem("user"))
+    let user = JSON.parse(localStorage.getItem("BJJFocusUser"))
 
     try {
       const response = await fetch(API_URL + '/techniques/variations', {
@@ -67,10 +61,7 @@ export async function createVariation(data) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
