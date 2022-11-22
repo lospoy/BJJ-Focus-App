@@ -105,7 +105,37 @@
             </form>
         </div>
 
-        <!-- MY STATS -->
+        <!-- STUDENT LIST SORTED BY LATEST CLASS ATTENDED (NEWEST) -->
+        <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col justify-center mt-4">
+          <div class="rounded-md bg-at-light-orange mb-2 self-center">
+            <span class="flex text-m text-white px-24">STUDENT LIST</span>
+          </div>
+            <!-- Form -->
+            <form
+                @submit.prevent="session"
+                class="flex flex-col gap-y-2 w-full"
+            >
+            <!--- SORTED STUDENT LIST --->
+                <!-- <ul id="sortedStudentList">
+                    <li v-for="(student, index) of sortedStudentList" :key="index">
+                        - {{ student }}
+                    </li>
+                </ul> -->
+
+                <div class="flex flex-row items-center justify-center">
+                  <Checkbox
+                    fieldId="volume"
+                    v-model:checked="volumeOn"
+                    label="Volume On"
+                  />
+                <span class="ml-2">{{ volumeOn }}</span>
+                </div>
+
+                <Button :title='buttonTitle' :color='buttonColor' />
+            </form>
+        </div>
+
+        <!-- LATEST SESSION SAVED -->
         <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col justify-center mt-4">
           <div class="rounded-md bg-at-light-orange mb-2 self-center">
             <span class="flex text-m text-white px-24">Latest Session Saved</span>
@@ -128,14 +158,17 @@ import { getAllTechniques } from '../services/bjj_services/techniqueService'
 import { getAllFocusLessons } from '../services/bjj_services/focusLessonService'
 import { saveSession, getAllSessions } from '../services/sessionService'
 import moment from 'moment'
+import store from '../store/store'
 
 // components import
 import Button from "../components/Button.vue";
+import Checkbox from "../components/Checkbox.vue";
 
 export default {
     name: 'session',
     components: {
         Button,
+        Checkbox,
     },
     setup() {
         // CURRENTLY THE ONLY CURRICULUM IS FOCUS LESSONS
@@ -156,6 +189,10 @@ export default {
         const teacher = ref(null)
         const latestSessionSavedDate = ref(null)
         const latestSessionSavedTopic = ref(null)
+
+        // SORTED STUDENT LIST
+        const sortedStudentList = reactive([])
+        const volumeOn = ref(true)
 
         // Human IDs
         const carlosCampoy = '630e5c2da1c2a0bcf246c383'
@@ -207,6 +244,21 @@ export default {
             // otherwise return date selected
             return date.value + focusLessonTime
         }
+
+        // Create array students and their last day attended
+        // [ { name: 'Fizz McBuzz', latestAttended: '2022-10-20'}, {...}]
+        const createStudentsLatestAttendedArray = async() => {
+            const allHumans = await getAllHumans()
+            const allSessions = await getAllSessions()
+
+            console.log(allHumans)
+            console.log(allSessions)
+
+            // human.name.first + .last
+            // filter session.who.students
+            
+        }
+        createStudentsLatestAttendedArray()
         
         // Retrieve student in search
         const getStudent = async () => {
@@ -278,7 +330,10 @@ export default {
             techniqueList, techniqueIdArray, getTechnique,
             getStudent, session, studentList, humanIdList, getDate,
             buttonColor, buttonTitle, buttonSuccess,
-            latestSessionSavedDate, latestSessionSavedTopic
+            latestSessionSavedDate, latestSessionSavedTopic,
+
+            // SORTED STUDENT LIST
+            sortedStudentList, volumeOn
         }
     },
 }
