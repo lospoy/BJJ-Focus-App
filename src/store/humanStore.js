@@ -1,27 +1,30 @@
 // HUMAN STORE
+import { getHuman } from "../services/humanService";
 
 class Human {
+  constructor(id) {
+    this.id = id;
+    this.user = user;
+    this.firstName = firstName;
+    this.LastName = LastName;
+    this.history = history;
+    this.status = status;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
 
-  // constructor(id, user, firstName, LastName, history, status, createdAt, updatedAt) {
-  //   this.id = id;
-  //   this.user = user;
-  //   this.firstName = firstName;
-  //   this.LastName = LastName;
-  //   this.history = history;
-  //   this.status = status;
-  //   this.createdAt = createdAt;
-  //   this.upupdatedAt = updatedAt;
-  // }
   // Getter
-  get human(id) {
-    return this.calcArea();
+  get Human() {
+    return this.getHumanObject();
   }
-  // Method
-  calcArea() {
-    return this.height * this.width;
+  // Methods
+  static retrieveHumanFromDatabase = async(id) => {
+    const human = await getHuman(id)
+    return Promise.resolve(human);
   }
+
 }
 
-const square = new Rectangle(10, 10);
+const loggedInStudent = new Human('630fbcd603c610ee444351b5');
 
-console.log(square.area); // 100
+console.log(loggedInStudent);
