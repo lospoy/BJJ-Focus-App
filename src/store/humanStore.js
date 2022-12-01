@@ -1,30 +1,25 @@
 // HUMAN STORE
 import { getHuman } from "../services/humanService";
+import { getAllSessions } from "../services/sessionService";
 
-class Human {
-  constructor(id) {
-    this.id = id;
-    this.user = user;
-    this.firstName = firstName;
-    this.LastName = LastName;
-    this.history = history;
-    this.status = status;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-  }
-
-  // Getter
-  get Human() {
-    return this.getHumanObject();
-  }
-  // Methods
-  static retrieveHumanFromDatabase = async(id) => {
+const methods = {
+  async getStudentName(id) {
     const human = await getHuman(id)
-    return Promise.resolve(human);
+    const humanName = human.name.first + " " + human.name.last
+    return humanName
+  },
+  async getStudentLastAttendedSession(id) {
+    const allSessions = await getAllSessions()
+    const sessionsAttendedByUser = allSessions.filter(session => JSON.stringify(session.who.students).includes(id))
+    const latestSessionAttended = sessionsAttendedByUser[sessionsAttendedByUser.length-1]
+    return latestSessionAttended
+  },
+  async getStudentLastAttendedSessionDate(id) {
+    getStudentLastAttendedSession(id).then(res => res.when.date)
   }
 
 }
 
-const loggedInStudent = new Human('630fbcd603c610ee444351b5');
-
-console.log(loggedInStudent);
+export default {
+  methods,
+};
