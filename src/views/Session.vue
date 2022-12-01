@@ -157,6 +157,7 @@ import { getAllHumans } from '../services/humanService'
 import { getAllTechniques } from '../services/bjj_services/techniqueService'
 import { getAllFocusLessons } from '../services/bjj_services/focusLessonService'
 import { saveSession, getAllSessions } from '../services/sessionService'
+import humanStore from "../store/humanStore"
 import moment from 'moment'
 import store from '../store/store'
 
@@ -249,16 +250,24 @@ export default {
         // [ { name: 'Fizz McBuzz', latestAttended: '2022-10-20'}, {...}]
         const createStudentsLatestAttendedArray = async() => {
             const allHumans = await getAllHumans()
-            const allSessions = await getAllSessions()
+            const allHumansIdArray = allHumans.map(human => human._id)  // this one works as intended
+            const studentsNameArray = Promise.all(
+              allHumansIdArray.map(id => { 
+              return humanStore.methods.getStudentName(id)
+              // humanStore.methods.getStudentLastAttendedSession(id).when.date
+              })
+            )
 
-            console.log(allHumans)
-            console.log(allSessions)
+            const studentsLatestSessionAttendedArray = Promise.all(
+              allHumansIdArray.map(id => { 
+               return humanStore.methods.getStudentLastAttendedSessionDate(id)
+              })
+            )
 
-            // human.name.first + .last
-            // filter session.who.students
-            
+            return studentsLatestSessionAttendedArray
         }
-        createStudentsLatestAttendedArray()
+        createStudentsLatestAttendedArray().then(res => console.log(res))
+
         
         // Retrieve student in search
         const getStudent = async () => {
