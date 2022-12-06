@@ -1,14 +1,14 @@
 <template>
-  <!-- 'update:checked' is synced to v-model:checked @Session.vue -->
   <input
     @input="(event) => $emit('update:checked', event.target.checked)"
-    type="checkbox"
+    type="Checkbox"
     :checked="checked"
     :id="fieldId"
-    class="mr-2 hidden" />
+    class="mr-2 hidden"
+  />
   <label
     :for="fieldId"
-    class="flex flex-row items-center font-bold text-gray-800 cursor-pointer"
+    class="flex flex-row items-center font-bold text-gray-800 cursor-pointer select-none"
   >
     <i
       class="fa mr-2"
@@ -31,11 +31,10 @@ export default {
     },
     checked: {
       type: Boolean,
-    }
+    },
   },
 };
 </script>
 
 <style>
 </style>
-

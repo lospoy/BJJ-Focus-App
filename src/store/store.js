@@ -1,3 +1,4 @@
+// GLOBAL STORE
 // Using Composition API
 import { reactive } from "vue";
 
@@ -9,6 +10,11 @@ const state = reactive({
 const student = reactive({
   data: null,
   training: null,
+});
+
+const human = reactive({
+  loggedHuman: null,
+  allHumans: null,
 });
 
 const methods = {
@@ -30,6 +36,12 @@ const methods = {
   },
   getStudent() {
     return JSON.parse(JSON.stringify(student))
+  },
+  setHuman(payload) {
+    human.loggedHuman = payload ? payload : null
+  },
+  setHumanArray(payload) {
+    human.allHumans = payload ? payload : null
   },
 };
 
