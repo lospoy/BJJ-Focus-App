@@ -17,7 +17,6 @@
         <div class="p-8 flex items-start bg-light-grey rounded-md shadow-lg">
             <!-- Form -->
             <form
-                @submit.prevent="getStudent"
                 class="flex flex-col gap-y-4 w-full"
             >
                 <h1 class="text-3xl text-at-light-orange self-center">Save Session</h1>
@@ -70,65 +69,24 @@
                     <option :value="turtle">Turtle</option>
                 </select>
                 </div>
-
-                <!-- Student Search -->
-                <div class="flex flex-col">
-                <label for="student" class="text-sm text-at-light-orange">
-                    Search student
-                </label>
-                <input
-                    type="text"
-                    required
-                    class="p-2 text-grey-500 focus:outline-none"
-                    id="student"
-                    v-model="student"
-                />
-                </div>
-
-                <Button title="Search" />
-            </form>
-        </div>
-
-        <!-- student list and save button -->
-        <div class="p-8 flex items-start bg-light-grey rounded-md shadow-lg mt-4">
-            <!-- Form -->
-            <form
-                @submit.prevent="session"
-                class="flex flex-col gap-y-2 w-full"
-            >
-            <!--- STUDENT LIST --->
-            <div class="flex flex-col items-center">
-                <span>{{ studentList }}</span>
-            </div>
-
-                <Button :title='buttonTitle' :color='buttonColor' />
             </form>
         </div>
 
         <!-- STUDENT LIST SORTED BY LATEST CLASS ATTENDED (NEWEST) -->
         <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col justify-center mt-4">
           <div class="rounded-md bg-at-light-orange mb-2 self-center">
-            <span class="flex text-m text-white px-24">STUDENT LIST</span>
+            <span class="flex text-m text-white px-24">ATTENDANCE - {{humanIdList.length}}</span>
           </div>
-            <!-- Form -->
             <form
-                @submit.prevent="session"
+                @submit.prevent="sessionToAPI"
                 class="flex flex-col gap-y-2 w-full"
             >
-            <!--- SORTED STUDENT LIST --->
-                <!-- <ul id="sortedStudentList">
-                    <li v-for="(student, index) of sortedStudentList" :key="index">
-                        - {{ student }}
-                    </li>
-                </ul> -->
-
-                <div class="flex flex-row items-center justify-center">
-                  <Checkbox
+                <div class="flex flex-col items-center justify-center">
+                  <MultiCheckbox
                     fieldId="volume"
-                    v-model:checked="volumeOn"
-                    label="Volume On"
+                    v-model:value="humanIdList"
+                    :options="attendanceList"
                   />
-                <span class="ml-2">{{ volumeOn }}</span>
                 </div>
 
                 <Button :title='buttonTitle' :color='buttonColor' />
@@ -152,48 +110,39 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { getAllHumans } from '../services/humanService'
-import { getAllTechniques } from '../services/bjj_services/techniqueService'
 import { getAllFocusLessons } from '../services/bjj_services/focusLessonService'
 import { saveSession, getAllSessions } from '../services/sessionService'
 import humanStore from "../store/humanStore"
 import moment from 'moment'
-import store from '../store/store'
 
 // components import
 import Button from "../components/Button.vue";
-import Checkbox from "../components/Checkbox.vue";
+import MultiCheckbox from "../components/Multi-checkbox.vue"
 
 export default {
     name: 'session',
     components: {
         Button,
-        Checkbox,
+        MultiCheckbox,
     },
     setup() {
-        // CURRENTLY THE ONLY CURRICULUM IS FOCUS LESSONS
-        // OTHER TYPES OF SESSIONS THAT ARE NOT FOCUS @18:15PM WILL REQUIRE TESTING
-
         const statusMsg = ref(null)
         const errorMsg = ref(null)
 
-        // These are Focus Lesson IDs
+        // Focus Lesson IDs
         const backControl = "63476ca77c0c4048382acb04"
         const mount = "634ecefa9f04894fb818c868"
         const halfGuard = "634ed31717260c95e351de8d"
         const sideControl = "634ed53c17260c95e351decb"
         const closedGuard = "634ed77517260c95e351dfa3"
         const deLaRiva = "634edb2337829d81a79048ab"
-        const openGuard = ""
-        const turtle = ""
+        const openGuard = "638eaab8964f267814d40a89"
+        const turtle = "638ead84964f267814d40ad7"
         const teacher = ref(null)
         const latestSessionSavedDate = ref(null)
         const latestSessionSavedTopic = ref(null)
-
-        // SORTED STUDENT LIST
-        const sortedStudentList = reactive([])
-        const volumeOn = ref(true)
 
         // Human IDs
         const carlosCampoy = '630e5c2da1c2a0bcf246c383'
@@ -203,13 +152,13 @@ export default {
         const topic = ref('')
         const student = ref(null)
         const date = ref(null)
-        // gotta use reactive when dealing with objects/arrays
-        const studentList = reactive([]) // Initialize empty array show attending student list in DOM
-        const humanIdList = reactive([]) // Initialize empty array to store human ids for POST
         const techniqueList = reactive([]) // Initialize empty array to show session techniques in DOM
         const techniqueIdArray = reactive([]) // Initialize empty array to store technique ids for POST
 
-        // INFO
+        const humanIdList = ref([]) // used in multicheckbox
+        const attendanceList = ref([]) // used in multicheckbox
+
+        // LAST SESSION SAVED CARD
         const displayLatestSessionSaved = async() => {
             const allSessions = await getAllSessions()
             const allFocusLessons = await getAllFocusLessons()
@@ -218,7 +167,6 @@ export default {
             latestSessionSavedDate.value = new Date(allSessions[allSessions.length-1].when.date).toLocaleDateString()
             latestSessionSavedTopic.value = allFocusLessons.filter(position => JSON.stringify(position._id).includes(latestLessonId))[0].topic
         }
-        displayLatestSessionSaved()
         
         // Button success visual feedback
         let buttonColor = ref(null)
@@ -238,74 +186,69 @@ export default {
         }
 
         // Date & Focus Lesson time formatting
-        const focusLessonTime = 'T18:15:00Z'
         const getDate = _ => {
+            const focusLessonTime = 'T18:15:00Z'
             // if date has not been selected, default to NOW
             if(!date.value) { return moment().format() }
             // otherwise return date selected
             return date.value + focusLessonTime
         }
 
-        // Create array students and their last day attended
-        // [ { name: 'Fizz McBuzz', latestAttended: '2022-10-20'}, {...}]
-        const createStudentsLatestAttendedArray = async() => {
+        // CREATE ATTENDANCE ARRAY -> array of objects sorted by their most recent attended date
+        // [ {name: "Juan", id: "1231228hfqinf"}, ] 
+        const createAttendanceArray = async() => {
             const allHumans = await getAllHumans()
-            const allHumansIdArray = allHumans.map(human => human._id)  // this one works as intended
-            const studentsNameArray = Promise.all(
+            const allHumansIdArray = allHumans.map(human => human._id)
+
+            const studentsNameArray = await Promise.all(  // returns array of strings
               allHumansIdArray.map(id => { 
-              return humanStore.methods.getStudentName(id)
-              // humanStore.methods.getStudentLastAttendedSession(id).when.date
+                return humanStore.methods.getStudentName(id)
               })
             )
 
-            const studentsLatestSessionAttendedArray = Promise.all(
+            const studentsLatestAttendedSessionArray = await Promise.all( // returns array of last session attended by each human (objects)
               allHumansIdArray.map(id => { 
-               return humanStore.methods.getStudentLastAttendedSessionDate(id)
+                return humanStore.methods.getStudentLastAttendedSession(id)
               })
             )
 
-            return studentsLatestSessionAttendedArray
-        }
-        createStudentsLatestAttendedArray().then(res => console.log(res))
+            const dates = []
+            for(let i = 0; i <= studentsLatestAttendedSessionArray.length; i++){ // extracts session.when.date from the session objects and stores in "dates" array
+              if (studentsLatestAttendedSessionArray[i] !== undefined) {
+                dates.push(studentsLatestAttendedSessionArray[i].when.date)
+              } else {
+                dates.push('No date')
+              }
+            }
 
-        
-        // Retrieve student in search
-        const getStudent = async () => {
-            // Retrieve object with all humans in database
-            const allHumans = await getAllHumans()
-            // Get student object based on first name search
-            const foundStudent = allHumans.filter(human => human.name.first.toLowerCase() === student.value.toLowerCase())
-            // Get student's name as string
-            const studentName = foundStudent.map(x => x.name.first + " " + x.name.last)[0]
-            // Get student's human ID ***JUST A STRING SO IT WILL NEED TO BE CONVERTED TO OBJECT ID***
-            const studentHumanId = foundStudent.map(x => x._id)[0]
+            const namesIdsLastDateArray = allHumansIdArray.map((id, i) => { // creates array of objects
+              return {
+                id: id,
+                name: studentsNameArray[i],
+                lastDate: dates[i]
+              }
+            })
 
-            const addStudentToList = async () => studentList.push(studentName)
-            const addHumantoAttendance = async () => humanIdList.push(studentHumanId)
-            
-            return addStudentToList(), addHumantoAttendance()
-        }
+            const dateToMs = date => new Date(date).getTime()
+            const sortedNamesAndIdsArray = namesIdsLastDateArray.sort((a, b) => { // Sorts array by most recent date
+                return dateToMs(b.lastDate) - dateToMs(a.lastDate)
+              })
 
-        // Retrieve technique in search
-        const getTechnique = async () => {
-            // Retrieve object with all techniques in database
-            const allTechniques = await getAllTechniques()
-            // Get technique object based on position && move && variation search
-            const foundTechnique = allTechniques.filter(technique => technique.name.first.toLowerCase() === student.value.toLowerCase())
-            // Get student's name as string
-            const techniqueName = foundTechnique.map(x => x.name.first + " " + x.name.last)[0]
-            // Get student's technique ID ***JUST A STRING SO IT WILL NEED TO BE CONVERTED TO OBJECT ID***
-            const techniqueId = foundTechnique.map(x => x._id)[0]
-
-            const addTechniqueToList = async () => techniqueList.push(techniqueName)
-            const addTechniqueIdToArray = async () => techniqueIdArray.push(techniqueId)
-            
-            return addTechniqueToList(), addTechniqueIdToArray()
+            return sortedNamesAndIdsArray
         }
 
-        // Save session
-        // update attendance object and POST to API
-        const session = async () => {
+        // MULTI CHECKBOX
+        const getAttendanceList = async() => {
+          attendanceList.value = await createAttendanceArray()
+        }
+
+        onMounted(() => {
+          getAttendanceList()
+          displayLatestSessionSaved()
+        })
+
+        // SAVE SESSION -> update attendance object and POST to API
+        const sessionToAPI = async () => {
             try {
               const res = await saveSession({
                 when: {
@@ -314,7 +257,7 @@ export default {
                 who: {
                     teacher: { _id: teacher.value },
                     // creates array with '_id' as key and human id string as value
-                    students: humanIdList.reduce((s, a) => {
+                    students: humanIdList.value.reduce((s, a) => {
                         s.push({_id: a})
                         return s
                     }, [])
@@ -336,13 +279,13 @@ export default {
         return {
             teacher, student, date, topic, statusMsg, errorMsg,
             backControl, mount, halfGuard, sideControl, closedGuard, deLaRiva, openGuard, turtle,
-            techniqueList, techniqueIdArray, getTechnique,
-            getStudent, session, studentList, humanIdList, getDate,
+            techniqueList, techniqueIdArray,
+            sessionToAPI, getDate,
             buttonColor, buttonTitle, buttonSuccess,
             latestSessionSavedDate, latestSessionSavedTopic,
 
-            // SORTED STUDENT LIST
-            sortedStudentList, volumeOn
+            // STUDENT LIST & MULTICHECKBOX
+            attendanceList, humanIdList, getAttendanceList
         }
     },
 }
