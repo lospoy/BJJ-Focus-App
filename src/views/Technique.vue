@@ -249,12 +249,8 @@ export default {
         } else if (moveObject.category.takedown === true) {
             takedownList.push(`${variationObject.name.english} ${moveObject.name.english} Takedown from ${positionObject.name.english}`)
         }
-
-
-
     }
     
-
     // Button success visual feedback
     let buttonColor = ref(null) 
     let buttonTitle = ref("Save Technique")
