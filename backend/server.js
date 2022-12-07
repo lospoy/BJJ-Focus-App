@@ -34,6 +34,7 @@ app.use('/api/focusLessons', require('./routes/bjj_routes/focusLessonRoutes'))
 // Serve frontend >> *must* be under the API routes
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../frontend/build')))
+    app.get('/', (req, res) => res.send('TEsting HI PLEASE FIND ME'))
     // all subdomain requests sent to index.html
     app.get(/.*/, (req, res) => res.sendFile(path.resolve(__dirname, '../', 'dist', 'index.html')))
 } else {
