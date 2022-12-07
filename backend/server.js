@@ -38,7 +38,7 @@ if(process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'dist')))
     console.log('inside the NOVE_ENV if block')
     // all subdomain requests sent to index.html
-    app.get(/.*/, (req, res) => res.sendFile(path.resolve(__dirname + '/public/index.html')))
+    app.get(/.*/, (req, res) => res.sendFile(path.resolve(__dirname, '../', 'dist', 'index.html')))
 } else {
     console.log('in the else of the NOVE_ENV if block')
     app.get('/', (req, res) => res.send('Please set to production'))
