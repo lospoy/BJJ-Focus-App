@@ -1,22 +1,22 @@
 <template>
-  <div class="max-w-screen-sm mx-auto px-4 py-10">
+  <div class="max-w-screen-sm mx-auto px-4 py-5">
     <!-- Error Handling -->
     <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-light-grey shadow-lg">
       <p class="text-red-500">{{ errorMsg }}</p>
     </div>
 
     <!-- Hi, user! -->
-    <div class="p-5">
-        <span class="flex text-2xl text-white -mb-2">Hi, {{ humanName }}!</span>
-        <span class="flex text-xl text-white">Focus Sessions: {{ focusSessions }}</span>
+    <div class="px-5 py-2">
+        <span class="flex text-xl text-white -mb-2">Hi, {{ humanName }}!</span>
+        <span class="flex text-l text-white">Focus Sessions: {{ focusSessions }}</span>
     </div>
 
     <!-- THIS WEEK, NEXT WEEK -->
     <div class="flex flex-col bg-light-grey rounded-md shadow-lg mb-4">
       <!-- content -->
-      <div class="self-center flex flex-col p-5">
-        <h2 class="self-center text-2xl text-dark-grey -mb-1 uppercase">This week:</h2>
-        <h1 class="self-center text-3xl mb-3 rounded-md bg-at-light-orange text-white py-1.5 px-16 text-center">{{ currentTopic }}</h1>
+      <div class="self-center flex flex-col p-2">
+        <h2 class="self-center text-xl text-dark-grey -mb-1 uppercase">This week:</h2>
+        <h1 class="self-center text-3xl mb-3 rounded-md bg-at-light-orange text-white py-1 px-16 text-center">{{ currentTopic }}</h1>
         <h2 class="self-center text-xl text-dark-grey -mb-2 uppercase">Next week:</h2>
         <h2 class="self-center text-l text-dark-grey uppercase">{{ nextTopic }}</h2>
       </div>
@@ -27,7 +27,6 @@
 
     <!-- STATS (components) -->
     <StudentStats />
-    
   </div>
 </template>
 

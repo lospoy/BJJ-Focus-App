@@ -32,21 +32,20 @@
               Loading session data
             </span>
       </div>
-      <div class="pl-4 px-6">
-            <ul class="list-inside space-y-1 justify-center" v-if="afterSessionCardSkeleton">
-                <li class="text-l text-dark-grey uppercase">{{ attendedOrNot }}</li>
-                <li class="text-l text-dark-grey uppercase">{{ sessionTopic }}</li>
-                <div class="flex flex-col mb-2">
-                    <label for="techniqueList" class="mb-1 text-at-light-orange"
-                    >Techniques</label
-                    >
-                    <ul id="techniqueList">
-                        <li v-for="(item, index) of techniqueList" :key="index">
-                            - {{ item }}
-                        </li>
-                    </ul>
-                </div>
+
+      <!-- SESSION CARD: SELECTED DATE'S DETAILS -->
+      <div class="flex flex-col pl-4 px-6 w-full">
+            <ul class="list-inside space-y-1 self-center" v-if="afterSessionCardSkeleton">
+              <li class="text-3xl text-dark-grey uppercase text-center -mb-3">{{ sessionTopic }}</li>
+              <li class="text-s text-dark-grey uppercase text-center">{{ attendedOrNot }}</li>  
             </ul>
+            <div class="flex flex-col mt-2 w-full" v-if="attended">
+              <ul id="techniqueList" class="space-y-1 ml-4">
+                  <li class="bg-light-gold bg-opacity-80 rounded-md shadow-sm text-dark-grey px-2" v-for="(item, index) of techniqueList" :key="index">
+                    {{ item }}
+                  </li>
+              </ul>
+            </div>
       </div>
     </div>
 
@@ -62,10 +61,10 @@
 import { ref, reactive } from "vue";
 import store from "../store/store"
 import { getAllFocusLessons } from "../services/bjj_services/focusLessonService"
-import { createTechnique, getAllTechniques, getTechnique } from "../services/bjj_services/techniqueService";
-import { createPosition, getAllPositions, getPosition } from "../services/bjj_services/positionService";
-import { createMove, getAllMoves, getMove } from "../services/bjj_services/moveService";
-import { createVariation, getAllVariations, getVariation } from "../services/bjj_services/variationService";
+import { getTechnique } from "../services/bjj_services/techniqueService";
+import { getPosition } from "../services/bjj_services/positionService";
+import { getMove } from "../services/bjj_services/moveService";
+import { getVariation } from "../services/bjj_services/variationService";
 
 export default {
   name: "SessionCalendar",
@@ -88,6 +87,7 @@ export default {
     const attendedSessions = ref(null)
     const techniqueList = reactive([])
     const attendedOrNot = ref(null)
+    const attended = ref(null)
 
     const getTopic = async(focusLessonId) => { // returns string
       const allFocusLessons = await getAllFocusLessons()
@@ -205,29 +205,33 @@ export default {
         const moveObject = await getMove(moveId)
         const variationObject = await getVariation(variationId)
 
-        if(moveObject.category.pass === true) {
+        if (variationObject.name.english === 'Standard') {
+          variationObject.name.english = ''
+        }
+
+        if(moveObject.category.pass) {
             techniqueList.push(`${variationObject.name.english} ${moveObject.name.english} Pass from ${positionObject.name.english}`)
         }
 
-        if(moveObject.category.entry === true) {
+        if(moveObject.category.entry) {
            techniqueList.push(`${variationObject.name.english} Entry ${moveObject.name.english} from ${positionObject.name.english}`)
         }
 
-        if(moveObject.category.escape === true) {
-           techniqueList.push(`${variationObject.name.english} ${moveObject.name.english} Escape from ${positionObject.name.english}`)
+        if(moveObject.category.escape) {
+           techniqueList.push(`${variationObject.name.english} ${moveObject.name.english} Escape`)
         }
 
-        if(moveObject.category.submission === true) {
-           techniqueList.push(`${variationObject.name.english} ${moveObject.name.english} from ${positionObject.name.english}`)
+        if(moveObject.category.submission) {
+           techniqueList.push(`${variationObject.name.english} ${moveObject.name.english}`)
         }
 
-        if(moveObject.category.sweep === true) {
-           techniqueList.push(`${variationObject.name.english} ${moveObject.name.english} Sweep from ${positionObject.name.english}`)
+        if(moveObject.category.sweep) {
+           techniqueList.push(`${variationObject.name.english} ${moveObject.name.english}`)
         }
 
-        if(moveObject.category.takedown === true && positionObject.name.english === "Standing") {
+        if(moveObject.category.takedown && positionObject.name.english === "Standing") {
             techniqueList.push(`${variationObject.name.english} ${moveObject.name.english} Takedown`)
-        } else if (moveObject.category.takedown === true) {
+        } else if (moveObject.category.takedown) {
             techniqueList.push(`${variationObject.name.english} ${moveObject.name.english} Takedown from ${positionObject.name.english}`)
         }
     }
@@ -245,7 +249,6 @@ export default {
           selectedLesson.value = lessonOnSelectedDay.what.focus._id
           showSessionTechniques(selectedLesson.value)
           sessionTopic.value = await Promise.resolve(getTopic(lessonOnSelectedDay.what.focus._id))
-          console.log(lessonOnSelectedDay)
           displaySessionCard.value = true
           noSessionCard.value = false
         }
@@ -253,7 +256,14 @@ export default {
           displaySessionCard.value = false
           noSessionCard.value = true
         }
-        attendedOnSelectedDay ? attendedOrNot.value = 'Attended' : attendedOrNot.value = 'Not Attended'
+
+        if (attendedOnSelectedDay) {
+          attendedOrNot.value = 'Attended'  // displays text to the user
+          attended.value = true             // used for v-if
+        } else {
+          attendedOrNot.value = 'Not Attended'
+          attended.value = false
+        } 
       }
         sessionCardDate.value = selectedDay.value
         displaySessionData()
@@ -269,7 +279,7 @@ export default {
         daySelected, selectedDay,
         displaySessionCard, sessionCardDate, noSessionCard,
         // Training data
-        studentTrainingData, attendedSessions, unattendedSessions, techniqueList, selectedLesson, attendedOrNot, sessionTopic
+        studentTrainingData, attendedSessions, unattendedSessions, techniqueList, selectedLesson, attendedOrNot, sessionTopic, attended
     };
   },
 };
