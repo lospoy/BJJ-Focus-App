@@ -10,7 +10,9 @@ module.exports = {
         "at-orange": "#a4442d",
         "light-grey": "#f7f7f7",
         "dark-grey": "#3d4250",
-        "gold": "#d8c93b"
+        "gold": "#d8c93b",
+        "light-gold": "#E7C93B"
+
       },
     },
     fontFamily: {
