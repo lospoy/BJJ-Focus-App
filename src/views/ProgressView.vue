@@ -8,7 +8,6 @@
     <!-- Hi, user! -->
     <div class="px-5 py-2">
         <span class="flex text-xl text-white -mb-2">Hi, {{ humanName }}!</span>
-        <span class="flex text-l text-white">Focus Sessions: {{ focusSessions }}</span>
     </div>
 
     <!-- THIS WEEK, NEXT WEEK -->
@@ -36,7 +35,6 @@ import { getHuman } from "../services/humanService"
 import store from "../store/store"
 import SessionCalendar from "../components/SessionCalendar.vue"
 import StudentStats from "../components/StudentStats.vue"
-import { setTrainingData } from "../store/trainingData"
 
 export default {
   name: "progressView",
@@ -45,28 +43,12 @@ export default {
     StudentStats
   },
   setup() {
-    const processTrainingData = async() => {
-      await setTrainingData()
-    }
-    processTrainingData()
-
     // Variables
     const errorMsg = ref(null);
     const user = store.methods.getUser()
-
     const currentTopic = ref(null);
     const nextTopic = ref(null)
     const humanName = ref(null)
-    const focusSessions = ref(null)
-
-    const displayFocusSessions = async() => {
-      focusSessions.value = "..."
-
-      setTimeout(() => {
-        focusSessions.value = store.methods.getStudent().training.focusSessions
-      }, 3000);
-    }
-    displayFocusSessions()
 
     const getHumanName = async () => {
         const res = await getHuman(user.human)
@@ -111,8 +93,7 @@ export default {
     
     return {
         errorMsg,
-        weeklyTopicList, currentTopic, nextTopic, currentWeekNumber, humanName,
-        focusSessions
+        weeklyTopicList, currentTopic, nextTopic, currentWeekNumber, humanName
     };
   },
 };
