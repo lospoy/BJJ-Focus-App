@@ -21,9 +21,10 @@
         <router-link v-if="user && isStudent" class="cursor-pointer" :to="{ name: 'PrivateClass' }">Private Class</router-link>
 
         <!-- admin routes -->
+        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'Session' }">Session</router-link>
+        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'Student' }">Student</router-link>
         <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'NewHuman' }">Human</router-link>
         <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'Technique' }">Technique</router-link>
-        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'Session' }">Session</router-link>
         
         <!-- login/logout routes -->
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Login' }" @click="logout">Logout</router-link>
