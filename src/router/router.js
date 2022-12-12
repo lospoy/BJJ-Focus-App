@@ -5,6 +5,7 @@ import PrivateClass from "../views/PrivateClass.vue";
 import ProgressView from "../views/ProgressView.vue";
 import Register from "../views/Register.vue";
 import Session from "../views/Session.vue";
+import Student from "../views/Student.vue";
 import Technique from "../views/Technique.vue";
 import UserProfile from "../views/UserProfile.vue";
 
@@ -48,6 +49,11 @@ const routes = [
     path: "/private-class",
     name: "PrivateClass",
     component: PrivateClass,
+  },
+  {
+    path: "/student",
+    name: "Student",
+    component: Student,
   },
 ];
 
