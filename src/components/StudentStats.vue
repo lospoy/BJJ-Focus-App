@@ -2,10 +2,11 @@
     <!-- MY STATS -->
     <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col justify-center">
       <div class="rounded-md bg-at-light-orange mb-2 self-center">
-        <span class="flex text-m text-white px-24">Stats</span>
+        <span class="flex text-m text-white px-24">{{ title }}</span>
       </div>
       <div class="pl-4 px-6 animate-pulse" v-if="skeleton">
             <ul class="list-inside space-y-1 justify-center">
+                <li class="text-l text-dark-grey uppercase">Focus Sessions: {{ focusSessions }}</li>
                 <li class="text-l text-dark-grey uppercase">Latest Session: {{ latestSession }}</li>
                 <li class="text-l text-dark-grey uppercase">First Session: {{ firstSession }}</li>
                 <li class="text-l text-dark-grey uppercase">Focus Training: {{ totalTrained }}</li>
@@ -13,6 +14,7 @@
       </div>
       <div class="pl-4 px-6">
             <ul class="list-inside space-y-1 justify-center" v-if="stats">
+                <li class="text-l text-dark-grey uppercase">Focus Sessions: {{ focusSessions }}</li>
                 <li class="text-l text-dark-grey uppercase">Latest Session: {{ latestSession }}</li>
                 <li class="text-l text-dark-grey uppercase">First Session: {{ firstSession }}</li>
                 <li class="text-l text-dark-grey uppercase">Focus Training: {{ totalTrained }}</li>
@@ -22,20 +24,36 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { setTrainingData } from "../store/trainingData"
 import store from "../store/store"
 
 export default {
   name: "StudentStats",
-  setup() {
+  props: {
+    title: {
+      type: String,
+      default: "Stats",
+    },
+    humanId: {
+      type: String,
+      required: true,
+    }
+  },
+  setup(props) {  // passing props allows us to use the values inside the props object -> props.item
     // Variables
     const errorMsg = ref(null);
+    const focusSessions = ref(null)
     const totalTrained = ref(null)
     const firstSession = ref(null)
     const latestSession = ref(null)
     const skeleton = ref(null)  // v-if
     const stats = ref(null) // v-if
     const delay = 3000  // ms delay to sync the skeletonService and displayStudentData setTimeouts
+
+    const processTrainingData = async(id) => {
+      await setTrainingData(id)
+    }
 
     const skeletonService = _ => {
       skeleton.value = true
@@ -46,23 +64,20 @@ export default {
         stats.value = true
       }, delay);
     }
-    skeletonService()
 
     const displayStudentData = async() => {
       latestSession.value = '...'
       firstSession.value = '...'
       totalTrained.value = '...'
+      focusSessions.value = "..."
 
       setTimeout(() => {  // data pulled from the store, but set @store/trainingData.js
         const training = store.methods.getStudent().training
 
-        // LATEST SESSION
         latestSession.value = `${training.daysSinceLatestSession} days ago`
-
-        // FIRST SESSION
         firstSession.value = new Date(training.firstSession).toLocaleDateString()
+        focusSessions.value = store.methods.getStudent().training.focusSessions
 
-        // FOCUS TRAINING
         const weeksTrained = training.weeksTrained
         if (weeksTrained < 1) {
             totalTrained.value = "Just Started!💪"
@@ -72,16 +87,20 @@ export default {
             totalTrained.value = `${Math.floor(weeksTrained/4)} months⚡`
         } else {
             totalTrained.value = `${(weeksTrained/4/12).toFixed(2)} years⚡`
-        }
-        
+        }    
       }, delay);
     }
-    displayStudentData()
+
+    onMounted(() => {
+      displayStudentData()
+      skeletonService()
+      processTrainingData(props.humanId)
+    })
 
     return {
         errorMsg,
         skeleton, stats,
-        totalTrained, firstSession, latestSession,
+        totalTrained, firstSession, latestSession, focusSessions, processTrainingData
     };
   },
 };
