@@ -5,53 +5,84 @@
       <p class="text-red-500">{{ errorMsg }}</p>
     </div>
 
-    <!-- STATS (components) -->
-    <StudentStats
-      :title='title'
-      :human-id='humanId'
-    />
+    <!-- STUDENT CHECKBOXES -->
+    <div class="p-8 flex flex-col items-center bg-light-grey rounded-md shadow-lg mb-4">
+      <h1 class="text-3xl text-at-light-orange self-center">STUDENTS STATS</h1>
+      <div class="flex flex-col items-center justify-center mt-4">
+        <MultiCheckbox
+          v-model:value="humanList"
+          :options="nameAndIdArray"
+        />
+      </div>
+    </div>
+    
+    <!-- STATS DISPLAY -->
+        <StudentStats
+          v-for="human in humanList"
+          :fieldId="human.name"
+          :label="human.name"
+          :key="human"
+          :title='human.name'
+          :id='human.id'
+          class="mb-4"
+        />
+  
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
-import { getHuman } from "../services/humanService"
+import { getAllHumans } from "../services/humanService"
+import humanStore from "../store/humanStore"
+// components import
 import StudentStats from "../components/StudentStats.vue"
+import MultiCheckbox from "../components/Multi-checkbox.vue"
 
 export default {
   name: "student",
   components: {
-    StudentStats
+    StudentStats,
+    MultiCheckbox
   },
   setup() {
     // Variables
     const errorMsg = ref(null);
-    const title = ref(null)
-    const humanId = ref('')
-    const humanName = ref(null)
+    const humanList = ref([]) // used in multicheckbox
+    const nameAndIdArray = ref([]) // used in multicheckbox
 
-    const getHumanName = async(id) => {
-      const human = await getHuman(id)
-      title.value = human.name.first + ' ' + human.name.last
+    // CREATE HUMAN NAMES AND IDs ARRAY -> array of objects
+    // [ {name: "Juan", id: "1231228hfqinf"}, ] 
+    const createNameAndIdArray = async() => {
+      const allHumans = await getAllHumans()
+      const allHumansIdArray = allHumans.map(human => human._id)
+      const studentsNameArray = await Promise.all(  // returns array of strings
+        allHumansIdArray.map(id => { 
+          return humanStore.methods.getStudentName(id)
+        })
+      )
+
+      const nameAndIdArray = allHumansIdArray.map((id, i) => {
+        return {
+          id: id,
+          name: studentsNameArray[i]
+        }
+      })
+      return nameAndIdArray
     }
 
-    const setHumanId = id => {
-      humanId.value = id
+    // MULTI CHECKBOX
+    const getNameAndIdArray = async() => {
+      nameAndIdArray.value = await createNameAndIdArray()
     }
 
     onMounted(() => {
-      setHumanId('630d866e5b21aa1ce143945c')  // FOR TESTING PURPOSES
-      getHumanName(humanId.value)
-      console.log(humanId.value)
+      getNameAndIdArray()
     })
 
-    
-
-    // studentTitle = human.name.first + ' ' + human.name.last
-    
     return {
         errorMsg,
-        title, humanId, humanName, getHumanName
+        // MULTICHECKBOX
+        humanList, nameAndIdArray
     };
   },
 };
