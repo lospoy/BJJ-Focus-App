@@ -7,8 +7,7 @@
 
     <!-- Hi, user! -->
     <div class="px-5 py-2">
-        <span class="flex text-xl text-white -mb-2">Hi, {{ humanName }}!</span>
-        <span class="flex text-l text-white">Focus Sessions: {{ focusSessions }}</span>
+        <span class="flex text-xl text-white -mb-1">Hi, {{ humanName }}!</span>
     </div>
 
     <!-- THIS WEEK, NEXT WEEK -->
@@ -26,17 +25,16 @@
     <SessionCalendar />
 
     <!-- STATS (components) -->
-    <StudentStats />
+    <StudentStats :id='user.human' v-if="user"/>
+
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { getHuman } from "../services/humanService"
-import store from "../store/store"
 import SessionCalendar from "../components/SessionCalendar.vue"
 import StudentStats from "../components/StudentStats.vue"
-import { setTrainingData } from "../store/trainingData"
 
 export default {
   name: "progressView",
@@ -45,38 +43,14 @@ export default {
     StudentStats
   },
   setup() {
-    const processTrainingData = async() => {
-      await setTrainingData()
-    }
-    processTrainingData()
-
     // Variables
     const errorMsg = ref(null);
-    const user = store.methods.getUser()
-
+    const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
     const currentTopic = ref(null);
     const nextTopic = ref(null)
     const humanName = ref(null)
-    const focusSessions = ref(null)
 
-    const displayFocusSessions = async() => {
-      focusSessions.value = "..."
-
-      setTimeout(() => {
-        focusSessions.value = store.methods.getStudent().training.focusSessions
-      }, 3000);
-    }
-    displayFocusSessions()
-
-    const getHumanName = async () => {
-        const res = await getHuman(user.human)
-        humanName.value = res.name.first
-    }
-    getHumanName()
-
-    // **************  CURRENT & NEXT TOPIC **************  
-    //
-    // DATA
+    // **************  CURRENT & NEXT TOPIC **************
     // One topic per week
     const weeklyTopicList = [
         "Back Control",
@@ -106,13 +80,23 @@ export default {
     // Assigning values to variables
     currentTopic.value = weeklyTopicList[currentTopicArrayIndex]
     nextTopic.value = weeklyTopicList[nextTopicArrayIndex]
-    // 
-    // END OF CURRENT & NEXT TOPIC
+
+
+    const getHumanNameAndId = async () => {
+        const res = await getHuman(user.human)
+        humanName.value = res.name.first
+    }
+
+    onMounted(() => {
+      getHumanNameAndId()
+    })
     
     return {
         errorMsg,
-        weeklyTopicList, currentTopic, nextTopic, currentWeekNumber, humanName,
-        focusSessions
+        // SESSION CALENDAR
+        weeklyTopicList, currentTopic, nextTopic, currentWeekNumber,
+        // STATS
+        humanName, user
     };
   },
 };

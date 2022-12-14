@@ -4,8 +4,8 @@
   >
     <Checkbox
       v-for="option in options"
-      :checked="value.includes(option.id)"
-      @update:checked="check(option.id, $event)"
+      :checked="value.includes(option)"
+      @update:checked="check(option, $event)"
       :fieldId="option.name"
       :label="option.name"
       :key="option"

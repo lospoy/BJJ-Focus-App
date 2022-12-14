@@ -62,8 +62,8 @@
                     <option :value="backControl">Back Control</option>
                     <option :value="halfGuard">Half Guard</option>
                     <option :value="sideControl">Side Control</option>
-                    <option :value="mount">Mount</option>
                     <option :value="closedGuard">Closed Guard</option>
+                    <option :value="mount">Mount</option>
                     <option :value="deLaRiva">De La Riva</option>
                     <option :value="openGuard">Open Guard</option>
                     <option :value="turtle">Turtle</option>
@@ -83,7 +83,6 @@
             >
                 <div class="flex flex-col items-center justify-center">
                   <MultiCheckbox
-                    fieldId="volume"
                     v-model:value="humanIdList"
                     :options="attendanceList"
                   />
