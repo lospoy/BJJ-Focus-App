@@ -1,6 +1,6 @@
 <template>
     <!-- MY STATS -->
-    <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col justify-center">
+    <div class="p-5 bg-light-grey rounded-md shadow-md flex flex-col justify-center">
       <div class="rounded-md bg-at-light-orange mb-2 self-center">
         <span class="flex text-m text-white px-24">{{ title }}</span>
       </div>
@@ -12,8 +12,13 @@
                 <li class="text-l text-dark-grey uppercase">Focus Training: {{ totalTrained }}</li>
             </ul>
       </div>
-      <div class="pl-4 px-6">
-            <ul class="list-inside space-y-1 justify-center" v-if="stats">
+      <div
+        class="pl-4 px-6"
+        v-if="stats"
+      >
+            <ul
+              class="list-inside space-y-1 justify-center"
+            >
                 <li class="text-l text-dark-grey uppercase">Focus Sessions: {{ focusSessions }}</li>
                 <li class="text-l text-dark-grey uppercase">Latest Session: {{ latestSession }}</li>
                 <li class="text-l text-dark-grey uppercase">First Session: {{ firstSession }}</li>
@@ -35,7 +40,7 @@ export default {
       type: String,
       default: "Stats",
     },
-    humanId: {
+    id: {
       type: String,
       required: true,
     }
@@ -49,7 +54,7 @@ export default {
     const latestSession = ref(null)
     const skeleton = ref(null)  // v-if
     const stats = ref(null) // v-if
-    const delay = 3000  // ms delay to sync the skeletonService and displayStudentData setTimeouts
+    const delay = 1000  // ms delay for skeletonService
 
     const processTrainingData = async(id) => {
       await setTrainingData(id)
@@ -94,7 +99,7 @@ export default {
     onMounted(() => {
       displayStudentData()
       skeletonService()
-      processTrainingData(props.humanId)
+      processTrainingData(props.id)
     })
 
     return {
