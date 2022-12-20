@@ -1,15 +1,15 @@
 <template>
     <div class="px-2 py-4 bg-light-grey rounded-md shadow-md flex flex-col justify-center mb-4">
         <div class="rounded-md bg-at-light-orange mb-2 self-center">
-          <span class="flex text-m text-white px-24">Balance Board</span>
+          <span class="flex text-m text-white px-14">Balance Board</span>
         </div>
-      <bar-chart
-        :data="topicData"
-        :colors="['#dfcd6d']"
-        :dataset="{borderWidth: 1000, barThickness: 20, borderRadius: 3}"
-        :library="chartOptions"
-      >
-      </bar-chart>
+          <bar-chart
+            :data="topicData"
+            :colors="['#dfcd6d']"
+            :dataset="{borderWidth: 1000, barThickness: 30, borderRadius: 3}"
+            :library="chartOptions"
+          >
+          </bar-chart>
     </div>
 </template>
 
@@ -37,13 +37,17 @@ export default {
       scales: {
         x: {
           ticks: {
-            display: false
+            display: false,
           },
         },
         y: {
-          afterFit: (context) => {
-            context.height -= 25
-          }
+          ticks: {
+            font: {
+              size: 14,
+              weight: 'bolder',
+              color: 'black',
+            },
+          },
         },
       },
       animation: {
