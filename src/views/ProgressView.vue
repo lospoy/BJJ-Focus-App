@@ -40,6 +40,12 @@ export default {
     const errorMsg = ref(null);
     const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
     const humanName = ref(null)
+    const isAdmin = ref(null)
+    const isStudent = ref(null)
+    isAdmin.value = user.role.admin
+    isStudent.value = user.role.student
+
+
 
     const getHumanNameAndId = async () => {
         const res = await getHuman(user.human)
@@ -53,7 +59,9 @@ export default {
     return {
         errorMsg,
         // STATS
-        humanName, user
+        humanName, user,
+        // PERMISSIONS
+        isAdmin, isStudent
     };
   },
 };
