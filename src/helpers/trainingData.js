@@ -1,7 +1,7 @@
 // Gets a student's (human) training data from server and sets it in the store
 // Used in /views/StudentStats.vue
 import { getAllSessions } from "../services/sessionService";
-import store from './store';
+import store from '../store/store';
 
 export async function setTrainingData(humanId) {
   const allSessions = await getAllSessions()

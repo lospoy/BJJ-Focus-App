@@ -1,7 +1,7 @@
 <template>
     <div class="px-2 py-4 bg-light-grey rounded-md shadow-md flex flex-col justify-center mb-4">
         <div class="rounded-md bg-at-light-orange mb-2 self-center">
-          <span class="flex text-m text-white px-14">Balance Board</span>
+          <span class="flex text-m text-white px-14">Skills Exposure</span>
         </div>
           <bar-chart
             :data="topicData"
@@ -15,7 +15,7 @@
 
 <script>
 import { ref, onMounted } from "vue"
-import { setTrainingData } from "../helpers/trainingData"
+import { setTrainingData } from "../store/trainingData"
 import store from "../store/store"
 
 export default {

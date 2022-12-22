@@ -30,7 +30,7 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import { setTrainingData } from "../store/trainingData"
+import { setTrainingData } from "../helpers/trainingData"
 import store from "../store/store"
 
 export default {
