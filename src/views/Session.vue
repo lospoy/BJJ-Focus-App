@@ -75,7 +75,7 @@
         <!-- STUDENT LIST SORTED BY LATEST CLASS ATTENDED (NEWEST) -->
         <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col justify-center mt-4">
           <div class="rounded-md bg-at-light-orange mb-2 self-center">
-            <span class="flex text-m text-white px-24">ATTENDANCE - {{humanIdList.length}}</span>
+            <span class="flex text-m text-white px-24">ATTENDANCE - {{humanIdList.length -1}}</span>
           </div>
             <form
                 @submit.prevent="sessionToAPI"
@@ -153,8 +153,8 @@ export default {
         const date = ref(null)
         const techniqueList = reactive([]) // Initialize empty array to show session techniques in DOM
         const techniqueIdArray = reactive([]) // Initialize empty array to store technique ids for POST
-
-        const humanIdList = ref([]) // used in multicheckbox
+        const carlosId = {"id": "630e5c2da1c2a0bcf246c383"}
+        const humanIdList = ref([carlosId]) // used in multicheckbox, defautl has Carlos Campoy as curriculum ideal
         const attendanceList = ref([]) // used in multicheckbox
 
         // LAST SESSION SAVED CARD
@@ -257,7 +257,7 @@ export default {
                     teacher: { _id: teacher.value },
                     // creates array with '_id' as key and human id string as value
                     students: humanIdList.value.reduce((s, a) => {
-                        s.push({_id: a})
+                        s.push({_id: a.id})
                         return s
                     }, [])
                 },
