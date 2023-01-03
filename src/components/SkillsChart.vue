@@ -4,7 +4,7 @@
           <span class="flex text-m text-white px-14">Skills Exposure</span>
         </div>
           <bar-chart
-            :data="topicData"
+            :data="skillData"
             :colors="['#dfcd6d']"
             :dataset="{borderWidth: 1000, barThickness: 30, borderRadius: 3}"
             :library="chartOptions"
@@ -15,11 +15,12 @@
 
 <script>
 import { ref, onMounted } from "vue"
-import { setTrainingData } from "../store/trainingData"
+import { setTrainingData } from "../helpers/trainingData"
+import { getFocusLesson } from "../services/bjj_services/focusLessonService"
 import store from "../store/store"
 
 export default {
-  name: "TopicsChart",
+  name: "SkillsChart",
   props: {
     id: {
       type: String,
@@ -27,7 +28,7 @@ export default {
     }
   },
   setup(props) {
-    const topicData = ref(null);
+    const skillData = ref(null);
     let delayed
 
     const chartOptions = {
@@ -64,15 +65,14 @@ export default {
       },
     }
 
-    // Focus Lesson Ids
-    const backControl = "63476ca77c0c4048382acb04"
-    const halfGuard = "634ed31717260c95e351de8d"
-    const sideControl = "634ed53c17260c95e351decb"
-    const closedGuard = "634ed77517260c95e351dfa3"
-    const mount = "634ecefa9f04894fb818c868"
-    const deLaRiva = "634edb2337829d81a79048ab"
-    const openGuard = "638eaab8964f267814d40a89"
-    const turtle = "638ead84964f267814d40ad7"
+    // technique.move.category types
+    //
+    // pass
+    // entry
+    // escape
+    // submission
+    // sweep
+    // takedown
     
     const getLessonName = id => {   // running it locally since it's just 8 ids that will not change
       if(id === backControl) return 'Back Control'
@@ -85,20 +85,39 @@ export default {
       if(id === turtle) return 'Turtle'
     }
 
-    const getLessonData = async() => {
-      const sessionsPerTopic = store.methods.getStudent().training.sessionsPerTopic
+    const getSkillData = async() => {
+      const sessionsAttendedPerTopic = store.methods.getStudent().training.sessionsPerTopic // [ "Focus lesson ID", number of attended sessions w/ that topic ID ]
+      
+      const getLessonsAndNumberAttended = async() => {
+        const focusArray = []
+  
+        sessionsAttendedPerTopic.map(e => {
+            focusArray.push([getFocusLesson(e[0]), e[1]])
+        })
+        return focusArray
+      }
 
-      sessionsPerTopic.find(e => e[0] === backControl) ? '' : sessionsPerTopic.push([backControl, 0])
-      sessionsPerTopic.find(e => e[0] === halfGuard) ? '' : sessionsPerTopic.push([halfGuard, 0])
-      sessionsPerTopic.find(e => e[0] === sideControl) ? '' : sessionsPerTopic.push([sideControl, 0])
-      sessionsPerTopic.find(e => e[0] === closedGuard) ? '' : sessionsPerTopic.push([closedGuard, 0])
-      sessionsPerTopic.find(e => e[0] === mount) ? '' : sessionsPerTopic.push([mount, 0])
-      sessionsPerTopic.find(e => e[0] === deLaRiva) ? '' : sessionsPerTopic.push([deLaRiva, 0])
-      sessionsPerTopic.find(e => e[0] === openGuard) ? '' : sessionsPerTopic.push([openGuard, 0])
-      sessionsPerTopic.find(e => e[0] === turtle) ? '' : sessionsPerTopic.push([turtle, 0])
+      const getSkillsAndNumberAttended = async() => {
+        const skillsArray = []
+        const res = await getLessonsAndNumberAttended()
+        
+        res.map(e => {
+          skillsArray.push([e[0], e[1]])
+        })
+        return skillsArray
+      }
 
-      const res = sessionsPerTopic.map(e => [getLessonName(e[0]), e[1]])
-      topicData.value = res
+      // sessionsPerTopic.find(e => e[0] === backControl) ? '' : sessionsPerTopic.push([backControl, 0])
+      // sessionsPerTopic.find(e => e[0] === halfGuard) ? '' : sessionsPerTopic.push([halfGuard, 0])
+      // sessionsPerTopic.find(e => e[0] === sideControl) ? '' : sessionsPerTopic.push([sideControl, 0])
+      // sessionsPerTopic.find(e => e[0] === closedGuard) ? '' : sessionsPerTopic.push([closedGuard, 0])
+      // sessionsPerTopic.find(e => e[0] === mount) ? '' : sessionsPerTopic.push([mount, 0])
+      // sessionsPerTopic.find(e => e[0] === deLaRiva) ? '' : sessionsPerTopic.push([deLaRiva, 0])
+      // sessionsPerTopic.find(e => e[0] === openGuard) ? '' : sessionsPerTopic.push([openGuard, 0])
+      // sessionsPerTopic.find(e => e[0] === turtle) ? '' : sessionsPerTopic.push([turtle, 0])
+
+      // const res = sessionsPerTopic.map(e => [getLessonName(e[0]), e[1]])
+      skillData.value = res
     }
 
     const processTrainingData = async(id) => {
@@ -110,11 +129,11 @@ export default {
     })
     
     setTimeout(() => {
-      getLessonData()
+      getSkillData()
     }, 2000);
 
     return {
-      topicData, chartOptions
+      skillData, chartOptions
     };
   }
 };
