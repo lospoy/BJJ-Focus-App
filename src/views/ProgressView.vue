@@ -15,7 +15,7 @@
     <TopicsChart :id='user.human'/>
     <SkillsChart :id='user.human'/>
     <SessionCalendar />
-    <StudentStats :id='user.human' v-if="user" />
+    <StudentStats :id='user.human' v-if="user" :title="'My Stats'" />
 
   </div>
 </template>
@@ -23,6 +23,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { getHuman } from "../services/humanService"
+import { setTrainingData } from "../helpers/trainingData"
 import SessionCalendar from "../components/SessionCalendar.vue"
 import StudentStats from "../components/StudentStats.vue"
 import ThisWeek from '../components/ThisWeek.vue';
@@ -48,15 +49,18 @@ export default {
     isAdmin.value = user.role.admin
     isStudent.value = user.role.student
 
-
-
     const getHumanNameAndId = async () => {
         const res = await getHuman(user.human)
         humanName.value = res.name.first
     }
 
+    const processTrainingData = async(id) => {
+      await setTrainingData(id)
+    }
+
     onMounted(() => {
       getHumanNameAndId()
+      processTrainingData(user.human)
     })
     
     return {
