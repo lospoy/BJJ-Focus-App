@@ -13,6 +13,7 @@
     <!-- Components (cards) -->
     <ThisWeek />
     <TopicsChart :id='user.human'/>
+    <SkillsChart :id='user.human'/>
     <SessionCalendar />
     <StudentStats :id='user.human' v-if="user" />
 
@@ -26,6 +27,7 @@ import SessionCalendar from "../components/SessionCalendar.vue"
 import StudentStats from "../components/StudentStats.vue"
 import ThisWeek from '../components/ThisWeek.vue';
 import TopicsChart from '../components/TopicsChart.vue';
+import SkillsChart from '../components/SkillsChart.vue';
 
 export default {
   name: "progressView",
@@ -33,7 +35,8 @@ export default {
     SessionCalendar,
     StudentStats,
     ThisWeek,
-    TopicsChart
+    TopicsChart,
+    SkillsChart
   },
   setup() {
     // Variables
