@@ -1,10 +1,10 @@
 <template>
     <div class="px-2 py-4 bg-light-grey rounded-md shadow-md flex flex-col justify-center mb-4">
         <div class="rounded-md bg-at-light-orange mb-2 self-center">
-          <span class="flex text-m text-white px-14">Skills Exposure</span>
+          <span class="flex text-m text-white px-14">Skill Growth</span>
         </div>
           <bar-chart
-            :data="topicData"
+            :data="skillData"
             :colors="['#dfcd6d']"
             :dataset="{borderWidth: 1000, barThickness: 30, borderRadius: 3}"
             :library="chartOptions"
@@ -14,20 +14,21 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue"
-import { setTrainingData } from "../store/trainingData"
+import { ref } from "vue"
+import { getFocusLesson } from "../services/bjj_services/focusLessonService"
 import store from "../store/store"
 
 export default {
-  name: "TopicsChart",
+  name: "SkillsChart",
   props: {
     id: {
       type: String,
       required: true,
     }
   },
-  setup(props) {
-    const topicData = ref(null);
+  setup() {
+    const skillData = ref(null);
+    const test1 = ref(null)
     let delayed
 
     const chartOptions = {
@@ -36,6 +37,8 @@ export default {
       },
       scales: {
         x: {
+          min: 0,
+          max: 1600, // 6 months of perfect attendance
           ticks: {
             display: false,
           },
@@ -64,57 +67,75 @@ export default {
       },
     }
 
-    // Focus Lesson Ids
-    const backControl = "63476ca77c0c4048382acb04"
-    const halfGuard = "634ed31717260c95e351de8d"
-    const sideControl = "634ed53c17260c95e351decb"
-    const closedGuard = "634ed77517260c95e351dfa3"
-    const mount = "634ecefa9f04894fb818c868"
-    const deLaRiva = "634edb2337829d81a79048ab"
-    const openGuard = "638eaab8964f267814d40a89"
-    const turtle = "638ead84964f267814d40ad7"
-    
-    const getLessonName = id => {   // running it locally since it's just 8 ids that will not change
-      if(id === backControl) return 'Back Control'
-      if(id === halfGuard) return 'Half Guard'
-      if(id === sideControl) return 'Side Control'
-      if(id === closedGuard) return 'Closed Guard'
-      if(id === mount) return 'Mount'
-      if(id === deLaRiva) return 'De La Riva'
-      if(id === openGuard) return 'Open Guard'
-      if(id === turtle) return 'Turtle'
+    // technique.move.category types
+    //
+    // pass
+    // entry
+    // escape
+    // submission
+    // sweep
+    // takedown
+
+    const processSkillData = async() => {
+      try {
+        const sessionsAttendedPerTopic = store.methods.getStudent().training.sessionsPerTopic
+        // ARRAY OF ARRAYS [string, integer]
+        // String: that Focus lesson's ID
+        // Integer: number of attended sessions that match the string's topic ID
+
+        const lessons = await Promise.all(sessionsAttendedPerTopic.map(async e => ([await getFocusLesson(e[0]), e[1]])))
+        // ARRAY OF ARRAYS [object, integer]
+        // Object: that lesson's object
+        // Integer: number of attended sessions related to the lesson's object
+
+        const les = [...lessons] // hard copy of lessons
+
+        const skills = les.map(e => [e[0].skills, e[1]])
+        // ARRAY OF [ object, integer ]
+        // Object: Skills object of the lesson
+        // Integer: number of attended sessions related to the skills object
+
+        const multiplier = (obj, multiplier) => Object.fromEntries(
+          Object.entries(obj).map(([name, value]) => [name, value * multiplier])
+        )
+        const sumOfSkills = skills.map(e => multiplier(e[0], e[1]))
+        // ARRAY OF [ object ]
+        // Object: skills values multiplied by number of attended lessons of that topic
+
+        const count = (arr, key) => {
+          return arr.reduce((r, a) => {
+            return r + a[key]
+          }, 0)
+        }
+
+        skillData.value = [
+          ["Pass", count(sumOfSkills, 'pass')],
+          ["Entry", count(sumOfSkills, 'entry')],
+          ["Escape", count(sumOfSkills, 'escape')],
+          ["Submission", count(sumOfSkills, 'submission')],
+          ["Sweep", count(sumOfSkills, 'sweep')],
+          ["Takedown", count(sumOfSkills, 'takedown')]
+        ]
+        // ARRAY of [ string, integer ]
+        // String: skill name
+        // Integer: total points acquired through all-time attendance
+
+        skillData.value = skillData.value.sort((a, b) => b[1] - a[1])
+        // SORTS in descending order, from highest to least exposure
+
+        console.log(skillData.value)
+
+      } catch (error) {
+        console.error(error)
+      }
     }
-
-    const getLessonData = async() => {
-      const sessionsPerTopic = store.methods.getStudent().training.sessionsPerTopic
-
-      sessionsPerTopic.find(e => e[0] === backControl) ? '' : sessionsPerTopic.push([backControl, 0])
-      sessionsPerTopic.find(e => e[0] === halfGuard) ? '' : sessionsPerTopic.push([halfGuard, 0])
-      sessionsPerTopic.find(e => e[0] === sideControl) ? '' : sessionsPerTopic.push([sideControl, 0])
-      sessionsPerTopic.find(e => e[0] === closedGuard) ? '' : sessionsPerTopic.push([closedGuard, 0])
-      sessionsPerTopic.find(e => e[0] === mount) ? '' : sessionsPerTopic.push([mount, 0])
-      sessionsPerTopic.find(e => e[0] === deLaRiva) ? '' : sessionsPerTopic.push([deLaRiva, 0])
-      sessionsPerTopic.find(e => e[0] === openGuard) ? '' : sessionsPerTopic.push([openGuard, 0])
-      sessionsPerTopic.find(e => e[0] === turtle) ? '' : sessionsPerTopic.push([turtle, 0])
-
-      const res = sessionsPerTopic.map(e => [getLessonName(e[0]), e[1]])
-      topicData.value = res
-    }
-
-    const processTrainingData = async(id) => {
-      await setTrainingData(id)
-    }
-
-    onMounted(() => {
-      processTrainingData(props.id)
-    })
     
     setTimeout(() => {
-      getLessonData()
+      processSkillData()
     }, 2000);
 
     return {
-      topicData, chartOptions
+      skillData, chartOptions, test1
     };
   }
 };

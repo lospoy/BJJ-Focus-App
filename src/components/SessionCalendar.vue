@@ -2,7 +2,7 @@
     <!-- CALENDAR -->
     <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col mb-4 justify-center">
       <div class="rounded-md bg-at-light-orange mb-2 self-center">
-        <span class="flex text-m text-white px-20">Sessions</span>
+        <span class="flex text-m text-white px-12">Session History</span>
       </div>
       <div class="">
       <!-- Skeleton loader (no data) -->

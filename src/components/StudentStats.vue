@@ -2,7 +2,7 @@
     <!-- MY STATS -->
     <div class="p-5 bg-light-grey rounded-md shadow-md flex flex-col justify-center">
       <div class="rounded-md bg-at-light-orange mb-2 self-center">
-        <span class="flex text-m text-white px-24">{{ title }}</span>
+        <span class="flex text-m text-white px-20">{{ title }}</span>
       </div>
       <div class="pl-4 px-6 animate-pulse" v-if="skeleton">
             <ul class="list-inside space-y-1 justify-center">
