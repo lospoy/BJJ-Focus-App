@@ -14,8 +14,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue"
-import { setTrainingData } from "../helpers/trainingData"
+import { ref } from "vue"
 import store from "../store/store"
 
 export default {
@@ -26,7 +25,7 @@ export default {
       required: true,
     }
   },
-  setup(props) {
+  setup() {
     const topicData = ref(null);
     let delayed
 
@@ -100,14 +99,6 @@ export default {
       const res = sessionsPerTopic.map(e => [getLessonName(e[0]), e[1]])
       topicData.value = res
     }
-
-    const processTrainingData = async(id) => {
-      await setTrainingData(id)
-    }
-
-    onMounted(() => {
-      processTrainingData(props.id)
-    })
     
     setTimeout(() => {
       getLessonData()
