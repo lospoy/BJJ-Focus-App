@@ -11,16 +11,9 @@ import 'chartkick/chart.js'
 import VueChartkick from 'vue-chartkick'
 
 // Vuetify
-import { createVuetify } from "vuetify"
-import * as components from "vuetify/components"
-import * as directives from "vuetify/directives"
-import "vuetify/styles"
-
-const vuetify = createVuetify({
-  components,
-  directives,
-});
-
+import vuetify from './plugins/vuetify'
+import { loadFonts } from './plugins/webfontloader'
+loadFonts()
 
 // EventBus
 import mitt from "mitt"
@@ -37,3 +30,4 @@ createApp(App)
   .provide('emitter', emitter)
   .use(vuetify)
   .mount("#app");
+
