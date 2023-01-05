@@ -38,9 +38,9 @@ export default {
       scales: {
         x: {
           min: 0,
-          max: 1600, // 6 months of perfect attendance
+          max: 100, // 100 represents ~6 months of perfect attendance
           ticks: {
-            display: false,
+            display: true,
           },
         },
         y: {
@@ -104,9 +104,11 @@ export default {
 
         const count = (arr, key) => {
           return arr.reduce((r, a) => {
-            return r + a[key]
+            return r + a[key] / 16
           }, 0)
         }
+        // dividing by 16 in combination with max X axis ticks of 100
+        // (100 being completion of curriculum in 6 months of perfect attendance)
 
         skillData.value = [
           ["Pass", count(sumOfSkills, 'pass')],
@@ -122,8 +124,6 @@ export default {
 
         skillData.value = skillData.value.sort((a, b) => b[1] - a[1])
         // SORTS in descending order, from highest to least exposure
-
-        console.log(skillData.value)
 
       } catch (error) {
         console.error(error)
