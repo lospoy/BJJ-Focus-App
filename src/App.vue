@@ -1,12 +1,14 @@
 <template>
+  <v-app>
   <div v-if="appReady" class="min-h-full font-Poppins box-border bg-at-light-orange">
-    <Navigation :key="navRerenderKey" />
+    <BottomNav :key="navRerenderKey" />
     <router-view />
   </div>
+  </v-app>
 </template>
 
 <script>
-import Navigation from "./components/Navigation.vue";
+import BottomNav from "./components/BottomNav.vue";
 import { ref } from "vue";
 import store from "./store/store.js";
 import { useRouter } from "vue-router";
@@ -14,7 +16,7 @@ import { inject } from "vue"    // required for the emitter (EventBus)
 
 export default {
   components: {
-    Navigation,
+    BottomNav,
   },
 
   setup() {
