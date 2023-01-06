@@ -1,29 +1,32 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Human from "../views/Human.vue";
 import Login from "../views/Login.vue";
-import NewHuman from "../views/NewHuman.vue";
 import PrivateClass from "../views/PrivateClass.vue";
 import ProgressView from "../views/ProgressView.vue";
 import Register from "../views/Register.vue";
 import Session from "../views/Session.vue";
-import Student from "../views/Student.vue";
+import BalanceBoard from "../views/student/BalanceBoard.vue";
+import StudentList from "../views/StudentList.vue";
 import Technique from "../views/Technique.vue";
-import UserProfile from "../views/UserProfile.vue";
 
 const routes = [
+  // ROLE AGNOSTIC/ALL USERS
   {
-    path: "/",
-    name: "ProgressView",
-    component: ProgressView,
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
   {
     path: "/register",
     name: "Register",
     component: Register,
   },
+
+  // ADMIN ROUTES
   {
-    path: "/login",
-    name: "Login",
-    component: Login,
+    path: "/progress",
+    name: "ProgressView",
+    component: ProgressView,
   },
   {
     path: "/session",
@@ -31,14 +34,9 @@ const routes = [
     component: Session,
   },
   {
-    path: "/newHuman",
-    name: "NewHuman",
-    component: NewHuman,
-  },
-  {
-    path: "/profile",
-    name: "UserProfile",
-    component: UserProfile,
+    path: "/human",
+    name: "Human",
+    component: Human,
   },
   {
     path: "/technique",
@@ -46,15 +44,22 @@ const routes = [
     component: Technique,
   },
   {
+    path: "/student-list",
+    name: "StudentList",
+    component: StudentList,
+  },
+
+  // STUDENT ROUTES
+  {
+    path: "/balance",
+    name: "BalanceBoard",
+    component: BalanceBoard,
+  },
+  {
     path: "/private-class",
     name: "PrivateClass",
     component: PrivateClass,
-  },
-  {
-    path: "/student",
-    name: "Student",
-    component: Student,
-  },
+  }
 ];
 
 const router = createRouter({
