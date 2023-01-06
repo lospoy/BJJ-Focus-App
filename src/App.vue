@@ -1,8 +1,7 @@
 <template>
   <v-app>
   <div v-if="appReady" class="min-h-full font-Poppins box-border bg-at-light-orange">
-    <BottomNav :key="navRerenderKey" />
-    <router-view />
+      <BottomNav :key="navRerenderKey" :role='userRole'/>
   </div>
   </v-app>
 </template>
@@ -24,6 +23,7 @@ export default {
     const appReady = ref(null)
     const router = useRouter()
     const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+    const userRole = ref(null)
     const navRerenderKey = ref(0) // works alongside the listener/emitter
 
     // Listener (EventBus) this section listens to the emitters
@@ -44,10 +44,18 @@ export default {
     } else {
       appReady.value = true;
       store.methods.setUser(user);
-      router.push({ name: "ProgressView" });
+      // If user logs in, checks for their role to display relevant reoute and bottom nav bar
+      if(user.role.admin) {
+        userRole.value = "admin"
+        router.push({ name: "Session" });
+      }
+      if(user.role.student) {
+        userRole.value = "student"
+        router.push({ name: "ProgressView" });
+      }
     }
 
-    return { appReady, user, emitter, navRerenderKey };
+    return { appReady, user, emitter, navRerenderKey, userRole };
   },
 };
 </script>
