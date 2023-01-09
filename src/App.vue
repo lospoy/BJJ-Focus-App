@@ -1,8 +1,12 @@
 <template>
   <v-app>
-  <div v-if="appReady" class="min-h-full font-Poppins box-border bg-at-light-orange">
+  <v-main v-if="appReady" class="min-h-full font-Poppins box-border bg-at-light-orange">
+      <v-img
+        class="w-screen h-5 mt-4"
+        src="./assets/vector/default-gold-white.svg"
+      ></v-img>
       <BottomNav :key="navRerenderKey" :role='userRole'/>
-  </div>
+  </v-main>
   </v-app>
 </template>
 
