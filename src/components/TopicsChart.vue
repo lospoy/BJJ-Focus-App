@@ -1,15 +1,16 @@
 <template>
-    <div class="px-2 py-4 bg-light-grey rounded-md shadow-md flex flex-col justify-center mb-4">
-        <div class="rounded-md bg-at-light-orange mb-2 self-center">
-          <span class="flex text-m text-white px-14">Balance Board</span>
+    <div class="flex flex-col px-2 bg-light-grey rounded-md shadow-md justify-center mb-2">
+      <!-- HEADER AND CHART -->
+        <div class="self-center">
+          <h2 class="flex text-4xl text-at-light-orange py-4">Balance Board</h2>
         </div>
-          <bar-chart
-            :data="topicData"
-            :colors="['#dfcd6d']"
-            :dataset="{borderWidth: 1000, barThickness: 30, borderRadius: 3}"
-            :library="chartOptions"
-          >
-          </bar-chart>
+        <bar-chart
+          :data="topicData"
+          :colors="['#dfcd6d']"
+          :dataset="{borderWidth: 1000, barThickness: 30, borderRadius: 3}"
+          :library="chartOptions"
+        >
+        </bar-chart>
     </div>
 </template>
 
@@ -31,7 +32,7 @@ export default {
 
     const chartOptions = {
       layout: {
-        padding: {left: -3, right: 5, top: 5, bottom: 0},
+        padding: {left: -3, right: 0, top: 0, bottom: 0},
       },
       scales: {
         x: {
