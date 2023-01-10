@@ -5,8 +5,7 @@
         </div>
           <bar-chart
             :data="skillData"
-            :colors="['#dfcd6d']"
-            :dataset="{borderWidth: 1000, barThickness: 30, borderRadius: 3}"
+            :dataset="{barThickness: 40, borderRadius: 5, borderWidth: 0, backgroundColor:'#ffcc41'}"
             :library="chartOptions"
           >
           </bar-chart>
@@ -33,24 +32,39 @@ export default {
 
     const chartOptions = {
       layout: {
-        padding: {left: -3, right: 5, top: 5, bottom: 0},
+        padding: {left: -10, right: 5, top: 0, bottom: 10},
       },
       scales: {
         x: {
-          min: 0,
-          max: 100, // 100 represents ~6 months of perfect attendance
-          ticks: {
-            display: true,
+          grid: {
+            drawTicks: false,
+            display: false
           },
+          ticks: {
+            display: false,
+          },
+          border: {
+            display:false
+          }
         },
         y: {
-          ticks: {
-            font: {
-              size: 14,
-              weight: 'bolder',
-              color: 'black',
-            },
+          barPercentage: 1,
+          grid: {
+            drawTicks: false,
+            display: false
           },
+          ticks: {
+            padding: 10,
+            mirror: true,
+            font: {
+              size: 10,
+            },
+            color: '#3d4250',
+            z: 1
+          },
+          border: {
+            display:false
+          }
         },
       },
       animation: {
@@ -60,7 +74,7 @@ export default {
         delay: (context) => {
           let delay = 0;
           if (context.type === 'data' && context.mode === 'default' && !delayed) {
-            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+            delay = context.dataIndex * 350 + context.datasetIndex * 100;
           }
           return delay;
         },
