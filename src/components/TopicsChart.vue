@@ -1,13 +1,9 @@
 <template>
     <div class="flex flex-col px-2 bg-light-grey rounded-md shadow-md justify-center mb-2">
       <!-- HEADER AND CHART -->
-        <div class="self-center">
-          <h2 class="flex text-4xl text-at-light-orange py-4">Balance Board</h2>
-        </div>
         <bar-chart
           :data="topicData"
-          :colors="['#dfcd6d']"
-          :dataset="{borderWidth: 1000, barThickness: 30, borderRadius: 3}"
+          :dataset="{barThickness: 30, borderRadius: 3, borderWidth: 0, backgroundColor:'#3E95B3'}"
           :library="chartOptions"
         >
         </bar-chart>
@@ -32,22 +28,39 @@ export default {
 
     const chartOptions = {
       layout: {
-        padding: {left: -3, right: 0, top: 0, bottom: 0},
+        padding: {left: -10, right: 5, top: 0, bottom: 10},
       },
       scales: {
         x: {
+          grid: {
+            drawTicks: false,
+            display: false
+          },
           ticks: {
             display: false,
           },
+          border: {
+            display:false
+          }
         },
         y: {
-          ticks: {
-            font: {
-              size: 14,
-              weight: 'bolder',
-              color: 'black',
-            },
+          barPercentage: 1,
+          grid: {
+            drawTicks: false,
+            display: false
           },
+          ticks: {
+            padding: 10,
+            mirror: true,
+            font: {
+              size: 10,
+            },
+            color: '#3d4250',
+            z: 1
+          },
+          border: {
+            display:false
+          }
         },
       },
       animation: {
@@ -57,7 +70,7 @@ export default {
         delay: (context) => {
           let delay = 0;
           if (context.type === 'data' && context.mode === 'default' && !delayed) {
-            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+            delay = context.dataIndex * 350 + context.datasetIndex * 100;
           }
           return delay;
         },
