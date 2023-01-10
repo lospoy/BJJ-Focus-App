@@ -131,8 +131,8 @@ export default {
       const attendedPromise = attendedSessions.value.map(async aS => ({
         highlight: {
           style: {
-            backgroundColor: '#E7C93B',
-            borderColor: '#E7C93B'
+            backgroundColor: '#ffcc41',
+            borderColor: '#ffcc41'
           },
           fillMode: 'outline'
         },
@@ -146,8 +146,8 @@ export default {
       const unattendedPromise = unattendedSessions.value.map(async uS => ({
         highlight: {
           style: {
-            backgroundColor: 'rgba(231, 201, 59, .3)',
-            borderColor: 'rgba(231, 201, 59, 0)'
+            backgroundColor: 'rgba(255, 204, 65, .3)',
+            borderColor: 'rgba(255, 204, 65, 0)'
           },
           fillMode: 'outline'
         },
