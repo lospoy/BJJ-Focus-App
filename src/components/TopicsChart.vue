@@ -1,12 +1,13 @@
 <template>
     <div class="flex flex-col px-2 bg-light-grey rounded-md shadow-md justify-center mb-2">
-      <!-- HEADER AND CHART -->
+      
         <bar-chart
           :data="topicData"
           :dataset="{barThickness: 30, borderRadius: 3, borderWidth: 0, backgroundColor:'#3E95B3'}"
           :library="chartOptions"
         >
         </bar-chart>
+        
     </div>
 </template>
 
