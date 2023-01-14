@@ -44,7 +44,7 @@ import { useRouter } from "vue-router";
 import { Slide } from "vue3-burger-menu"
 import store from "../store/store"
 import { getHuman } from "../services/humanService"
-import { inject, ref } from "vue"        // required for the emitter (EventBus)
+import { inject, ref } from "vue" // inject is required for the emitter (EventBus)
 
 export default {
     components: {
