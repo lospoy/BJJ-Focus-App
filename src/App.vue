@@ -27,7 +27,7 @@ export default {
     const appReady = ref(null)
     const router = useRouter()
     const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
-    const userRole = ref(null)
+    const userRole = ref('')
     const navRerenderKey = ref(0) // works alongside the listener/emitter
 
     // Listener (EventBus) this section listens to the emitters
