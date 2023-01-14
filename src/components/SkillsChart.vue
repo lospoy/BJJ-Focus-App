@@ -1,14 +1,13 @@
 <template>
-    <div class="px-2 py-4 bg-light-grey rounded-md shadow-md flex flex-col justify-center mb-4">
-        <div class="rounded-md bg-at-light-orange mb-2 self-center">
-          <span class="flex text-m text-white px-14">Skill Growth</span>
-        </div>
+    <div class="flex flex-col px-2 bg-light-grey rounded-md shadow-md justify-center mb-2">
+
           <bar-chart
             :data="skillData"
             :dataset="{barThickness: 40, borderRadius: 5, borderWidth: 0, backgroundColor:'#ffcc41'}"
             :library="chartOptions"
           >
           </bar-chart>
+
     </div>
 </template>
 
