@@ -1,9 +1,6 @@
 <template>
     <!-- CALENDAR -->
     <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col mb-4 justify-center">
-      <div class="rounded-md bg-at-light-orange mb-2 self-center">
-        <span class="flex text-m text-white px-12">Session History</span>
-      </div>
       <div class="">
       <!-- Skeleton loader (no data) -->
       <v-calendar
@@ -23,9 +20,6 @@
 
     <!-- SESSION CARD -->
     <div class="p-5 bg-light-grey rounded-md flex flex-col justify-center" v-if="displaySessionCard">
-      <div class="rounded-md bg-at-light-orange mb-2 self-center">
-        <span class="flex text-m text-white px-24">{{ sessionCardDate }}</span>
-      </div>
 
       <div class="pl-4 px-6 py-6 animate-pulse" v-if="sessionCardSkeleton">
             <span class="list-inside space-y-1 justify-center">
@@ -37,11 +31,11 @@
       <div class="flex flex-col pl-4 px-6 w-full">
             <ul class="list-inside space-y-1 self-center" v-if="afterSessionCardSkeleton">
               <li class="text-3xl text-dark-grey uppercase text-center -mb-3">{{ sessionTopic }}</li>
-              <li class="text-s text-dark-grey uppercase text-center">{{ attendedOrNot }}</li>  
+              <li class="text-xs text-dark-grey uppercase text-center">{{ sessionCardDate }} • {{ attendedOrNot }}</li>
             </ul>
             <div class="flex flex-col mt-2 w-full" v-if="attended">
               <ul id="techniqueList" class="space-y-1 ml-4">
-                  <li class="bg-light-gold bg-opacity-80 rounded-md shadow-sm text-dark-grey px-2" v-for="(item, index) of techniqueList" :key="index">
+                  <li class="bg-dark-grey bg-opacity-80 rounded-md shadow-sm text-light-grey px-2" v-for="(item, index) of techniqueList" :key="index">
                     {{ item }}
                   </li>
               </ul>
