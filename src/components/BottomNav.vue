@@ -7,7 +7,7 @@
         <v-icon>mdi-home</v-icon>
       </v-btn>
 
-      <v-btn value="balanceBoard" :to="{ name: 'BalanceBoard' }">
+      <v-btn value="charts" :to="{ name: 'Charts' }">
         <v-icon>mdi-chart-box-outline</v-icon>
       </v-btn>
 
@@ -15,7 +15,7 @@
         <v-icon>mdi-brain</v-icon>
       </v-btn>
 
-      <v-btn value="sessionHistory">
+      <v-btn value="sessionHistory" :to="{ name: 'SessionHistory' }">
         <v-icon>mdi-calendar-multiselect</v-icon>
       </v-btn>
       
