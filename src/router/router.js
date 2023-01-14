@@ -5,7 +5,8 @@ import PrivateClass from "../views/PrivateClass.vue";
 import ProgressView from "../views/ProgressView.vue";
 import Register from "../views/Register.vue";
 import Session from "../views/Session.vue";
-import BalanceBoard from "../views/student/BalanceBoard.vue";
+import Charts from "../views/student/Charts.vue";
+import SessionHistory from "../views/student/SessionHistory.vue";
 import StudentList from "../views/StudentList.vue";
 import Technique from "../views/Technique.vue";
 
@@ -51,15 +52,20 @@ const routes = [
 
   // STUDENT ROUTES
   {
-    path: "/balance",
-    name: "BalanceBoard",
-    component: BalanceBoard,
+    path: "/charts",
+    name: "Charts",
+    component: Charts,
   },
   {
     path: "/private-class",
     name: "PrivateClass",
     component: PrivateClass,
-  }
+  },
+  {
+    path: "/session-history",
+    name: "SessionHistory",
+    component: SessionHistory,
+  },
 ];
 
 const router = createRouter({
