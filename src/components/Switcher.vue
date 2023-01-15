@@ -2,28 +2,28 @@
 <div class="flex rounded-md bg-med-grey justify-center">
 
   <!-- LEFT SIDE -->
-  <button
+  <v-btn
     @click="changeOption('left')"
     class="self-center -ml-1 w-1/2 py-1 rounded-md text-xs font-medium"
     :class="{
-      'bg-dark-grey text-white': option === 'left',
-      'bg-med-grey text-black': option !== 'left',
+      'bg-dark-grey text-white shadow-md': option === 'left',
+      'bg-med-grey text-black shadow-none': option !== 'left',
     }"
   >
     {{ titleLeft }}
-  </button>
+  </v-btn>
 
   <!-- RIGHT SIDE -->
-  <button
+  <v-btn
     @click="changeOption('right')"
-    class="self-center -mr-1 w-1/2 py-1 rounded-md text-xs font-medium"
+    class="self-center -mr-1 w-1/2 py-1 rounded-md text-xs font-medium shadow-none"
     :class="{
-      'bg-dark-grey text-white': option === 'right',
-      'bg-med-grey text-black': option !== 'right',
+      'bg-dark-grey text-white shadow-md': option === 'right',
+      'bg-med-grey text-black shadow-none': option !== 'right',
     }"
   >
     {{ titleRight }}
-  </button>
+  </v-btn>
 
 </div>
 </template>
