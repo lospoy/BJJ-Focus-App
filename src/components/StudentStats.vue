@@ -1,20 +1,20 @@
 <template>
     <!-- MY STATS -->
     <div class="p-5 bg-dark-grey flex flex-col justify-center">
-      <div class="pl-4 px-6 animate-pulse" v-if="skeleton">
+      <div class="pl-2 px-2 animate-pulse" v-if="skeleton">
             <ul class="list-inside justify-center">
-                <li class="text-xs text-light-grey">You've attended {{ focusSessions }} Focus sessions.</li>
-                <li class="text-xs text-light-grey">Your most recent session was {{ latestSession }}.</li>
-                <li class="text-xs text-light-grey">Your first session was on {{ firstSession }}.</li>
-                <li class="text-xs text-light-grey">You've been doing Focus training for {{ totalTrained }}</li>
+                <li class="text-sm text-light-grey font-normal">You've attended {{ focusSessions }} Focus sessions.</li>
+                <li class="text-sm text-light-grey font-normal">Your most recent session was {{ latestSession }}.</li>
+                <li class="text-sm text-light-grey font-normal">Your first session was on {{ firstSession }}.</li>
+                <li class="text-sm text-light-grey font-normal">You've been doing Focus training for {{ totalTrained }}</li>
             </ul>
       </div>
-      <div class="pl-4 px-6" v-if="stats">
+      <div class="pl-2 px-2" v-if="stats">
             <ul class="list-inside justify-center">
-                <li class="text-xs text-light-grey">You've attended {{ focusSessions }} Focus sessions.</li>
-                <li class="text-xs text-light-grey">Your most recent session was {{ latestSession }}.</li>
-                <li class="text-xs text-light-grey">Your first session was on {{ firstSession }}.</li>
-                <li class="text-xs text-light-grey">You've been doing Focus training for {{ totalTrained }}</li>
+                <li class="text-sm text-light-grey font-normal">You've attended {{ focusSessions }} Focus sessions.</li>
+                <li class="text-sm text-light-grey font-normal">Your most recent session was {{ latestSession }}.</li>
+                <li class="text-sm text-light-grey font-normal">Your first session was on {{ firstSession }}.</li>
+                <li class="text-sm text-light-grey font-normal">You've been Focus training for {{ totalTrained }}</li>
             </ul>
       </div>
     </div>
