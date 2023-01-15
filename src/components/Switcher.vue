@@ -46,10 +46,7 @@ export default {
       type: Boolean,
     }
   },
-  setup(props) {
-    const titleLeft = ref(null)
-    const titleRight = ref(null)
-
+  setup() {
     const option = ref('left')
 
     // Emitter (EventBus) this section emits an event that can be listened to globally
@@ -60,15 +57,6 @@ export default {
       if(newOption === 'left') emitter.emit('switcherLeft', true)
       if(newOption === 'right') emitter.emit('switcherRight', true)
     }
-
-    function assignProps(props) {
-      props.titleLeft = titleLeft.value
-      props.titleRight = titleRight.value
-    }
-
-    // setTimeout(() => {
-    //   assignProps(props)
-    // }, 500);
 
     return {
       option, changeOption, assignProps
