@@ -46,7 +46,7 @@ export default {
       type: Boolean,
     }
   },
-  setup() {
+  setup(props) {
     const option = ref('left')
 
     // Emitter (EventBus) this section emits an event that can be listened to globally
@@ -59,7 +59,7 @@ export default {
     }
 
     return {
-      option, changeOption, assignProps
+      option, changeOption
     }
   }
 };
