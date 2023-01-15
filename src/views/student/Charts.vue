@@ -9,11 +9,13 @@
       <h1 class="text-5xl text-med-grey self-center">CHARTS</h1>
     </div>
 
-      <Switcher
-        class="flex justify-center max-w-screen-sm py-1 px-2"
-        :titleLeft="'Topics'"
-        :titleRight="'Skills'"
-      />
+    <div class="px-4">
+    <Switcher
+      class="flex justify-center max-w-screen-sm py-1 px-2"
+      :titleLeft="'Topics'"
+      :titleRight="'Skills'"
+    />
+    </div>
 
     <div :key="cardRerenderKey" v-if="topicsCard">
       <!-- TEXT ABOVE TOPICS CHART  -->
