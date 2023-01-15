@@ -1,9 +1,9 @@
 <template>
-    <div class="flex flex-col px-2 bg-light-grey rounded-md shadow-md justify-center mb-2">
+    <div class="flex flex-col px-2 bg-dark-grey text-light-grey rounded-md shadow-md justify-center mb-2">
       
         <bar-chart
           :data="topicData"
-          :dataset="{barThickness: 30, borderRadius: 3, borderWidth: 0, backgroundColor:'#3E95B3'}"
+          :dataset="{barThickness: 30, borderRadius: 3, borderWidth: 0, backgroundColor:'#347C94'}"
           :library="chartOptions"
         >
         </bar-chart>
@@ -38,7 +38,7 @@ export default {
             display: false
           },
           ticks: {
-            display: false,
+            display: false
           },
           border: {
             display:false
@@ -54,9 +54,9 @@ export default {
             padding: 10,
             mirror: true,
             font: {
-              size: 10,
+              size: 10
             },
-            color: '#3d4250',
+            color: '#f7f7f7',
             z: 1
           },
           border: {
