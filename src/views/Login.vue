@@ -13,7 +13,7 @@
       <h1 class="text-3xl text-light-grey mb-4 self-center">Login</h1>
 
       <div class="flex flex-col mb-2">
-        <label for="email" class="text-sm text-light-grey"
+        <label for="email" class="mb-1 text-sm text-light-grey"
           >Email</label
         >
         <input
@@ -26,7 +26,7 @@
       </div>
 
       <div class="flex flex-col mb-2">
-        <label for="password" class="text-sm text-light-grey"
+        <label for="password" class="mb-1 text-sm text-light-grey"
           >Password</label
         >
         <input
