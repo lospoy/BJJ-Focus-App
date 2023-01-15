@@ -8,31 +8,31 @@
     <!--- Login --->
     <form
       @submit.prevent="login"
-      class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg"
+      class="p-8 flex flex-col bg-dark-grey rounded-md shadow-lg text-light-grey"
     >
-      <h1 class="text-3xl text-at-light-orange mb-4 self-center">Login</h1>
+      <h1 class="text-3xl text-light-grey mb-4 self-center">Login</h1>
 
       <div class="flex flex-col mb-2">
-        <label for="email" class="mb-1 text-sm text-at-light-orange"
+        <label for="email" class="text-sm text-light-grey"
           >Email</label
         >
         <input
           type="text"
           required
-          class="p-2 text-gray-500 focus:outline-none"
+          class="p-2 rounded-sm bg-med-grey text-light-grey focus:outline-none"
           id="email"
           v-model="email"
         />
       </div>
 
       <div class="flex flex-col mb-2">
-        <label for="password" class="mb-1 text-sm text-at-light-orange"
+        <label for="password" class="text-sm text-light-grey"
           >Password</label
         >
         <input
           type="password"
           required
-          class="p-2 text-gray-500 focus:outline-none"
+          class="p-2 rounded-sm bg-med-grey text-light-grey focus:outline-none"
           id="password"
           v-model="password"
         />
@@ -42,7 +42,7 @@
 
       <router-link class="text-sm mt-6 text-center" :to="{ name: 'Register' }">
         Don't have an account?
-        <span class="text-at-light-orange">Sign up</span>
+        <span class="text-gold">Sign up</span>
       </router-link>
     </form>
   </div>
@@ -98,9 +98,11 @@ export default {
         if (res.status === 200) {
             localStorage.setItem("BJJFocusUser", JSON.stringify(userData));
             store.methods.setUser(userData)
+            const user = store.state.user
             setTimeout(() => {
                 emitLogin() // emits the login event
-                router.push({ name: "ProgressView" })
+                if(user.role.student) router.push({ name: "StudentHome" })
+                if(user.role.admin) router.push({ name: "Session" })
             }, 600);                
         }
 
