@@ -1,10 +1,7 @@
 <template>
   <v-app>
   <v-main v-if="appReady" class="min-h-full font-Poppins box-border bg-dark-grey">
-      <v-img
-        class="h-5 mt-4 -ml-2"
-        src="./assets/vector/default-gold-white.svg"
-      ></v-img>
+      <Navigation :key="navRerenderKey" />
       <BottomNav :key="navRerenderKey" :role='userRole'/>
   </v-main>
   </v-app>
@@ -12,6 +9,7 @@
 
 <script>
 import BottomNav from "./components/BottomNav.vue";
+import Navigation from "./components/Navigation.vue";
 import { ref } from "vue";
 import store from "./store/store.js";
 import { useRouter } from "vue-router";
@@ -20,6 +18,7 @@ import { inject } from "vue"    // required for the emitter (EventBus)
 export default {
   components: {
     BottomNav,
+    Navigation
   },
 
   setup() {
@@ -55,7 +54,7 @@ export default {
       }
       if(user.role.student) {
         userRole.value = "student"
-        router.push({ name: "ProgressView" });
+        router.push({ name: "StudentHome" });
       }
     }
 
