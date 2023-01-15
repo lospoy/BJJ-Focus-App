@@ -5,12 +5,12 @@
       <p class="text-red-500">{{ errorMsg }}</p>
     </div>
 
-    <div class="flex flex-col mt-2 w-full">
+    <div class="flex flex-col mt-2 mb-3 w-full">
       <h1 class="text-5xl text-med-grey self-center">CHARTS</h1>
     </div>
 
       <Switcher
-        class="flex justify-center max-w-screen-sm py-2 px-3"
+        class="flex justify-center max-w-screen-sm py-1 px-2"
         :titleLeft="'Topics'"
         :titleRight="'Skills'"
       />
@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <TopicsChart :id='user.human'/>
+    <TopicsChart :id='user.human'/>
     </div>
 
     <div :key="cardRerenderKey" v-if="skillsCard">
@@ -53,8 +53,7 @@
 </template>
 
 <script>
-import { ref, onMounted, inject } from "vue"; // inject is required for the emitter (EventBus)
-import { setTrainingData } from "../../helpers/trainingData"
+import { ref, inject } from "vue"; // inject is required for the emitter (EventBus)
 import TopicsChart from '../../components/TopicsChart.vue';
 import SkillsChart from '../../components/SkillsChart.vue';
 import Switcher from '../../components/Switcher.vue';
@@ -79,10 +78,6 @@ export default {
     const topicsCard = ref(true)
     const skillsCard = ref(null)
 
-    const processTrainingData = async(id) => {
-      await setTrainingData(id)
-    }
-
     const emitter = inject('emitter')
     emitter.on('switcherLeft', (value) => {
         topicsCard.value = true
@@ -91,10 +86,6 @@ export default {
     emitter.on('switcherRight', (value) => {
         topicsCard.value = false
         skillsCard.value = true
-    })
-
-    onMounted(() => {
-      processTrainingData(user.human)
     })
     
     return {
