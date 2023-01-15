@@ -1,8 +1,8 @@
 <template>
-    <div class="flex flex-col bg-dark-grey mb-4 p-5 mt-2">
+    <div class="flex flex-col bg-dark-grey mb-4 p-3 mt-2">
       <!-- content -->
       <div class="flex flex-col px-4">
-        <h2 class="text-sm -mb-2 text-med-grey2">This week's topic is</h2>
+        <h2 class="text-sm -mb-2 mt-2 text-med-grey2">This week's topic is</h2>
         <h1 class="text-4xl text-white uppercase">{{ currentTopic }}</h1>
 
 
