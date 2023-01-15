@@ -22,8 +22,8 @@
       <div class="px-5 pt-10 pb-12 bg-dark-grey rounded-md flex flex-col justify-center -mb-7">
         <div class="flex flex-col pl-4 px-6 w-full">
               <div class="flex flex-col mt-2 w-full">
-                <ul id="techniqueList" class="space-y-1 ml-4 self-center">
-                    <li class="text-light-grey text-xs font-normal">
+                <ul class="space-y-1 ml-4 self-center">
+                    <li class="text-light-grey text-sm font-normal">
                       How balanced is your game?
                     </li>
                 </ul>
@@ -39,8 +39,8 @@
     <div class="px-5 pt-10 pb-12 bg-dark-grey rounded-md flex flex-col justify-center -mb-7">
       <div class="flex flex-col pl-4 px-6 w-full">
             <div class="flex flex-col mt-2 w-full">
-              <ul id="techniqueList" class="space-y-1 ml-4 self-center">
-                  <li class="text-light-grey text-xs font-normal">
+              <ul class="space-y-1 ml-4 self-center">
+                  <li class="text-light-grey text-sm font-normal">
                     How much have you practiced these skills?
                   </li>
               </ul>
