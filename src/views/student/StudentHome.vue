@@ -1,0 +1,69 @@
+<template>
+  <div class="max-w-screen-sm mx-auto py-5 px-3 mt-28">
+    <!-- Error Handling -->
+    <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-light-grey shadow-lg">
+      <p class="text-red-500">{{ errorMsg }}</p>
+    </div>
+
+    <div class="flex flex-col rounded-md -space-y-3">
+      <div class="flex flex-col w-full pl-9 py-10">
+        <h3 class="text-sm text-med-grey2">Hi, {{ humanName }}!</h3>
+      </div>
+      <StudentStats :id='user.human'/>
+      <ThisWeek />
+    </div>
+
+    <!-- BETA NOTE -->
+    <div class="flex flex-col pl-4 px-10 w-full mt-32">
+      <div class="flex flex-col mt-2 pl-1 w-full">
+        <ul id="techniqueList" class="space-y-1 ml-4 self-center">
+            <li class="text-med-grey2 text-xs font-normal">
+              This is a closed beta so some things might be slow (or broken). Please let me know if you have any feedback! Thanks and see you in class.
+            </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import { ref, onMounted } from "vue";
+import { getHuman } from "../../services/humanService"
+import { setTrainingData } from "../../helpers/trainingData"
+import StudentStats from '../../components/StudentStats.vue';
+import ThisWeek from '../../components/ThisWeek.vue';
+
+export default {
+  name: "charts",
+  components: {
+    StudentStats,
+    ThisWeek
+  },
+  setup() {
+    // Variables
+    const errorMsg = ref(null);
+    const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+    const humanName = ref(null)
+
+    const getHumanNameAndId = async () => {
+        const res = await getHuman(user.human)
+        humanName.value = res.name.first
+    }
+
+    const processTrainingData = async(id) => {
+      await setTrainingData(id)
+    }
+
+    onMounted(() => {
+      getHumanNameAndId()
+      processTrainingData(user.human)
+    })
+    
+    return {
+        errorMsg, user,
+        humanName
+    };
+  },
+};
+</script>
