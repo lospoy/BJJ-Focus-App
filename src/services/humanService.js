@@ -26,10 +26,7 @@ export async function getAllHumans() {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
@@ -50,10 +47,7 @@ export async function getHuman(id) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
@@ -74,10 +68,7 @@ export async function createHuman(data) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
+
   }
 }
 
