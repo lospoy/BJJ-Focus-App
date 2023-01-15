@@ -1,11 +1,13 @@
 <template>
-    <div class="flex flex-col bg-light-grey rounded-md shadow-lg mb-4">
+    <div class="flex flex-col bg-dark-grey mb-4 p-5 mt-2">
       <!-- content -->
-      <div class="self-center flex flex-col p-2">
-        <h2 class="self-center text-xl text-dark-grey -mb-1 uppercase">This week:</h2>
-        <h1 class="self-center text-3xl mb-3 rounded-md bg-at-light-orange text-white py-1 px-16 text-center">{{ currentTopic }}</h1>
-        <h2 class="self-center text-xl text-dark-grey -mb-2 uppercase">Next week:</h2>
-        <h2 class="self-center text-l text-dark-grey uppercase">{{ nextTopic }}</h2>
+      <div class="flex flex-col px-4">
+        <h2 class="text-sm -mb-2 text-med-grey2">This week's topic is</h2>
+        <h1 class="text-4xl text-white uppercase">{{ currentTopic }}</h1>
+
+
+        <!-- <h2 class="self-center text-xl text-light-grey -mb-2 uppercase">Next week:</h2>
+        <h2 class="self-center text-l text-light-grey uppercase">{{ nextTopic }}</h2> -->
       </div>
     </div>
 </template>
