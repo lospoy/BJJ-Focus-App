@@ -6,17 +6,17 @@
     </div>
 
     <div class="flex flex-col rounded-md -space-y-3">
-      <div class="flex flex-col w-full pl-9 py-10">
-        <h3 class="text-sm text-med-grey2">Hi, {{ humanName }}!</h3>
+      <div class="flex flex-col w-full pl-7 py-10">
+        <h3 class="text-base text-med-grey2">Hi, {{ humanName }}!</h3>
       </div>
       <StudentStats :id='user.human'/>
       <ThisWeek />
     </div>
 
     <!-- BETA NOTE -->
-    <div class="flex flex-col pl-4 px-10 w-full mt-32">
-      <div class="flex flex-col mt-2 pl-1 w-full">
-        <ul id="techniqueList" class="space-y-1 ml-4 self-center">
+    <div class="flex flex-col pl-7 px-10 w-full mt-28">
+      <div class="flex flex-col mt-2 w-full">
+        <ul class="space-y-1 self-center">
             <li class="text-med-grey2 text-xs font-normal">
               This is a closed beta - some things might be slow (or broken). Please share your feedback! Thanks and see you in class.
             </li>
