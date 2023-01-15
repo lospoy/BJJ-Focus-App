@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { ref, inject } from 'vue'; // inject is required for the emitter (EventBus)
+import { ref, inject, onMounted } from 'vue'; // inject is required for the emitter (EventBus)
 
 export default {
   name: "Switcher",
@@ -49,8 +49,6 @@ export default {
   setup(props) {
     const titleLeft = ref(null)
     const titleRight = ref(null)
-    props.titleLeft = titleLeft.value
-    props.titleRight = titleRight.value
 
     const option = ref('left')
 
@@ -62,6 +60,11 @@ export default {
       if(newOption === 'left') emitter.emit('switcherLeft', true)
       if(newOption === 'right') emitter.emit('switcherRight', true)
     }
+
+    onMounted(() => {
+      props.titleLeft = titleLeft.value
+      props.titleRight = titleRight.value
+    })
 
     return {
       option, changeOption
