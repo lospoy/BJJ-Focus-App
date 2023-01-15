@@ -2,11 +2,12 @@ import { createRouter, createWebHistory } from "vue-router";
 import Human from "../views/Human.vue";
 import Login from "../views/Login.vue";
 import PrivateClass from "../views/PrivateClass.vue";
-import ProgressView from "../views/ProgressView.vue";
+import Progress from "../views/Progress.vue";
 import Register from "../views/Register.vue";
 import Session from "../views/Session.vue";
 import Charts from "../views/student/Charts.vue";
-import SessionHistory from "../views/student/SessionHistory.vue";
+import StudentHome from "../views/student/StudentHome.vue";
+import StudentSession from "../views/student/StudentSession.vue";
 import StudentList from "../views/StudentList.vue";
 import Technique from "../views/Technique.vue";
 
@@ -25,46 +26,51 @@ const routes = [
 
   // ADMIN ROUTES
   {
-    path: "/progress",
-    name: "ProgressView",
-    component: ProgressView,
+    path: "/teacher/progress",
+    name: "Progress",
+    component: Progress,
   },
   {
-    path: "/session",
+    path: "/teacher/session",
     name: "Session",
     component: Session,
   },
   {
-    path: "/human",
+    path: "/teacher/human",
     name: "Human",
     component: Human,
   },
   {
-    path: "/technique",
+    path: "/teacher/technique",
     name: "Technique",
     component: Technique,
   },
   {
-    path: "/student-list",
+    path: "/teacher/student-list",
     name: "StudentList",
     component: StudentList,
   },
 
   // STUDENT ROUTES
   {
-    path: "/charts",
+    path: "/student/charts",
     name: "Charts",
     component: Charts,
   },
   {
-    path: "/private-class",
+    path: "/student/private-class",
     name: "PrivateClass",
     component: PrivateClass,
   },
   {
-    path: "/session-history",
-    name: "SessionHistory",
-    component: SessionHistory,
+    path: "/student/session",
+    name: "StudentSession",
+    component: StudentSession,
+  },
+  {
+    path: "/student/home",
+    name: "StudentHome",
+    component: StudentHome,
   },
 ];
 
