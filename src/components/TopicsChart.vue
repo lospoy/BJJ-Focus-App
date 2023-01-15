@@ -54,7 +54,7 @@ export default {
             padding: 10,
             mirror: true,
             font: {
-              size: 10
+              size: 12
             },
             color: '#f7f7f7',
             z: 1
