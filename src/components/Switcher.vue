@@ -61,13 +61,17 @@ export default {
       if(newOption === 'right') emitter.emit('switcherRight', true)
     }
 
-    onMounted(() => {
+    function assignProps(props) {
       props.titleLeft = titleLeft.value
       props.titleRight = titleRight.value
+    }
+
+    onMounted(() => {
+      assignProps(props)
     })
 
     return {
-      option, changeOption
+      option, changeOption, assignProps
     }
   }
 };
