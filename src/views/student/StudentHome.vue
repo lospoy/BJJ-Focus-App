@@ -18,7 +18,7 @@
       <div class="flex flex-col mt-2 pl-1 w-full">
         <ul id="techniqueList" class="space-y-1 ml-4 self-center">
             <li class="text-med-grey2 text-xs font-normal">
-              This is a closed beta so some things might be slow (or broken). Please let me know if you have any feedback! Thanks and see you in class.
+              This is a closed beta - some things might be slow (or broken). Please share your feedback! Thanks and see you in class.
             </li>
         </ul>
       </div>
