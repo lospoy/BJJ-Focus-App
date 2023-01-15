@@ -4,7 +4,7 @@
   <!-- LEFT SIDE -->
   <button
     @click="changeOption('left')"
-    class="self-center -ml-1 w-80 py-4 rounded-md text-xs font-medium"
+    class="self-center -ml-1 w-80 py-1 rounded-md text-xs font-medium"
     :class="{
       'bg-dark-grey text-white': option === 'left',
       'bg-med-grey text-black': option !== 'left',
@@ -16,7 +16,7 @@
   <!-- RIGHT SIDE -->
   <button
     @click="changeOption('right')"
-    class="self-center -mr-1 w-80 py-4 rounded-md text-xs font-medium"
+    class="self-center -mr-1 w-80 py-1 rounded-md text-xs font-medium"
     :class="{
       'bg-dark-grey text-white': option === 'right',
       'bg-med-grey text-black': option !== 'right',
