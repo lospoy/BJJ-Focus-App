@@ -1,9 +1,9 @@
 <template>
-    <div class="flex flex-col px-2 bg-light-grey rounded-md shadow-md justify-center mb-2">
+    <div class="flex flex-col px-2 bg-dark-grey rounded-md shadow-md justify-center mb-2">
 
           <bar-chart
             :data="skillData"
-            :dataset="{barThickness: 40, borderRadius: 5, borderWidth: 0, backgroundColor:'#ffcc41'}"
+            :dataset="{barThickness: 40, borderRadius: 5, borderWidth: 0, backgroundColor:'#3957BF'}"
             :library="chartOptions"
           >
           </bar-chart>
@@ -58,7 +58,7 @@ export default {
             font: {
               size: 10,
             },
-            color: '#3d4250',
+            color: '#f7f7f7',
             z: 1
           },
           border: {
