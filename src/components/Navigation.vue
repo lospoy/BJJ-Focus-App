@@ -11,7 +11,7 @@
       <Slide
         right
         :closeOnNavigation="true"
-        width="170"
+        width="190"
         class="flex flex-1 justify-end"
       >
         <!-- student routes -->
