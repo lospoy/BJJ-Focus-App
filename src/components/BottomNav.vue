@@ -1,9 +1,8 @@
 <template>
-
     <!-- STUDENT NAV -->
-    <v-bottom-navigation density="compact" v-if="isStudent">
+    <v-bottom-navigation density="compact" v-if="isStudent" class="bg-med-grey text-light-grey">
 
-      <v-btn value="recent" to="/">
+      <v-btn value="home" :to="{ name: 'StudentHome' }">
         <v-icon>mdi-home</v-icon>
       </v-btn>
 
@@ -11,16 +10,8 @@
         <v-icon>mdi-chart-box-outline</v-icon>
       </v-btn>
 
-      <v-btn value="privates" :to="{ name: 'PrivateClass' }">
-        <v-icon>mdi-brain</v-icon>
-      </v-btn>
-
-      <v-btn value="sessionHistory" :to="{ name: 'SessionHistory' }">
+      <v-btn value="studentSession" :to="{ name: 'StudentSession' }">
         <v-icon>mdi-calendar-multiselect</v-icon>
-      </v-btn>
-      
-      <v-btn value="settings">
-        <v-icon>mdi-nut</v-icon>
       </v-btn>
 
     </v-bottom-navigation>
@@ -32,7 +23,7 @@
         <v-icon>mdi-account-details</v-icon>
       </v-btn>
 
-      <v-btn value="studentProgress" :to="{ name: 'ProgressView' }">
+      <v-btn value="progress" :to="{ name: 'Progress' }">
         <v-icon>mdi-account-search</v-icon>
       </v-btn>
 
@@ -49,7 +40,6 @@
       </v-btn>
 
     </v-bottom-navigation>
-
     <router-view></router-view>
 </template>
 
