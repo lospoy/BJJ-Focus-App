@@ -11,8 +11,8 @@ module.exports = {
         "at-faint-orange": "#fe6945",
         "at-light-orange": "#d85a3b",
         "at-orange": "#a4442d",
-        "light-grey": "#f7f7f7",
-        "light-grey2": "#e4ffff",
+        "light-grey": "#f7f7f7", // this one changes the charts background color
+        "med-grey2": "#8f9b9f",
         "med-grey": "#4b5153",
         "dark-grey": "#292c2d",
         "gold": "#ffcc41",
