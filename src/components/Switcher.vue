@@ -66,9 +66,9 @@ export default {
       props.titleRight = titleRight.value
     }
 
-    onMounted(() => {
+    setTimeout(() => {
       assignProps(props)
-    })
+    }, 500);
 
     return {
       option, changeOption, assignProps
