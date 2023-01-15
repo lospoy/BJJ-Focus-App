@@ -1,28 +1,20 @@
 <template>
     <!-- MY STATS -->
-    <div class="p-5 bg-light-grey rounded-md shadow-md flex flex-col justify-center">
-      <div class="rounded-md bg-at-light-orange mb-2 self-center">
-        <span class="flex text-m text-white px-20">{{ title }}</span>
-      </div>
+    <div class="p-5 bg-dark-grey flex flex-col justify-center">
       <div class="pl-4 px-6 animate-pulse" v-if="skeleton">
-            <ul class="list-inside space-y-1 justify-center">
-                <li class="text-l text-dark-grey uppercase">Focus Sessions: {{ focusSessions }}</li>
-                <li class="text-l text-dark-grey uppercase">Latest Session: {{ latestSession }}</li>
-                <li class="text-l text-dark-grey uppercase">First Session: {{ firstSession }}</li>
-                <li class="text-l text-dark-grey uppercase">Focus Training: {{ totalTrained }}</li>
+            <ul class="list-inside justify-center">
+                <li class="text-xs text-light-grey">You've attended {{ focusSessions }} Focus sessions.</li>
+                <li class="text-xs text-light-grey">Your most recent session was {{ latestSession }}.</li>
+                <li class="text-xs text-light-grey">Your first session was on {{ firstSession }}.</li>
+                <li class="text-xs text-light-grey">You've been doing Focus training for {{ totalTrained }}</li>
             </ul>
       </div>
-      <div
-        class="pl-4 px-6"
-        v-if="stats"
-      >
-            <ul
-              class="list-inside space-y-1 justify-center"
-            >
-                <li class="text-l text-dark-grey uppercase">Focus Sessions: {{ focusSessions }}</li>
-                <li class="text-l text-dark-grey uppercase">Latest Session: {{ latestSession }}</li>
-                <li class="text-l text-dark-grey uppercase">First Session: {{ firstSession }}</li>
-                <li class="text-l text-dark-grey uppercase">Focus Training: {{ totalTrained }}</li>
+      <div class="pl-4 px-6" v-if="stats">
+            <ul class="list-inside justify-center">
+                <li class="text-xs text-light-grey">You've attended {{ focusSessions }} Focus sessions.</li>
+                <li class="text-xs text-light-grey">Your most recent session was {{ latestSession }}.</li>
+                <li class="text-xs text-light-grey">Your first session was on {{ firstSession }}.</li>
+                <li class="text-xs text-light-grey">You've been doing Focus training for {{ totalTrained }}</li>
             </ul>
       </div>
     </div>
