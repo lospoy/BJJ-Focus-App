@@ -1,7 +1,7 @@
 <template>
   <button
     type="{{ type }}"
-    class="self-center mt-6 py-2 px-20 rounded-sm text-m font-medium text-white bg-gold duration-200 border-solid border-2 border-transparent hover:bg-at-faint-orange hover:text-light-grey"
+    class="self-center mt-6 px-20 py-1 rounded-sm text-sm font-medium text-light-grey bg-dark-grey duration-200 border-solid border-2 border-gold hover:bg-gold hover:text-dark-grey"
     :style="{ background: color}"
   >
     {{ title }}
