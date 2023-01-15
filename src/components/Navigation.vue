@@ -103,8 +103,8 @@ export default {
 .bm-burger-button {
     position: -webkit-sticky !important; /* Safari */
     position: sticky !important;
-    width: 18px;
-    height: 16px;
+    width: 1.2rem;
+    height: 1rem;
     right: 20px;
     top: 20px;
     cursor: pointer;
