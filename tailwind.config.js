@@ -21,7 +21,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      Exo2: ["Exo-2, sans-serif"],
+      Poppins: ["Poppins, sans-serif"],
     },
     flex: {
       1: "1 1 0%",
