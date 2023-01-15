@@ -1,59 +1,76 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Human from "../views/Human.vue";
 import Login from "../views/Login.vue";
-import NewHuman from "../views/NewHuman.vue";
 import PrivateClass from "../views/PrivateClass.vue";
-import ProgressView from "../views/ProgressView.vue";
+import Progress from "../views/Progress.vue";
 import Register from "../views/Register.vue";
 import Session from "../views/Session.vue";
-import Student from "../views/Student.vue";
+import Charts from "../views/student/Charts.vue";
+import StudentHome from "../views/student/StudentHome.vue";
+import StudentSession from "../views/student/StudentSession.vue";
+import StudentList from "../views/StudentList.vue";
 import Technique from "../views/Technique.vue";
-import UserProfile from "../views/UserProfile.vue";
 
 const routes = [
-  {
-    path: "/",
-    name: "ProgressView",
-    component: ProgressView,
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: Register,
-  },
+  // ROLE AGNOSTIC/ALL USERS
   {
     path: "/login",
     name: "Login",
     component: Login,
   },
   {
-    path: "/session",
+    path: "/register",
+    name: "Register",
+    component: Register,
+  },
+
+  // ADMIN ROUTES
+  {
+    path: "/teacher/progress",
+    name: "Progress",
+    component: Progress,
+  },
+  {
+    path: "/teacher/session",
     name: "Session",
     component: Session,
   },
   {
-    path: "/newHuman",
-    name: "NewHuman",
-    component: NewHuman,
+    path: "/teacher/human",
+    name: "Human",
+    component: Human,
   },
   {
-    path: "/profile",
-    name: "UserProfile",
-    component: UserProfile,
-  },
-  {
-    path: "/technique",
+    path: "/teacher/technique",
     name: "Technique",
     component: Technique,
   },
   {
-    path: "/private-class",
+    path: "/teacher/student-list",
+    name: "StudentList",
+    component: StudentList,
+  },
+
+  // STUDENT ROUTES
+  {
+    path: "/student/charts",
+    name: "Charts",
+    component: Charts,
+  },
+  {
+    path: "/student/private-class",
     name: "PrivateClass",
     component: PrivateClass,
   },
   {
-    path: "/student",
-    name: "Student",
-    component: Student,
+    path: "/student/session",
+    name: "StudentSession",
+    component: StudentSession,
+  },
+  {
+    path: "/student/home",
+    name: "StudentHome",
+    component: StudentHome,
   },
 ];
 

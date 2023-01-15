@@ -1,38 +1,41 @@
 <template>
-  <header class="bg-at-light-orange text-white">
+  <header class="bg-dark-grey text-white">
     <nav
-      class="container py-5 px-4 flex flex-column gap-4 items-center sm:flex-row"
+      class="container py-3 px-4 flex gap-4 items-center sm:flex-row max-w-screen-sm"
     >
       <div class="flex items-center gap-x-4">
         <a href="http://www.bjjfocus.com">
-            <img class="w-32" src="../assets/vector/default-gold-white.svg" alt="bjj focus logo"/>
+            <img class="w-28" :src="require('../assets/vector/default-gold-white.svg')" alt="bjj focus logo"/>
         </a>
       </div>
       <Slide
         right
         :closeOnNavigation="true"
-        width="200"
+        width="170"
         class="flex flex-1 justify-end"
       >
-        <span class="rounded-md bg-at-light-orange mr-7 text-white p-1.5 mb-4 justify-center" v-if="user">{{ humanName }}</span>
-        
         <!-- student routes -->
-        <router-link v-if="user && isStudent" class="cursor-pointer" :to="{ name: 'ProgressView' }">Progress</router-link>
-        <router-link v-if="user && isStudent" class="cursor-pointer" :to="{ name: 'PrivateClass' }">Private Class</router-link>
-
-        <!-- admin routes -->
-        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'Session' }">Session</router-link>
-        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'Student' }">Student</router-link>
-        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'NewHuman' }">Human</router-link>
-        <router-link v-if="user && isAdmin" class="cursor-pointer" :to="{ name: 'Technique' }">Technique</router-link>
+        <div class="flex flex-row gap-x-2" v-if="user && isStudent">
+          <v-icon class="text-lg top-1">mdi-alien</v-icon>
+          <router-link :to="{ name: 'PrivateClass' }">Private Class</router-link>
+        </div>
         
         <!-- login/logout routes -->
-        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Login' }" @click="logout">Logout</router-link>
-        <router-link v-if="!user" class="cursor-pointer" :to="{ name: 'Login' }">Login</router-link>
-        <router-link v-if="!user" class="cursor-pointer" :to="{ name: 'Register' }">Sign up</router-link>
+        <div class="flex flex-row gap-x-2" v-if="user">
+          <v-icon class="text-lg top-1">mdi-exit-to-app</v-icon>
+          <router-link class="cursor-pointer" :to="{ name: 'Login' }" @click="logout">Logout</router-link>
+        </div>
 
-        <!-- not in use currently -->
-        <!-- <router-link v-if="user" class="cursor-pointer" :to="{ name: 'UserProfile' }">My Profile</router-link> -->
+        <div class="flex flex-row gap-x-2" v-if="!user">
+          <v-icon class="text-lg top-1">mdi-login</v-icon>
+          <router-link :to="{ name: 'Login' }">Login</router-link>
+        </div>
+
+        <div class="flex flex-row gap-x-2" v-if="!user">
+          <v-icon class="text-lg top-1">mdi-triangle</v-icon>
+          <router-link :to="{ name: 'Register' }">Sign up</router-link>
+        </div> 
+
       </Slide>
     </nav>
   </header>
@@ -100,14 +103,14 @@ export default {
 .bm-burger-button {
     position: -webkit-sticky !important; /* Safari */
     position: sticky !important;
-    width: 30px;
-    height: 25px;
+    width: 18px;
+    height: 16px;
     right: 20px;
     top: 20px;
     cursor: pointer;
   }
   .bm-burger-bars {
-    background-color: #ffffff !important;
+    background-color: #f7f7f7 !important;
   }
   .line-style {
     position: absolute;
@@ -122,7 +125,7 @@ export default {
     cursor: pointer;
   }
   .bm-cross {
-    background: #d85a3b !important;
+    background: #f7f7f7 !important;
   }
   .bm-cross-button {
     height: 24px;
@@ -135,24 +138,23 @@ export default {
     z-index: 1000; /* Stay on top */
     top: 0;
     right: 0;
-    background-color: #fff4f0 !important; /* Black*/
+    background-color: #4b5153 !important;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.4s !important; /*0.5 second transition effect to slide in the sidenav*/
+    transition: 0.4s !important; /*X seconds transition effect to slide in the sidenav*/
   }
   .bm-item-list {
-    color: #d85a3b !important;
+    color: #f7f7f7 !important;
     margin-left: 10%;
-    font-size: 20px;
+    font-size: 16px;
   }
   .bm-item-list > * {
     display: flex;
     text-decoration: none;
-    padding: 0.7em;
+    padding: 0.2em;
   }
   .bm-item-list > * > span {
-    margin-left: 10px;
-    font-weight: 700;
+    font-weight: 400;
     color: white;
   }
 

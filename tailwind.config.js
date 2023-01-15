@@ -1,5 +1,8 @@
 module.exports = {
-  purge: { content: ["./public/**/*.html", "./src/**/*.vue"] },
+  purge: {
+    enabled: true,
+    content: ["./public/**/*.html", "./src/**/*.vue"]
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -8,15 +11,17 @@ module.exports = {
         "at-faint-orange": "#fe6945",
         "at-light-orange": "#d85a3b",
         "at-orange": "#a4442d",
-        "light-grey": "#f7f7f7",
-        "dark-grey": "#3d4250",
-        "gold": "#d8c93b",
-        "light-gold": "#E7C93B"
+        "light-grey": "#f7f7f7", // this one changes the charts background color
+        "med-grey2": "#8f9b9f",
+        "med-grey": "#4b5153",
+        "dark-grey": "#292c2d",
+        "gold": "#ffcc41",
+        "light-gold": "#fff0c6"
 
       },
     },
     fontFamily: {
-      Poppins: ["Poppins, sans-serif"],
+      Exo2: ["Exo-2, sans-serif"],
     },
     flex: {
       1: "1 1 0%",

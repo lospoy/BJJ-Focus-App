@@ -1,15 +1,13 @@
 <template>
-    <div class="px-2 py-4 bg-light-grey rounded-md shadow-md flex flex-col justify-center mb-4">
-        <div class="rounded-md bg-at-light-orange mb-2 self-center">
-          <span class="flex text-m text-white px-14">Skill Growth</span>
-        </div>
+    <div class="flex flex-col px-2 bg-dark-grey rounded-md shadow-md justify-center mb-2">
+
           <bar-chart
             :data="skillData"
-            :colors="['#dfcd6d']"
-            :dataset="{borderWidth: 1000, barThickness: 30, borderRadius: 3}"
+            :dataset="{barThickness: 40, borderRadius: 5, borderWidth: 0, backgroundColor:'#3957BF'}"
             :library="chartOptions"
           >
           </bar-chart>
+
     </div>
 </template>
 
@@ -33,24 +31,39 @@ export default {
 
     const chartOptions = {
       layout: {
-        padding: {left: -3, right: 5, top: 5, bottom: 0},
+        padding: {left: -10, right: 5, top: 0, bottom: 10},
       },
       scales: {
         x: {
-          min: 0,
-          max: 1600, // 6 months of perfect attendance
+          grid: {
+            drawTicks: false,
+            display: false
+          },
           ticks: {
             display: false,
           },
+          border: {
+            display:false
+          }
         },
         y: {
-          ticks: {
-            font: {
-              size: 14,
-              weight: 'bolder',
-              color: 'black',
-            },
+          barPercentage: 1,
+          grid: {
+            drawTicks: false,
+            display: false
           },
+          ticks: {
+            padding: 10,
+            mirror: true,
+            font: {
+              size: 10,
+            },
+            color: '#f7f7f7',
+            z: 1
+          },
+          border: {
+            display:false
+          }
         },
       },
       animation: {
@@ -60,7 +73,7 @@ export default {
         delay: (context) => {
           let delay = 0;
           if (context.type === 'data' && context.mode === 'default' && !delayed) {
-            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+            delay = context.dataIndex * 350 + context.datasetIndex * 100;
           }
           return delay;
         },
@@ -104,9 +117,11 @@ export default {
 
         const count = (arr, key) => {
           return arr.reduce((r, a) => {
-            return r + a[key]
+            return r + a[key] / 16
           }, 0)
         }
+        // dividing by 16 in combination with max X axis ticks of 100
+        // (100 being completion of curriculum in 6 months of perfect attendance)
 
         skillData.value = [
           ["Pass", count(sumOfSkills, 'pass')],
@@ -122,8 +137,6 @@ export default {
 
         skillData.value = skillData.value.sort((a, b) => b[1] - a[1])
         // SORTS in descending order, from highest to least exposure
-
-        console.log(skillData.value)
 
       } catch (error) {
         console.error(error)

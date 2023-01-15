@@ -39,7 +39,7 @@ import StudentStats from "../components/StudentStats.vue"
 import MultiCheckbox from "../components/Multi-checkbox.vue"
 
 export default {
-  name: "student",
+  name: "StudentList",
   components: {
     StudentStats,
     MultiCheckbox

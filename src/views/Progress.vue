@@ -31,7 +31,7 @@ import TopicsChart from '../components/TopicsChart.vue';
 import SkillsChart from '../components/SkillsChart.vue';
 
 export default {
-  name: "progressView",
+  name: "progress",
   components: {
     SessionCalendar,
     StudentStats,

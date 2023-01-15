@@ -5,6 +5,7 @@ module.exports = defineConfig({
 });
 
 module.exports = {
+  
     pages: {
       index: {
         // entry for the page
@@ -13,3 +14,11 @@ module.exports = {
       },
     }
   }
+
+module.exports = defineConfig({
+  pluginOptions: {
+    vuetify: {
+      // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
+    }
+  }
+})

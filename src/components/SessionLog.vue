@@ -1,29 +1,19 @@
 <template>
     <!-- CALENDAR -->
-    <div class="bg-dark-grey rounded-md shadow-md border-0 flex flex-col mb-4 justify-center">
-      <div class="">
+    <div class="p-5 bg-light-grey rounded-md shadow-lg flex flex-col mb-4 justify-center">
+
       <!-- Skeleton loader (no data) -->
-      <v-calendar
+      <div
         class="animate-pulse"
         is-expanded
         v-if="skeleton"
-        style="background-color: #4b5153; border: 0;"
-      />
-      <!-- Actual calendar with data -->
-      <v-calendar
-        is-expanded
-        is-dark
-        color="yellow"
-        :attributes="attributes"
-        @dayclick = 'daySelected'
-        v-if="calendar"
-        class="calendar-style"
       >
+      </div>
 
-      </v-calendar>
+    <!-- Actual Log with data -->
 
     <!-- SESSION CARD -->
-    <div class="p-5 bg-dark-grey rounded-md flex flex-col justify-center" v-if="displaySessionCard">
+    <div class="p-5 bg-light-grey rounded-md flex flex-col justify-center">
 
       <div class="pl-4 px-6 py-6 animate-pulse" v-if="sessionCardSkeleton">
             <span class="list-inside space-y-1 justify-center">
@@ -32,26 +22,20 @@
       </div>
 
       <!-- SESSION CARD: SELECTED DATE'S DETAILS -->
-      <div class="flex flex-col pr-2 w-full">
+      <div class="flex flex-col pl-4 px-6 w-full">
             <ul class="list-inside space-y-1 self-center" v-if="afterSessionCardSkeleton">
-              <li class="text-3xl text-light-grey uppercase text-center -mb-3">{{ sessionTopic }}</li>
-              <li class="text-xs text-light-grey uppercase text-center">session {{ attendedOrNot }}</li>
+              <li class="text-3xl text-dark-grey uppercase text-center -mb-3">{{ sessionTopic }}</li>
+              <li class="text-s text-dark-grey uppercase text-center">{{ attendedOrNot }}</li>  
             </ul>
-            <div class="flex flex-col mt-6 w-full" v-if="attended">
-              <ul id="techniqueList" class="space-y-1 ml-10 justify-center">
-                  <li class=" text-light-grey rounded-md font-normal text-xs px-2" v-for="(item, index) of techniqueList" :key="index">
+            <div class="flex flex-col mt-2 w-full" v-if="attended">
+              <ul id="techniqueList" class="space-y-1 ml-4">
+                  <li class="bg-light-gold bg-opacity-80 rounded-md shadow-sm text-dark-grey px-2" v-for="(item, index) of techniqueList" :key="index">
                     {{ item }}
                   </li>
               </ul>
             </div>
       </div>
     </div>
-
-    <div class="p-5 bg-dark-grey rounded-md flex flex-col justify-center" v-if="noSessionCard">
-      <span class="flex justify-center">No session on this date</span>
-    </div>
-
-      </div>
     </div>
 </template>
 
@@ -65,7 +49,7 @@ import { getMove } from "../services/bjj_services/moveService";
 import { getVariation } from "../services/bjj_services/variationService";
 
 export default {
-  name: "SessionCalendar",
+  name: "SessionLog",
   setup() {
     // Variables
     const errorMsg = ref(null);
@@ -130,9 +114,9 @@ export default {
         highlight: {
           style: {
             backgroundColor: '#ffcc41',
-            borderColor: '#ffcc41',
+            borderColor: '#ffcc41'
           },
-          fillMode: 'outline',
+          fillMode: 'outline'
         },
         popover: {
           label: `${await getTopic(aS.what.focus._id)}`,
@@ -144,8 +128,8 @@ export default {
       const unattendedPromise = unattendedSessions.value.map(async uS => ({
         highlight: {
           style: {
-            backgroundColor: 'rgba(247, 247, 247, .3)',
-            borderColor: 'rgba(247, 247, 247, 0)'
+            backgroundColor: 'rgba(255, 204, 65, .3)',
+            borderColor: 'rgba(255, 204, 65, 0)'
           },
           fillMode: 'outline'
         },
@@ -276,29 +260,9 @@ export default {
         // Skeleton
         skeleton, calendar, sessionCardSkeleton, afterSessionCardSkeleton,
         dayDescription,
-        // Session Card
-        daySelected, selectedDay,
-        displaySessionCard, sessionCardDate, noSessionCard,
         // Training data
         studentTrainingData, attendedSessions, unattendedSessions, techniqueList, selectedLesson, attendedOrNot, sessionTopic, attended
     };
   },
 };
 </script>
-
-<style scoped>
-  .calendar-style {
-    background-color: #292c2d;
-    border: none;
-    color: #f7f7f7;
-  }
-  .vc-title {
-    color: #f7f7f7 !important;
-    padding: 0 !important;
-    font-size: 12px !important;
-    font-weight: 400 !important;
-  }
-  .vc-weekday {
-    color: #ffcc41;
-  }
-</style>

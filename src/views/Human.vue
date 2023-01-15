@@ -53,7 +53,7 @@ import { createHuman, getAllHumans } from "../services/humanService";
 import Button from "../components/Button.vue";
 
 export default {
-  name: "newHuman",
+  name: "Human",
   components: {
     Button,
   },
