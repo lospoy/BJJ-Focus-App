@@ -10,11 +10,6 @@ import "./assets/tailwind.css"
 import 'chartkick/chart.js'
 import VueChartkick from 'vue-chartkick'
 
-// Vuetify
-import vuetify from './plugins/vuetify'
-import { loadFonts } from './plugins/webfontloader'
-loadFonts()
-
 // EventBus
 import mitt from "mitt"
 const emitter = mitt()
@@ -28,6 +23,5 @@ createApp(App)
   .use(VCalendar, {})
   .use(VueChartkick)
   .provide('emitter', emitter)
-  .use(vuetify)
   .mount("#app");
 
