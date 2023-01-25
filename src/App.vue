@@ -1,10 +1,8 @@
 <template>
-  <v-app>
-  <v-main v-if="appReady" class="min-h-full font-Poppins box-border bg-dark-grey">
+  <div v-if="appReady" class="min-h-full font-Poppins box-border bg-dark-grey">
       <Navigation :key="navRerenderKey" />
       <BottomNav :key="navRerenderKey" :role='userRole'/>
-  </v-main>
-  </v-app>
+  </div>
 </template>
 
 <script>
