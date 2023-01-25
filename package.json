@@ -43,7 +43,6 @@
     "vue-chartkick": "^1.1.0",
     "vue-router": "^4.1.6",
     "vue3-burger-menu": "^1.1.1",
-    "vuetify": "^3.1.0",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
@@ -60,9 +59,7 @@
     "prettier": "2.8.1",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
-    "vue-cli-plugin-tailwind": "^3.0.0",
-    "vue-cli-plugin-vuetify": "~2.5.8",
-    "webpack-plugin-vuetify": "^2.0.0"
+    "vue-cli-plugin-tailwind": "^3.0.0"
   },
   "browserslist": [
     "> 1%",
