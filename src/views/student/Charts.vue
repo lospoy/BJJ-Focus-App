@@ -5,10 +5,6 @@
       <p class="text-red-500">{{ errorMsg }}</p>
     </div>
 
-    <div class="flex flex-col mt-2 mb-3 w-full">
-      <h1 class="text-5xl text-med-grey self-center">CHARTS</h1>
-    </div>
-
     <div class="px-4">
     <Switcher
       class="flex justify-center max-w-screen-sm py-1 px-2"
