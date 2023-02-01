@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-screen-sm mx-auto py-5 px-3 mt-28">
+  <div class="max-w-screen-sm mx-auto py-5 px-1 mt-20">
     <!-- Error Handling -->
     <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-light-grey shadow-lg">
       <p class="text-red-500">{{ errorMsg }}</p>
@@ -54,6 +54,10 @@ export default {
     const processTrainingData = async(id) => {
       await setTrainingData(id)
     }
+
+      // setTimeout(() => {
+      //   location.reload()
+      // }, 10);
 
     onMounted(() => {
       getHumanNameAndId()
