@@ -5,10 +5,6 @@
       <p class="text-red-500">{{ errorMsg }}</p>
     </div>
 
-    <div class="flex flex-col mt-2 mb-2 w-full">
-      <h1 class="text-5xl text-med-grey self-center">SESSIONS</h1>
-    </div>
-
     <div :key="cardRerenderKey" ><!-- add v-if="calendarCard" -->
     <div class="px-5 pt-10 pb-12 bg-dark-grey rounded-md flex flex-col justify-center -mb-7">
       <div class="flex flex-col pl-4 px-6 w-full">
