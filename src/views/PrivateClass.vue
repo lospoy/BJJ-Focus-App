@@ -20,25 +20,21 @@
 
 <script>
 import { ref } from "vue";
-import { getHuman } from "../services/humanService"
-import { getAllSessions } from "../services/sessionService"
-import store from "../store/store"
 
 export default {
-  name: "privateClass",
-  setup() {
+name: "privateClass",
+setup() {
+  // Variables
+  const errorMsg = ref(null);
 
-    // Calendly
-    const recaptchaScript = document.createElement('script')
-    recaptchaScript.setAttribute('src', 'https://assets.calendly.com/assets/external/widget.js')
-    document.head.appendChild(recaptchaScript)
+  // Calendly
+  const recaptchaScript = document.createElement('script')
+  recaptchaScript.setAttribute('src', 'https://assets.calendly.com/assets/external/widget.js')
+  document.head.appendChild(recaptchaScript)
 
-    // Variables
-    const errorMsg = ref(null);
-
-    return {
-        errorMsg
-    };
-  },
+  return {
+      errorMsg
+  };
+},
 };
 </script>
