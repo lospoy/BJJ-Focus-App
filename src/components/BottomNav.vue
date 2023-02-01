@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import { logoutUser } from "../services/userService";
-import { useRouter } from "vue-router";
 import store from "../store/store"
 import { inject, ref } from "vue"        // required for the emitter (EventBus)
 import TabMenu from 'primevue/tabmenu';
