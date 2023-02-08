@@ -1,14 +1,14 @@
 <template >
   <div class="min-h-screen font-Poppins box-border bg-dark-grey">
     <Navigation />
-    <BottomNav :key="appReady" :role='userRole'/>
+    <BottomNav :key='userRole' :role='userRole'/>
   </div>
 </template>
 
 <script>
 import BottomNav from "./components/BottomNav.vue";
 import Navigation from "./components/Navigation.vue";
-import store from "./store/store.js";
+import { useUserStore } from "./store/user"
 import { useRouter } from "vue-router";
 import { inject, ref } from "vue";    // required for the emitter (EventBus)
 
@@ -20,44 +20,32 @@ export default {
 
   setup() {
     //  Data & variables
-    const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+    const userLocal = JSON.parse(localStorage.getItem("BJJFocusUser"))
     const router = useRouter()
-    const userRole = ref('')
+    const userRole = ref({})
     const emitter = inject('emitter')
-    const appReady = ref(0) // re-render key
-
-    //  Listener (EventBus) this section listens to the emitters
-    //
-    //  on user login or logout modifies appReady's value, 
-    //  with the intent that this will trigger a re-render of the BottomNav component
-    //  Re-render of the component however is not happening
-    emitter.on('userHasLoggedIn', (booleanValue) => {
-        appReady.value++
-        console.log('login')
-    })
-    emitter.on('userHasLoggedOut', (booleanValue) => {
-        appReady.value++
-        console.log('logout')
-    })
+    const userStore = useUserStore()
 
     //  Checks for user on page load
-    if (!user) {
+    if (!userLocal) {
       router.push({ name: "Login" });
-      store.methods.setUser(user);
+      userStore.setUser(userLocal)
     } else {
-      store.methods.setUser(user);
+      userStore.setUser(userLocal)
       //  If user is logged in, checks for their role to display relevant route and bottom nav bar
-      if(user.role.admin) {
-        userRole.value = "admin"
+      if(userStore.user.role.admin) {
+        userRole.value = userStore.user.role
         router.push({ name: "Session" });
       }
-      if(user.role.student) {
-        userRole.value = "student"
+      if(userStore.user.role.student) {
+        userRole.value = userStore.user.role
         router.push({ name: "StudentHome" });
       }
     }
 
-    return { user, emitter, appReady, userRole };
+    return {
+      userLocal, emitter, userRole, userStore
+    };
   },
 };
 </script>
