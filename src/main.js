@@ -18,6 +18,7 @@ import VueChartkick from 'vue-chartkick'
 
 // Pinia (state management)
 import { createPinia } from 'pinia'
+const pinia = createPinia()
 
 // EventBus
 import mitt from "mitt"
@@ -28,7 +29,7 @@ import VCalendar from 'v-calendar'
 import 'v-calendar/dist/style.css'
 
 createApp(App)
-  .use(createPinia())
+  .use(pinia)
   .use(router)
   .component('TabMenu', TabMenu)
   .use(PrimeVue)
