@@ -1,19 +1,16 @@
-<template>
-  <v-app>
-  <v-main v-if="appReady" class="min-h-full font-Poppins box-border bg-dark-grey">
-      <Navigation :key="navRerenderKey" />
-      <BottomNav :key="navRerenderKey" :role='userRole'/>
-  </v-main>
-  </v-app>
+<template >
+  <div class="min-h-screen font-Poppins box-border bg-dark-grey">
+    <Navigation />
+    <BottomNav :key='userRole' :role='userRole'/>
+  </div>
 </template>
 
 <script>
 import BottomNav from "./components/BottomNav.vue";
 import Navigation from "./components/Navigation.vue";
-import { ref } from "vue";
-import store from "./store/store.js";
+import { useUserStore } from "./store/user"
 import { useRouter } from "vue-router";
-import { inject } from "vue"    // required for the emitter (EventBus)
+import { inject, ref } from "vue";    // required for the emitter (EventBus)
 
 export default {
   components: {
@@ -22,47 +19,44 @@ export default {
   },
 
   setup() {
-    // Data & variables
-    const appReady = ref(null)
+    //  Data & variables
+    const userLocal = JSON.parse(localStorage.getItem("BJJFocusUser"))
     const router = useRouter()
-    const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
-    const userRole = ref('')
-    const navRerenderKey = ref(0) // works alongside the listener/emitter
-
-    // Listener (EventBus) this section listens to the emitters
+    const userRole = ref({})
     const emitter = inject('emitter')
-    emitter.on('userHasLoggedIn', (value) => {
-        navRerenderKey.value += 1
-        console.log("(emitter) Logged In")
-    })
-    emitter.on('userHasLoggedOut', (value) => {
-        navRerenderKey.value += 1
-        console.log("(emitter) Logged Out")
-    })
+    const userStore = useUserStore()
 
-    if (!user) {
-      appReady.value = true;
-      store.methods.setUser(user);
+    //  Checks for user on page load
+    if (!userLocal) {
       router.push({ name: "Login" });
+      userStore.setUser(userLocal)
     } else {
-      appReady.value = true;
-      store.methods.setUser(user);
-      // If user logs in, checks for their role to display relevant reoute and bottom nav bar
-      if(user.role.admin) {
-        userRole.value = "admin"
+      userStore.setUser(userLocal)
+      //  If user is logged in, checks for their role to display relevant route and bottom nav bar
+      if(userStore.user.role.admin) {
+        userRole.value = userStore.user.role
         router.push({ name: "Session" });
       }
-      if(user.role.student) {
-        userRole.value = "student"
+      if(userStore.user.role.student) {
+        userRole.value = userStore.user.role
         router.push({ name: "StudentHome" });
       }
     }
 
-    return { appReady, user, emitter, navRerenderKey, userRole };
+    return {
+      userLocal, emitter, userRole, userStore
+    };
   },
 };
 </script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+@import "~primevue/resources/primevue.min.css";
+@import "~primevue/resources/themes/md-dark-deeppurple/theme.css";
+
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 </style>

@@ -56,8 +56,8 @@ export async function loginUser(data) {
 }
 
 // Logout user
-export async function logoutUser() {
-  return localStorage.removeItem("BJJFocusUser");
+export function logoutUser() {
+  localStorage.removeItem("BJJFocusUser");
 }
 
 // Get user object

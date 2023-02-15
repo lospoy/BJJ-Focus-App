@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-screen-sm mx-auto py-5 px-1 mt-28">
+  <div class="max-w-screen-sm mx-auto py-5 px-1 mt-20">
     <!-- Error Handling -->
     <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-light-grey shadow-lg">
       <p class="text-red-500">{{ errorMsg }}</p>
@@ -33,6 +33,7 @@ import { getHuman } from "../../services/humanService"
 import { setTrainingData } from "../../helpers/trainingData"
 import StudentStats from '../../components/StudentStats.vue';
 import ThisWeek from '../../components/ThisWeek.vue';
+import { useUserStore } from "../../store/user";
 
 export default {
   name: "charts",
@@ -45,6 +46,7 @@ export default {
     const errorMsg = ref(null);
     const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
     const humanName = ref(null)
+    const userStore = useUserStore()
 
     const getHumanNameAndId = async () => {
         const res = await getHuman(user.human)
@@ -55,9 +57,21 @@ export default {
       await setTrainingData(id)
     }
 
+    function loadBottomNav(){
+      let refreshToken = localStorage.getItem('refreshToken')
+
+      if (refreshToken !== '1') {
+        location.reload()
+        localStorage.setItem('refreshToken', '1')
+      }
+    }
+
     onMounted(() => {
       getHumanNameAndId()
       processTrainingData(user.human)
+      console.log("userStore.user in StudentHome")
+      console.log(userStore.user)
+      loadBottomNav()
     })
     
     return {

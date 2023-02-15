@@ -1,69 +1,151 @@
 <template>
-
-  <!-- STUDENT NAV -->
-  <v-bottom-navigation density="compact" v-if="isStudent" class="bg-med-grey text-light-grey">
-    <v-btn value="home" :to="{ name: 'StudentHome' }">
-      <v-icon>mdi-home</v-icon>
-    </v-btn>
-    <v-btn value="charts" :to="{ name: 'Charts' }">
-      <v-icon>mdi-chart-box-outline</v-icon>
-    </v-btn>
-    <v-btn value="studentSession" :to="{ name: 'StudentSession' }">
-      <v-icon>mdi-calendar-multiselect</v-icon>
-    </v-btn>
-    <v-btn value="privateClass" :to="{ name: 'PrivateClass' }">
-      <v-icon>mdi-alien</v-icon>
-    </v-btn>
-  </v-bottom-navigation>
-
-  <!-- ADMIN NAV -->
-  <v-bottom-navigation density="compact" v-if="isAdmin">
-    <v-btn value="studentList" :to="{ name: 'StudentList' }">
-      <v-icon>mdi-account-details</v-icon>
-    </v-btn>
-    <v-btn value="progress" :to="{ name: 'Progress' }">
-      <v-icon>mdi-account-search</v-icon>
-    </v-btn>
-    <v-btn value="session" :to="{ name: 'Session' }">
-      <v-icon>mdi-calendar-plus</v-icon>
-    </v-btn>
-    
-    <v-btn value="human" :to="{ name: 'Human' }">
-      <v-icon>mdi-human</v-icon>
-    </v-btn>
-    <v-btn value="technique" :to="{ name: 'Technique' }">
-      <v-icon>mdi-chess-pawn</v-icon>
-    </v-btn>
-  </v-bottom-navigation>
-  <router-view></router-view>
-
+    <!-- STUDENT NAV -->
+    <TabMenu
+      :model="studentMenu"
+      v-if="isStudent"
+    />
+    <TabMenu
+      :model="adminMenu"
+      v-if="isAdmin"
+    />
+    <router-view />
 </template>
 
 <script>
 import store from "../store/store"
-import { ref } from "vue"        // required for the emitter (EventBus)
+import { inject, ref, onMounted } from "vue"        // required for the emitter (EventBus)
+import TabMenu from 'primevue/tabmenu';
+import { useRouter } from 'vue-router'
+import { logoutUser }  from '../services/userService'
+import { useUserStore } from "../store/user"
 
 export default {
 name: "BottomNav",
 props: {
   role: {
-    type: String,
+    type: Object,
     required: true,
+  },
+  components: {
+    TabMenu
   }
 },
+
 setup(props) {
   // VARIABLES
   const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+  const router = useRouter();
   const isAdmin = ref(null)
   const isStudent = ref(null)
+  const active = ref(3)
+  const userStore = useUserStore()
   
-  if(props.role === 'admin') isAdmin.value = true
-  if(props.role === 'student') isStudent.value = true
+  // TabMenu
+  const studentMenu = ref([
+    {
+      icon: 'pi pi-fw pi-home',
+      to: '/student/home'
+    },
+    {
+      icon: 'pi pi-fw pi-chart-bar',
+      to: '/student/charts'
+    },
+    {
+      icon: 'pi pi-fw pi-calendar',
+      to: '/student/session'
+    },
+    {
+      icon: 'pi pi-fw pi-cog',
+      to: '/student/settings'
+    },
+  ])
+
+  const adminMenu = ref([
+    {
+      icon: 'pi pi-fw pi-home',
+      to: '/teacher/progress'
+    },
+    {
+      icon: 'pi pi-fw pi-calendar-plus',
+      to: '/teacher/session'
+    },
+    {
+      icon: 'pi pi-fw pi-user-plus',
+      to: '/teacher/human'
+    },
+    {
+      icon: 'pi pi-fw pi-sitemap',
+      to: '/teacher/technique'
+    },
+    {
+      icon: 'pi pi-fw pi-users',
+      to: '/teacher/student-list'
+    },
+    {
+      icon: 'pi pi-fw pi-power-off',
+      command:() => {logout()}
+    },
+  ])
+
+  // Emitter (EventBus) this section emits an event that can be listened to globally
+  const emitter = inject('emitter')
+  const emitLogout = _ => {
+      emitter.emit('userHasLoggedOut', true)
+  }
+
+  // Logout function
+  const logout = async () => {
+    logoutUser();
+    store.methods.setUser(user)
+    
+    setTimeout(() => {
+      emitLogout()
+    }, 1);
+    setTimeout(() => {
+      router.push({ name: "Login" });
+    }, 700);
+  };
+
+  // USING PINIA
+  function checkRole() {
+    if (!userStore.user) {
+      return
+    }
+
+    if(userStore.user.role.admin) isAdmin.value = true
+    if(userStore.user.role.student) isStudent.value = true
+  }
+
+  // USING PROPS
+  // if(props.role.admin) isAdmin.value = true
+  // if(props.role.student) isStudent.value = true
+
+  onMounted(() => {
+    checkRole()
+  })
+
 
   return {
-    // Roles
-    store, user, isAdmin, isStudent
+    store, user,
+    // LOGOUT
+    logout, emitLogout,
+    // TAB MENU
+    studentMenu, adminMenu, isAdmin, isStudent, active
   };
 },
+
 };
 </script>
+
+<style scoped>
+  .p-tabmenu {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .p-menuitem-icon {
+    font-size: 1.8rem;
+  }
+</style>

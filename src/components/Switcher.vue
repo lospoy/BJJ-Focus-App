@@ -2,7 +2,7 @@
 <div class="flex rounded-md bg-med-grey justify-center">
 
   <!-- LEFT SIDE -->
-  <v-btn
+  <button
     @click="changeOption('left')"
     class="self-center -ml-1 w-1/2 py-1 rounded-md text-xs font-medium"
     :class="{
@@ -11,10 +11,10 @@
     }"
   >
     {{ titleLeft }}
-  </v-btn>
+  </button>
 
   <!-- RIGHT SIDE -->
-  <v-btn
+  <button
     @click="changeOption('right')"
     class="self-center -mr-1 w-1/2 py-1 rounded-md text-xs font-medium shadow-none"
     :class="{
@@ -23,7 +23,7 @@
     }"
   >
     {{ titleRight }}
-  </v-btn>
+  </button>
 
 </div>
 </template>

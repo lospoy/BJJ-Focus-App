@@ -8,6 +8,7 @@ import Session from "../views/Session.vue";
 import Charts from "../views/student/Charts.vue";
 import StudentHome from "../views/student/StudentHome.vue";
 import StudentSession from "../views/student/StudentSession.vue";
+import StudentSettings from "../views/student/StudentSettings";
 import StudentList from "../views/StudentList.vue";
 import Technique from "../views/Technique.vue";
 
@@ -53,6 +54,11 @@ const routes = [
 
   // STUDENT ROUTES
   {
+    path: "/student/home",
+    name: "StudentHome",
+    component: StudentHome,
+  },
+  {
     path: "/student/charts",
     name: "Charts",
     component: Charts,
@@ -68,13 +74,14 @@ const routes = [
     component: StudentSession,
   },
   {
-    path: "/student/home",
-    name: "StudentHome",
-    component: StudentHome,
+    path: "/student/settings",
+    name: "StudentSettings",
+    component: StudentSettings,
   },
 ];
 
 const router = createRouter({
+  mode: "hash",
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });

@@ -35,14 +35,17 @@
     "mitt": "^3.0.0",
     "moment": "^2.29.4",
     "mongoose": "^6.8.2",
+    "pinia": "^2.0.29",
     "postcss": "^8.4.20",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.22.4",
     "roboto-fontface": "*",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.2.45",
     "vue-chartkick": "^1.1.0",
     "vue-router": "^4.1.6",
-    "vuetify": "^3.1.2",
+    "vue3-burger-menu": "^1.1.1",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
@@ -58,9 +61,7 @@
     "prettier": "2.8.1",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
-    "vue-cli-plugin-tailwind": "^3.0.0",
-    "vue-cli-plugin-vuetify": "~2.5.8",
-    "webpack-plugin-vuetify": "^2.0.0"
+    "vue-cli-plugin-tailwind": "^3.0.0"
   },
   "browserslist": [
     "> 1%",
