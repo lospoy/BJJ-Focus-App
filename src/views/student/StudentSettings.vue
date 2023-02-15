@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted } from "vue";
 import { logoutUser } from "../../services/userService";
 import { useRouter } from "vue-router";
 import store from "../../store/store"
@@ -50,23 +50,16 @@ setup() {
       humanFullName.value = res.name.first + ' ' + res.name.last
   }
 
-  // Emitter (EventBus) this section emits an event that can be listened to globally
-  const emitter = inject('emitter')
-  const emitLogout = _ => {
-      emitter.emit('userHasLoggedOut', true)
-  }
-
   // Logout function
   const logout = () => {
     logoutUser();
     
     setTimeout(() => {
-      
       store.methods.setUser(user)
     }, 200);
-      setTimeout(() => {
-        emitLogout()
-        router.push({ name: "Login" });
+
+    setTimeout(() => {
+      router.push({ name: "Login" });
     }, 800);
   }
 
@@ -77,8 +70,7 @@ setup() {
   return {
       errorMsg, user,
       humanFullName,
-      // LOGOUT FUNCTION
-      logout, emitLogout
+      logout
   };
 },
 }
