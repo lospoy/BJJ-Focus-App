@@ -22,3 +22,6 @@ Learning progress app for combat sports students and instructors
 - Object-based schemas, avoiding “primitive obsession”
 - RESTful API, JWT token authentication
 - Tailwind, PrimeVue and custom UI components
+
+
+✅ App is live and active!
