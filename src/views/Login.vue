@@ -75,6 +75,16 @@ export default {
         buttonColor.value = "orange"
     }
 
+    function unloadBottomNav(){
+      let refreshToken = localStorage.getItem('refreshToken')
+      if (refreshToken === '1') {
+        location.reload()
+        localStorage.setItem('refreshToken', '0')
+      }
+    }
+    unloadBottomNav()
+    
+
     // Login function
     const login = async () => {
         // Button success visual feedback
