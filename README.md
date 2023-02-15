@@ -5,7 +5,7 @@ Edtech engagement app. Students can track their curriculum progression. Teachers
 <br><br>
 Database design following the Decorator pattern. Schemas structured using objects, avoiding primitive obsession. RESTful API and secure authentication with JSON Web Token. Currently live and developing features.
 <br><br>
-<h3 align="center">Built using the MEVN stack</h3>
+<h3 align="center">Built using</h3>
 <p align="center">
   <img alt="MongoDB" src="https://img.shields.io/badge/-MongoDB-13aa52?style=for-the-badge&logo=mongodb&logoColor=white" />
     <img alt="Express" src="https://img.shields.io/badge/-Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
