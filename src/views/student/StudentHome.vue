@@ -57,11 +57,21 @@ export default {
       await setTrainingData(id)
     }
 
+    function loadBottomNav(){
+      let refreshToken = localStorage.getItem('refreshToken')
+
+      if (refreshToken !== '1') {
+        location.reload()
+        localStorage.setItem('refreshToken', '1')
+      }
+    }
+
     onMounted(() => {
       getHumanNameAndId()
       processTrainingData(user.human)
       console.log("userStore.user in StudentHome")
       console.log(userStore.user)
+      loadBottomNav()
     })
     
     return {
