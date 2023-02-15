@@ -24,4 +24,4 @@ Learning progress app for combat sports students and instructors
 - Tailwind, PrimeVue and custom UI components
 
 
-✅ App is live and active!
+✅ Live and active! -> www.bjjfocus.com
