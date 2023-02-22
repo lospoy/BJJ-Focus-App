@@ -24,11 +24,12 @@
 <script>
 import { ref, reactive, onMounted } from "vue"
 import { getAllFocusLessons } from "../services/bjj_services/focusLessonService"
-import store from "../store/store";
+import { useUserStore } from "../store/user"
 
 export default {
   name: "ThisWeek",
   setup() {
+    const userStore = useUserStore()
     const currentTopic = ref(null);
     const nextTopic = ref(null)
     const skillsList = reactive([])
@@ -36,7 +37,7 @@ export default {
     const isStudent = ref(null)
 
     function setRole() {
-      const role = store.state.user.role
+      const role = userStore.user.role
       if (role.admin || role.teacher) isTeacher.value = true
       if (role.student) isStudent.value = true
     }
