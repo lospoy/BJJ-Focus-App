@@ -69,7 +69,7 @@ export default {
   setup() {
     // Variables
     const errorMsg = ref(null);
-    const delay = 1000  // ms delay to sync the skeletonService and displayStudentData setTimeouts
+    const delay = 100  // ms delay to sync the skeletonService and displayStudentData setTimeouts
     const selectedDay = ref(null)
     const dayDescription = ref(null)
     const displaySessionCard = ref(null) // if true, displays selected session's data
