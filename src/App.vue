@@ -35,7 +35,7 @@ export default {
       //  If user is logged in, checks for their role to display relevant route and bottom nav bar
       if(userStore.user.role.admin) {
         userRole.value = userStore.user.role
-        router.push({ name: "Session" });
+        router.push({ name: "Overview" });
       }
       if(userStore.user.role.student) {
         userRole.value = userStore.user.role

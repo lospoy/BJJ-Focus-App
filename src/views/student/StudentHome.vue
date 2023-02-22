@@ -33,7 +33,6 @@ import { getHuman } from "../../services/humanService"
 import { setTrainingData } from "../../helpers/trainingData"
 import StudentStats from '../../components/StudentStats.vue';
 import ThisWeek from '../../components/ThisWeek.vue';
-import { useUserStore } from "../../store/user";
 
 export default {
   name: "charts",
@@ -46,7 +45,6 @@ export default {
     const errorMsg = ref(null);
     const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
     const humanName = ref(null)
-    const userStore = useUserStore()
 
     const getHumanNameAndId = async () => {
         const res = await getHuman(user.human)
@@ -69,8 +67,6 @@ export default {
     onMounted(() => {
       getHumanNameAndId()
       processTrainingData(user.human)
-      console.log("userStore.user in StudentHome")
-      console.log(userStore.user)
       loadBottomNav()
     })
     

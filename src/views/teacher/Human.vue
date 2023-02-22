@@ -47,10 +47,10 @@
 
 <script>
 import { ref } from "vue";
-import { createHuman, getAllHumans } from "../services/humanService";
+import { createHuman, getAllHumans } from "../../services/humanService";
 
 // components import
-import Button from "../components/Button.vue";
+import Button from "../../components/Button.vue";
 
 export default {
   name: "Human",

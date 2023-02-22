@@ -162,13 +162,13 @@
 
 <script>
 import { reactive, ref } from "vue";
-import { createTechnique, getAllTechniques } from "../services/bjj_services/techniqueService";
-import { createPosition, getAllPositions, getPosition } from "../services/bjj_services/positionService";
-import { createMove, getAllMoves, getMove } from "../services/bjj_services/moveService";
-import { createVariation, getAllVariations, getVariation } from "../services/bjj_services/variationService";
+import { createTechnique, getAllTechniques } from "../../services/bjj_services/techniqueService";
+import { createPosition, getAllPositions, getPosition } from "../../services/bjj_services/positionService";
+import { createMove, getAllMoves, getMove } from "../../services/bjj_services/moveService";
+import { createVariation, getAllVariations, getVariation } from "../../services/bjj_services/variationService";
 
 // components import
-import Button from "../components/Button.vue";
+import Button from "../../components/Button.vue";
 
 export default {
   name: "technique",
@@ -208,8 +208,6 @@ export default {
     // **********************************************************************************************
     //                                       RENDER STORED TECHNIQUES
     // **********************************************************************************************
-    console.log(getAllTechniques())
-
     const showAllTechniques = async() => {
         const allTechniques = await getAllTechniques()
         

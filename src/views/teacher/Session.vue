@@ -110,15 +110,15 @@
 
 <script>
 import { ref, reactive, onMounted } from 'vue'
-import { getAllHumans } from '../services/humanService'
-import { getAllFocusLessons } from '../services/bjj_services/focusLessonService'
-import { saveSession, getAllSessions } from '../services/sessionService'
-import humanStore from "../store/humanStore"
+import { getAllHumans } from '../../services/humanService'
+import { getAllFocusLessons } from '../../services/bjj_services/focusLessonService'
+import { saveSession, getAllSessions } from '../../services/sessionService'
+import humanStore from "../../store/humanStore"
 import moment from 'moment'
 
 // components import
-import Button from "../components/Button.vue";
-import MultiCheckbox from "../components/Multi-checkbox.vue"
+import Button from "../../components/Button.vue";
+import MultiCheckbox from "../../components/Multi-checkbox.vue"
 
 export default {
     name: 'session',

@@ -102,21 +102,13 @@ export default {
             //  Set user data to local storage
             localStorage.setItem("BJJFocusUser", JSON.stringify(userData));
 
-            //  Set user data to userStore (Pinia @"../store/user")
-            //  If not placed inside of a timeout, app displays "Error: incorrect login"
-            //  but on browser refresh, you've logged in
-            //  network tab shows a 200 and a 204
-
-            //  Inside of the timeout, the app does not display "Error: incorrect login"
-            //  redirects correctly to "StudentHome", but userStore.user is null
-            //  and therefore does not load the bottom navigation component
             setTimeout(() => {
               userStore.setUser(userData)
             }, 300);
 
             setTimeout(() => {
               if(userData.role.student) router.push({ name: "StudentHome" })
-              if(userData.role.admin) router.push({ name: "Session" })
+              if(userData.role.admin) router.push({ name: "Overview" })
             }, 700);
         }
       } catch (error) {

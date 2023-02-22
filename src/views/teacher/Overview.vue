@@ -22,16 +22,16 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import { getHuman } from "../services/humanService"
-import { setTrainingData } from "../helpers/trainingData"
-import SessionCalendar from "../components/SessionCalendar.vue"
-import StudentStats from "../components/StudentStats.vue"
-import ThisWeek from '../components/ThisWeek.vue';
-import TopicsChart from '../components/TopicsChart.vue';
-import SkillsChart from '../components/SkillsChart.vue';
+import { getHuman } from "../../services/humanService"
+import { setTrainingData } from "../../helpers/trainingData"
+import SessionCalendar from "../../components/SessionCalendar.vue"
+import StudentStats from "../../components/StudentStats.vue"
+import ThisWeek from '../../components/ThisWeek.vue';
+import TopicsChart from '../../components/TopicsChart.vue';
+import SkillsChart from '../../components/SkillsChart.vue';
 
 export default {
-  name: "progress",
+  name: "overview",
   components: {
     SessionCalendar,
     StudentStats,
@@ -58,9 +58,19 @@ export default {
       await setTrainingData(id)
     }
 
+    function loadBottomNav(){
+      let refreshToken = localStorage.getItem('refreshToken')
+
+      if (refreshToken !== '1') {
+        location.reload()
+        localStorage.setItem('refreshToken', '1')
+      }
+    }
+
     onMounted(() => {
       getHumanNameAndId()
       processTrainingData(user.human)
+      loadBottomNav()
     })
     
     return {
