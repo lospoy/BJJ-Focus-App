@@ -12,11 +12,6 @@ const student = reactive({
   training: null,
 });
 
-const human = reactive({
-  loggedHuman: null,
-  allHumans: null,
-});
-
 const methods = {
   setUser(payload) {
     state.user = payload ? payload : null,
@@ -36,12 +31,6 @@ const methods = {
   },
   getStudent() {
     return JSON.parse(JSON.stringify(student))
-  },
-  setHuman(payload) {
-    human.loggedHuman = payload ? payload : null
-  },
-  setHumanArray(payload) {
-    human.allHumans = payload ? payload : null
   },
 };
 
