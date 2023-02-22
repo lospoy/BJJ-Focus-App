@@ -1,4 +1,5 @@
 <template>
+  <nav>
     <!-- STUDENT NAV -->
     <TabMenu
       :model="studentMenu"
@@ -8,12 +9,13 @@
       :model="adminMenu"
       v-if="isAdmin"
     />
-    <router-view />
+  </nav>
+  <router-view />
 </template>
 
 <script>
 import store from "../store/store"
-import { inject, ref, onMounted } from "vue"        // required for the emitter (EventBus)
+import { ref, onMounted } from "vue"
 import TabMenu from 'primevue/tabmenu';
 import { useRouter } from 'vue-router'
 import { logoutUser }  from '../services/userService'
@@ -31,7 +33,7 @@ props: {
   }
 },
 
-setup(props) {
+setup() {
   // VARIABLES
   const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
   const router = useRouter();
@@ -63,7 +65,7 @@ setup(props) {
   const adminMenu = ref([
     {
       icon: 'pi pi-fw pi-home',
-      to: '/teacher/progress'
+      to: '/teacher/overview'
     },
     {
       icon: 'pi pi-fw pi-calendar-plus',
@@ -86,12 +88,6 @@ setup(props) {
       command:() => {logout()}
     },
   ])
-
-  // Emitter (EventBus) this section emits an event that can be listened to globally
-  const emitter = inject('emitter')
-  const emitLogout = _ => {
-      emitter.emit('userHasLoggedOut', true)
-  }
 
   // Logout function
   const logout = async () => {
@@ -116,10 +112,6 @@ setup(props) {
     if(userStore.user.role.student) isStudent.value = true
   }
 
-  // USING PROPS
-  // if(props.role.admin) isAdmin.value = true
-  // if(props.role.student) isStudent.value = true
-
   onMounted(() => {
     checkRole()
   })
@@ -128,7 +120,7 @@ setup(props) {
   return {
     store, user,
     // LOGOUT
-    logout, emitLogout,
+    logout,
     // TAB MENU
     studentMenu, adminMenu, isAdmin, isStudent, active
   };
@@ -138,14 +130,15 @@ setup(props) {
 </script>
 
 <style scoped>
-  .p-tabmenu {
+  .p-tabmenu.p-component {
     position: fixed;
     bottom: 0;
     width: 100%;
     display: flex;
     justify-content: center;
-  }
-  .p-menuitem-icon {
-    font-size: 1.8rem;
+    overflow: hidden;
+    background-color: rgba(41, 44, 45, .5);
+    padding-top: 0;
+    z-index: 1000;
   }
 </style>
