@@ -1,16 +1,16 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Human from "../views/Human.vue";
 import Login from "../views/Login.vue";
-import PrivateClass from "../views/PrivateClass.vue";
-import Progress from "../views/Progress.vue";
 import Register from "../views/Register.vue";
-import Session from "../views/Session.vue";
 import Charts from "../views/student/Charts.vue";
+import PrivateClass from "../views/student/PrivateClass.vue";
 import StudentHome from "../views/student/StudentHome.vue";
 import StudentSession from "../views/student/StudentSession.vue";
 import StudentSettings from "../views/student/StudentSettings";
-import StudentList from "../views/StudentList.vue";
-import Technique from "../views/Technique.vue";
+import Human from "../views/teacher/Human.vue";
+import Overview from "../views/teacher/Overview.vue";
+import Session from "../views/teacher/Session.vue";
+import StudentList from "../views/teacher/StudentList.vue";
+import Technique from "../views/teacher/Technique.vue";
 
 const routes = [
   // ROLE AGNOSTIC/ALL USERS
@@ -27,9 +27,9 @@ const routes = [
 
   // ADMIN ROUTES
   {
-    path: "/teacher/progress",
-    name: "Progress",
-    component: Progress,
+    path: "/teacher/overview",
+    name: "Overview",
+    component: Overview,
   },
   {
     path: "/teacher/session",
