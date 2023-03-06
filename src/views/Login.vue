@@ -51,9 +51,9 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { loginUser } from "../services/userService";
 import Button from "../components/Button.vue";
-import { useUserStore } from "../store/user"
+import { loginUser } from "../services/userService";
+import { useUserStore } from "../store/user";
 
 export default {
   name: "login",
@@ -62,7 +62,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const userStore = useUserStore()
+    const user = useUserStore()
     const email = ref(null);
     const password = ref(null);
     const errorMsg = ref(null);
@@ -101,15 +101,12 @@ export default {
         if(res.status === 200) {
             //  Set user data to local storage
             localStorage.setItem("BJJFocusUser", JSON.stringify(userData));
-
-            setTimeout(() => {
-              userStore.setUser(userData)
-            }, 300);
+            
 
             setTimeout(() => {
               if(userData.role.student) router.push({ name: "StudentHome" })
               if(userData.role.admin) router.push({ name: "Overview" })
-            }, 700);
+            }, 100);
         }
       } catch (error) {
         errorMsg.value = "Error: incorrect login";
@@ -122,7 +119,7 @@ export default {
     return {
       errorMsg,
       buttonColor, buttonTitle, buttonSuccess,
-      email, password, login, userStore
+      email, password, login, user
     };
   },
 };
