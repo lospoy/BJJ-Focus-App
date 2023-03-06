@@ -9,7 +9,7 @@
       <div class="flex flex-col w-full pl-7 py-10">
         <h3 class="text-base text-med-grey2">Hi, {{ humanName }}!</h3>
       </div>
-      <StudentStats :id='user.human'/>
+      <StudentStats :id='userLocal.human'/>
       <ThisWeek />
     </div>
 
@@ -28,11 +28,11 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { getHuman } from "../../services/humanService"
-import { setTrainingData } from "../../helpers/trainingData"
+import { onMounted, ref } from "vue";
 import StudentStats from '../../components/StudentStats.vue';
 import ThisWeek from '../../components/ThisWeek.vue';
+import { getHuman } from "../../services/humanService";
+import { useUserStore } from "../../store/user";
 
 export default {
   name: "charts",
@@ -43,18 +43,26 @@ export default {
   setup() {
     // Variables
     const errorMsg = ref(null);
-    const user = JSON.parse(localStorage.getItem("BJJFocusUser"))
+    const userStore = useUserStore()
+    const userLocal = JSON.parse(localStorage.getItem("BJJFocusUser"))
     const humanName = ref(null)
 
-    const getHumanNameAndId = async () => {
-        const res = await getHuman(user.human)
+    // Get human name and ID and set to Store @../../store/user
+    async function getHumanNameAndId() {
+        const res = await getHuman(userLocal.human)
         humanName.value = res.name.first
+        userStore.setHumanName(res.name)
     }
 
-    const processTrainingData = async(id) => {
-      await setTrainingData(id)
+    // Checks for human data in persisted state store (localstorage)
+    function checkHumanName() {
+      if(userStore.human.name === "") {
+        getHumanNameAndId()
+      }
+      humanName.value = userStore.human.name.first
     }
 
+    // Forces re-render
     function loadBottomNav(){
       let refreshToken = localStorage.getItem('refreshToken')
 
@@ -65,13 +73,13 @@ export default {
     }
 
     onMounted(() => {
-      getHumanNameAndId()
-      processTrainingData(user.human)
+      checkHumanName()
       loadBottomNav()
+      userStore.setUserDataAndHumanID(userLocal)
     })
     
     return {
-        errorMsg, user,
+        errorMsg, userLocal,
         humanName
     };
   },
