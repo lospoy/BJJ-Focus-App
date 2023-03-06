@@ -18,7 +18,9 @@ import VueChartkick from 'vue-chartkick'
 
 // Pinia (state management)
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 
 // EventBus
 import mitt from "mitt"
