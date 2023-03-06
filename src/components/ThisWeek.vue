@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted } from "vue"
-import { getAllFocusLessons } from "../services/bjj_services/focusLessonService"
-import { useUserStore } from "../store/user"
+import { onMounted, reactive, ref } from "vue";
+import { getAllFocusLessons } from "../services/bjj_services/focusLessonService";
+import { useUserStore } from "../store/user";
 
 export default {
   name: "ThisWeek",
@@ -35,11 +35,15 @@ export default {
     const skillsList = reactive([])
     const isTeacher = ref(null)
     const isStudent = ref(null)
+    const role = userStore.user.role
 
     function setRole() {
-      const role = userStore.user.role
-      if (role.admin || role.teacher) isTeacher.value = true
-      if (role.student) isStudent.value = true
+      if (role.admin || role.teacher) {
+        isTeacher.value = true
+      }
+      if (role.student)  {
+        isStudent.value = true
+      }
     }
 
     // **************  CURRENT & NEXT TOPIC **************
@@ -99,8 +103,10 @@ export default {
     
     onMounted(async() => {
       setRole()
-      const currentTopicSkills = await getSkills(currentTopicId)
-      populateSkillsList(currentTopicSkills)
+      if (role.admin || role.teacher) {
+        const currentTopicSkills = await getSkills(currentTopicId)
+        populateSkillsList(currentTopicSkills)
+      }
     })
 
     return {
