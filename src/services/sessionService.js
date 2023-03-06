@@ -18,10 +18,6 @@ export async function saveSession(data) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
   }
 }
 
@@ -42,10 +38,6 @@ export async function getAllSessions() {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
   }
 }
 
@@ -67,9 +59,5 @@ export async function updateSession(data, id) {
     }
   } catch (e) {
     console.log(e);
-    this.setState({
-      isError: true,
-      errorMessage: e.message,
-    });
   }
 }
