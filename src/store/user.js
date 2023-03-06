@@ -1,24 +1,41 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-export const useUserStore = defineStore('user', () => {
+export const useUserStore = defineStore('data', () => {
   const user = ref({
-    userID: '',
+    id: '',
     email: '',
-    humanID: '',
-    role: {}
+    role: {},
   })
 
-  function setUser(payload) {
+  const human = ref({
+    id: '',
+    name: {
+      first: '',
+      last: ''
+    }
+  })
+
+  function setUserDataAndHumanID(payload) {
     if(!payload) { return user.value = null }
 
-    user.value.userID = payload._id,
+    user.value.id = payload._id,
     user.value.email = payload.email,
-    user.value.humanID = payload.human,
-    user.value.role = payload.role
+    user.value.role = payload.role,
+    human.value.id = payload.human
+  }
+
+  function setHumanName(payload) {
+    if(!payload) { return human.value = null }
+
+    human.value.name.first = payload.first,
+    human.value.name.last = payload.last
   }
 
   return {
-    user, setUser
+    user, setUserDataAndHumanID,
+    human, setHumanName
   }
+}, {
+  persist: true
 })
