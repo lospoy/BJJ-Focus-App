@@ -25,10 +25,9 @@
 </template>
 
 <script>
-import { ref, onMounted, inject } from "vue"; // inject is required for the emitter (EventBus)
-import { setTrainingData } from "../../helpers/trainingData"
-import SessionCalendar from "../../components/SessionCalendar.vue"
-import SessionLog from "../../components/SessionLog.vue"
+import { inject, ref } from "vue"; // inject is required for the emitter (EventBus)
+import SessionCalendar from "../../components/SessionCalendar.vue";
+import SessionLog from "../../components/SessionLog.vue";
 import Switcher from '../../components/Switcher.vue';
 
 
@@ -51,10 +50,6 @@ export default {
     const logCard = ref(true)
     const calendarCard = ref(null)
 
-    const processTrainingData = async(id) => {
-      await setTrainingData(id)
-    }
-
     const emitter = inject('emitter')
     emitter.on('switcherLeft', (value) => {
         logCard.value = true
@@ -63,10 +58,6 @@ export default {
     emitter.on('switcherRight', (value) => {
         logCard.value = false
         calendarCard.value = true
-    })
-
-    onMounted(() => {
-      processTrainingData(user.human)
     })
     
     return {
