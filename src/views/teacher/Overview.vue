@@ -21,14 +21,13 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { getHuman } from "../../services/humanService"
-import { setTrainingData } from "../../helpers/trainingData"
-import SessionCalendar from "../../components/SessionCalendar.vue"
-import StudentStats from "../../components/StudentStats.vue"
+import { onMounted, ref } from "vue";
+import SessionCalendar from "../../components/SessionCalendar.vue";
+import SkillsChart from '../../components/SkillsChart.vue';
+import StudentStats from "../../components/StudentStats.vue";
 import ThisWeek from '../../components/ThisWeek.vue';
 import TopicsChart from '../../components/TopicsChart.vue';
-import SkillsChart from '../../components/SkillsChart.vue';
+import { getHuman } from "../../services/humanService";
 
 export default {
   name: "overview",
@@ -54,10 +53,6 @@ export default {
         humanName.value = res.name.first
     }
 
-    const processTrainingData = async(id) => {
-      await setTrainingData(id)
-    }
-
     function loadBottomNav(){
       let refreshToken = localStorage.getItem('refreshToken')
 
@@ -69,7 +64,6 @@ export default {
 
     onMounted(() => {
       getHumanNameAndId()
-      processTrainingData(user.human)
       loadBottomNav()
     })
     
