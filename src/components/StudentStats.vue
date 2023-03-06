@@ -21,84 +21,78 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { setTrainingData } from "../helpers/trainingData"
-import store from "../store/store"
+import { onMounted, ref } from "vue";
+import { useSessionsStore } from "../store/sessions";
 
 export default {
-  name: "StudentStats",
-  props: {
-    title: {
-      type: String,
-      default: "Stats",
-    },
-    id: {
-      type: String,
-      required: true,
-    }
+name: "StudentStats",
+props: {
+  title: {
+    type: String,
+    default: "Stats",
   },
-  setup(props) {  // passing props allows us to use the values inside the props object -> props.item
-    // Variables
-    const errorMsg = ref(null);
-    const focusSessions = ref(null)
-    const totalTrained = ref(null)
-    const firstSession = ref(null)
-    const latestSession = ref(null)
-    const skeleton = ref(null)  // v-if
-    const stats = ref(null) // v-if
-    const delay = 1000  // ms delay for skeletonService
+  id: {
+    type: String,
+    required: true,
+  }
+},
+setup(props) {  // passing props allows us to use the values inside the props object -> props.item
+  // Variables
+  const errorMsg = ref(null);
+  const focusSessions = ref(null)
+  const totalTrained = ref(null)
+  const firstSession = ref(null)
+  const latestSession = ref(null)
+  const skeleton = ref(null)  // v-if
+  const stats = ref(null) // v-if
+  const delay = 1000  // ms delay for skeletonService
+  const sessionsStore = useSessionsStore()
 
-    const processTrainingData = async(id) => {
-      await setTrainingData(id)
-    }
+  const skeletonService = _ => {
+    skeleton.value = true
+    stats.value = false
+    setTimeout(() => {
+      skeleton.value = false
+      stats.value = true
+    }, delay);
+  }
 
-    const skeletonService = _ => {
-      skeleton.value = true
-      stats.value = false
+  const displayStudentData = async(humanID) => {
+    latestSession.value = '...'
+    firstSession.value = '...'
+    totalTrained.value = '...'
+    focusSessions.value = "..."
 
-      setTimeout(() => {
-        skeleton.value = false
-        stats.value = true
-      }, delay);
-    }
+    sessionsStore.getAndSetSessionsData(humanID)
+    const sessions = sessionsStore.sessions
 
-    const displayStudentData = async() => {
-      latestSession.value = '...'
-      firstSession.value = '...'
-      totalTrained.value = '...'
-      focusSessions.value = "..."
+    setTimeout(() => {
+      latestSession.value = `${sessions.daysSinceLatest} days ago`
+      firstSession.value = new Date(sessions.first).toLocaleDateString()
+      focusSessions.value = sessions.focus
+      const weeksTrained = sessions.weeksTrained
+      if (weeksTrained < 1) {
+          totalTrained.value = "Just Started!💪"
+      } else if (weeksTrained >= 1 && weeksTrained < 8) {
+          totalTrained.value = `${Math.floor(weeksTrained)} weeks🔥`
+      } else if (weeksTrained >= 8 && weeksTrained < 52) {
+          totalTrained.value = `${Math.floor(weeksTrained/4)} months⚡`
+      } else {
+          totalTrained.value = `${(weeksTrained/4/12).toFixed(2)} years⚡`
+      }    
+    }, delay);
+  }
 
-      setTimeout(() => {  // data pulled from the store, but set @store/trainingData.js
-        const training = store.methods.getStudent().training
+  onMounted(() => {
+    displayStudentData(props.id)
+    skeletonService()
+  })
 
-        latestSession.value = `${training.daysSinceLatestSession} days ago`
-        firstSession.value = new Date(training.firstSession).toLocaleDateString()
-        focusSessions.value = store.methods.getStudent().training.focusSessions
-
-        const weeksTrained = training.weeksTrained
-        if (weeksTrained < 1) {
-            totalTrained.value = "Just Started!💪"
-        } else if (weeksTrained >= 1 && weeksTrained < 8) {
-            totalTrained.value = `${Math.floor(weeksTrained)} weeks🔥`
-        } else if (weeksTrained >= 8 && weeksTrained < 52) {
-            totalTrained.value = `${Math.floor(weeksTrained/4)} months⚡`
-        } else {
-            totalTrained.value = `${(weeksTrained/4/12).toFixed(2)} years⚡`
-        }    
-      }, delay);
-    }
-
-    onMounted(() => {
-      displayStudentData()
-      skeletonService()
-      processTrainingData(props.id)
-    })
-
-    return {
-        errorMsg,
-        skeleton, stats,
-        totalTrained, firstSession, latestSession, focusSessions, processTrainingData
-    };
-  },
+  return {
+      errorMsg,
+      skeleton, stats,
+      totalTrained, firstSession, latestSession, focusSessions
+  };
+},
 };
 </script>
