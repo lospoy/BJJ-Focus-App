@@ -6,11 +6,11 @@
 </template>
 
 <script>
+import { inject, ref } from "vue"; // required for the emitter (EventBus)
+import { useRouter } from "vue-router";
 import BottomNav from "./components/BottomNav.vue";
 import Navigation from "./components/Navigation.vue";
-import { useUserStore } from "./store/user"
-import { useRouter } from "vue-router";
-import { inject, ref } from "vue";    // required for the emitter (EventBus)
+import { useUserStore } from "./store/user";
 
 export default {
   components: {
@@ -29,9 +29,8 @@ export default {
     //  Checks for user on page load
     if (!userLocal) {
       router.push({ name: "Login" });
-      userStore.setUser(userLocal)
     } else {
-      userStore.setUser(userLocal)
+      userStore.setUserDataAndHumanID(userLocal)
       //  If user is logged in, checks for their role to display relevant route and bottom nav bar
       if(userStore.user.role.admin) {
         userRole.value = userStore.user.role
