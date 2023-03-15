@@ -1,9 +1,3 @@
-<div align="center">
-  <a href="https://bjjfocus.com">
-    <img src="https://u.cubeupload.com/aa9988vvb/eeacover.png" width="70%">
-  </a>
-</div>
-<br>
 <p align="center">
   <img alt="MongoDB" src="https://img.shields.io/badge/-MongoDB-13aa52?style=for-the-badge&logo=mongodb&logoColor=white" />
   <img alt="Nodejs" src="https://img.shields.io/badge/-Nodejs-43853d?style=for-the-badge&logo=Node.js&logoColor=white" />
@@ -13,15 +7,11 @@
   <img alt="JavaScript" src="https://img.shields.io/badge/-JavaScript-c4af0e?style=for-the-badge&logo=javascript&logoColor=white" />
 </p>
 
-<br>
-
+# BJJ FOCUS (old)
 Learning progress app for combat sports students and instructors
 
-- Component-structured SPA with Vue 3, Composition API, and Pinia
-- Designed using UML and the Decorator Pattern
-- Object-based schemas, avoiding “primitive obsession”
-- RESTful API, JWT token authentication
-- Tailwind, PrimeVue and custom UI components
+THIS IS AN OLD VERSION USING THE VUE-CLI
+<br>
+FOR THE NEW, VITE-BASED VERSION -> https://github.com/lospoy/bjj-focus-vue
 
 
-✅ Live and active! -> www.bjjfocus.com
